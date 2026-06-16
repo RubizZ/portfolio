@@ -1,11 +1,11 @@
-import { SiTypescript, SiJavascript, SiJava, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress } from "react-icons/si";
-import { FaCode } from "react-icons/fa";
+import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress } from "react-icons/si";
+import { FaCode, FaJava } from "react-icons/fa";
 
 const skillsData = [
   { name: "Todas", icon: FaCode },
   { name: "TypeScript", icon: SiTypescript },
   { name: "JavaScript", icon: SiJavascript },
-  { name: "Java", icon: SiJava },
+  { name: "Java", icon: FaJava },
   { name: "C++", icon: SiCplusplus },
   { name: "Node.js", icon: SiNodedotjs },
   { name: "React", icon: SiReact },
