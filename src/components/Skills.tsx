@@ -15,7 +15,12 @@ const skillsData = [
   { name: "Express", icon: SiExpress }
 ];
 
-export default function Skills({ selectedTech, setSelectedTech }) {
+interface SkillsProps {
+  selectedTech: string;
+  setSelectedTech: (tech: string) => void;
+}
+
+export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   return (
     <section className="container" style={{ padding: '2rem 2rem' }}>
       <h2 className="section-title animate-up delay-1" style={{ marginBottom: '2rem' }}>Tecnologías Principales</h2>

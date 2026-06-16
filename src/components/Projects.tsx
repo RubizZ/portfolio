@@ -39,7 +39,11 @@ const projectsData = [
   }
 ];
 
-export default function Projects({ selectedTech }) {
+interface ProjectsProps {
+  selectedTech: string;
+}
+
+export default function Projects({ selectedTech }: ProjectsProps) {
   const filteredProjects = selectedTech === "Todas" 
     ? projectsData 
     : projectsData.filter(p => p.tech.includes(selectedTech));

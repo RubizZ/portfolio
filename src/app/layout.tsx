@@ -11,7 +11,7 @@ export const metadata = {
   description: "Portafolio personal de RubizZ. Proyectos de software, tecnologías y soluciones.",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={inter.variable}>
       <body>{children}</body>
