@@ -21,16 +21,16 @@ export default function TechNetwork() {
 
   // Flechas TechNetwork
   const arrow1Opacity = useTransform(scrollY, [400, 600, 1000, 1200], [0, 1, 1, 0]);
-  const arrow1PointerEvents = useTransform(scrollY, [400, 600, 1000, 1200], ["none", "auto", "auto", "none"]) as any;
+  const arrow1PointerEvents = useTransform(scrollY, [399, 400, 1200, 1201], ["none", "auto", "auto", "none"]) as any;
 
   const arrow2Opacity = useTransform(scrollY, [1200, 1400, 1800, 2000], [0, 1, 1, 0]);
-  const arrow2PointerEvents = useTransform(scrollY, [1200, 1400, 1800, 2000], ["none", "auto", "auto", "none"]) as any;
+  const arrow2PointerEvents = useTransform(scrollY, [1199, 1200, 2000, 2001], ["none", "auto", "auto", "none"]) as any;
 
   const arrow3Opacity = useTransform(scrollY, [2000, 2200, 2600, 2800], [0, 1, 1, 0]);
-  const arrow3PointerEvents = useTransform(scrollY, [2000, 2200, 2600, 2800], ["none", "auto", "auto", "none"]) as any;
+  const arrow3PointerEvents = useTransform(scrollY, [1999, 2000, 2800, 2801], ["none", "auto", "auto", "none"]) as any;
 
   const arrow4Opacity = useTransform(scrollY, [2800, 3000, 3400, 3600], [0, 1, 1, 0]);
-  const arrow4PointerEvents = useTransform(scrollY, [2800, 3000, 3400, 3600], ["none", "auto", "auto", "none"]) as any;
+  const arrow4PointerEvents = useTransform(scrollY, [2799, 2800, 3600, 3601], ["none", "auto", "auto", "none"]) as any;
 
   // Master Sidebar Opacity
   const sidebarOpacity = useTransform(
@@ -40,7 +40,7 @@ export default function TechNetwork() {
   );
   const sidebarPointerEvents = useTransform(
     scrollY,
-    [400, 600, 3400, 3600],
+    [399, 400, 3600, 3601],
     ["none", "auto", "auto", "none"],
   ) as any;
 

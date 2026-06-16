@@ -1,4 +1,10 @@
-import { FaGithub, FaCode, FaJava, FaLeaf, FaChevronDown } from "react-icons/fa";
+import {
+  FaGithub,
+  FaCode,
+  FaJava,
+  FaLeaf,
+  FaChevronDown,
+} from "react-icons/fa";
 import {
   SiTypescript,
   SiJavascript,
@@ -203,8 +209,12 @@ function ProjectItem({
         [0, 1, 1, 0],
       );
   const pointerEvents = isLast
-    ? (useTransform(scrollY, [endEnter, endEnter + 1], ["none", "auto"]) as any)
-    : (useTransform(scrollY, [endEnter, startExit], ["none", "auto"]) as any);
+    ? (useTransform(scrollY, [startEnter - 1, startEnter], ["none", "auto"]) as any)
+    : (useTransform(
+        scrollY,
+        [startEnter - 1, startEnter, endExit, endExit + 1],
+        ["none", "auto", "auto", "none"]
+      ) as any);
 
   // Text transitions mapped to scroll
   const textX = isLast
@@ -425,7 +435,9 @@ function ProjectItem({
       {/* Arrow to Next Project */}
       {nextProjectName && (
         <motion.div
-          onClick={() => window.scrollTo({ top: endEnter + 1600, behavior: "smooth" })}
+          onClick={() =>
+            window.scrollTo({ top: endEnter + 1600, behavior: "smooth" })
+          }
           style={{
             position: "absolute",
             bottom: "8vh",
@@ -497,7 +509,11 @@ export default function Projects({ selectedTech }: ProjectsProps) {
             index={index}
             layout={layout}
             isLast={index === filteredProjects.length - 1}
-            nextProjectName={index < filteredProjects.length - 1 ? filteredProjects[index + 1].name : undefined}
+            nextProjectName={
+              index < filteredProjects.length - 1
+                ? filteredProjects[index + 1].name
+                : undefined
+            }
           />
         );
       })}
