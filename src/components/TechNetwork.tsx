@@ -7,10 +7,9 @@ import { FaJava, FaAndroid, FaLeaf, FaChevronDown } from "react-icons/fa";
 export default function TechNetwork() {
   const { scrollY } = useScroll();
 
-  // Animaciones de la flecha de scroll, que solo aparece al final de la constelación.
-  // Termina en 3600 (cuando el usuario llega al final de los lenguajes).
-  const arrowOpacity = useTransform(scrollY, [3000, 3200, 3600, 3800], [0, 1, 1, 0]);
-  const arrowPointerEvents = useTransform(scrollY, [3000, 3200, 3600, 3800], ['none', 'auto', 'auto', 'none']) as any;
+  // Animaciones de la flecha de scroll, visible durante todo el recorrido de lenguajes
+  const arrowOpacity = useTransform(scrollY, [400, 600, 3600, 3800], [0, 1, 1, 0]);
+  const arrowPointerEvents = useTransform(scrollY, [400, 600, 3600, 3800], ['none', 'auto', 'auto', 'none']) as any;
 
   // Master Sidebar Opacity
   const sidebarOpacity = useTransform(scrollY, [400, 600, 3400, 3600], [0, 1, 1, 0]);

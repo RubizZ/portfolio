@@ -1,4 +1,26 @@
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaCode, FaJava, FaLeaf } from "react-icons/fa";
+import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress, SiPython, SiDjango, SiFlask, SiTensorflow } from "react-icons/si";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const techIcons: Record<string, any> = {
+  "TypeScript": SiTypescript,
+  "JavaScript": SiJavascript,
+  "React": SiReact,
+  "Next.js": SiNextdotjs,
+  "Node.js": SiNodedotjs,
+  "Express": SiExpress,
+  "HTML": SiHtml5,
+  "Java": FaJava,
+  "Android": SiAndroid,
+  "Spring": FaLeaf,
+  "C++": SiCplusplus,
+  "Qt": SiCplusplus,
+  "Unreal": SiCplusplus,
+  "Python": SiPython,
+  "Django": SiDjango,
+  "Flask": SiFlask,
+  "TensorFlow": SiTensorflow
+};
 
 const projectsData = [
   {
@@ -39,81 +61,252 @@ const projectsData = [
   }
 ];
 
+const projectLayouts: any[] = [
+  {
+    text: { top: '35%', left: '10%' },
+    img: { bottom: '10%', right: '10%' },
+    textInitial: { x: -300, y: 0, scale: 1 },
+    imgInitial: { x: 300, y: 0, scale: 1 },
+    techSpots: [
+      { bottom: '15%', left: '15%' },
+      { top: '40%', right: '15%' },
+      { bottom: '20%', left: '45%' },
+      { top: '35%', left: '55%' },
+      { top: '60%', right: '10%' },
+      { bottom: '30%', left: '10%' }
+    ]
+  },
+  {
+    text: { bottom: '15%', right: '10%', textAlign: 'right' },
+    img: { top: '35%', left: '10%' },
+    textInitial: { x: 300, y: 0, scale: 1 },
+    imgInitial: { x: -300, y: 0, scale: 1 },
+    techSpots: [
+      { bottom: '15%', left: '15%' },
+      { top: '35%', right: '15%' },
+      { bottom: '15%', right: '50%' },
+      { top: '35%', left: '55%' },
+      { top: '55%', right: '10%' },
+      { top: '65%', left: '10%' }
+    ]
+  },
+  {
+    text: { top: '45%', right: '10%', textAlign: 'right' },
+    img: { bottom: '15%', left: '10%' },
+    textInitial: { x: 0, y: -300, scale: 1 },
+    imgInitial: { x: 0, y: 300, scale: 1 },
+    techSpots: [
+      { top: '35%', left: '15%' },
+      { bottom: '15%', right: '15%' },
+      { top: '45%', left: '10%' },
+      { bottom: '15%', left: '55%' },
+      { top: '35%', right: '50%' },
+      { bottom: '35%', left: '5%' }
+    ]
+  },
+  {
+    text: { bottom: '20%', left: '15%' },
+    img: { top: '35%', right: '15%' },
+    textInitial: { x: 0, y: 0, scale: 0.5 },
+    imgInitial: { x: 0, y: 0, scale: 1.5 },
+    techSpots: [
+      { top: '35%', left: '15%' },
+      { bottom: '15%', right: '15%' },
+      { top: '35%', left: '45%' },
+      { bottom: '20%', right: '45%' },
+      { top: '55%', left: '10%' },
+      { top: '65%', right: '10%' }
+    ]
+  },
+  {
+    text: { top: '50%', left: '8%', transform: 'translateY(-50%)' },
+    img: { top: '50%', right: '8%', transform: 'translateY(-50%)' },
+    textInitial: { x: -300, y: 0, scale: 1 },
+    imgInitial: { x: 300, y: 0, scale: 1 },
+    techSpots: [
+      { top: '35%', left: '45%' },
+      { bottom: '15%', left: '45%' },
+      { bottom: '10%', left: '15%' },
+      { bottom: '10%', right: '15%' },
+      { top: '35%', left: '15%' },
+      { top: '35%', right: '15%' }
+    ]
+  },
+  {
+    text: { top: '35%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' },
+    img: { bottom: '10%', left: '50%', transform: 'translateX(-50%)' },
+    textInitial: { x: 0, y: -200, scale: 1 },
+    imgInitial: { x: 0, y: 200, scale: 1 },
+    techSpots: [
+      { top: '50%', left: '15%' },
+      { top: '50%', right: '15%' },
+      { bottom: '15%', left: '15%' },
+      { bottom: '15%', right: '15%' },
+      { top: '35%', left: '15%' },
+      { top: '35%', right: '15%' }
+    ]
+  }
+];
+
+function ProjectItem({ project, index, layout }: { project: any, index: number, layout: any }) {
+  const { scrollY } = useScroll();
+  
+  // Define scroll ranges for scrubbing
+  const startEnter = 3600 + index * 1600;
+  const endEnter = startEnter + 650; // Syncs perfectly with 3600->4250 dockY animation for the first item
+  const startExit = endEnter + 600;
+  const endExit = startExit + 500;
+
+  // Overall opacity and pointer events
+  const opacity = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [0, 1, 1, 0]);
+  const pointerEvents = useTransform(scrollY, [endEnter, startExit], ['none', 'auto']) as any;
+
+  // Text transitions mapped to scroll
+  const textX = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.x, 0, 0, layout.textInitial.x * -1]);
+  const textY = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.y, 0, 0, layout.textInitial.y * -1]);
+  const textScale = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.scale, 1, 1, layout.textInitial.scale]);
+
+  // Image transitions mapped to scroll
+  const imgX = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1]);
+  const imgY = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1]);
+  const imgScale = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale]);
+
+  return (
+    <motion.div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100vh',
+      opacity,
+      pointerEvents: 'none', // NEVER block the whole screen
+      zIndex: 30 + index,
+      overflow: 'hidden'
+    }}>
+      {/* Flying Technologies */}
+      {project.tech.map((t: string, i: number) => {
+        // Use safe spots assigned to this specific layout to avoid text/image overlap
+        const pos = layout.techSpots[i % layout.techSpots.length];
+        const Icon = techIcons[t];
+        return (
+          <span key={t} className="flying-tech" style={{
+            ...pos,
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.6rem',
+            fontSize: '1.1rem',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            fontWeight: 600,
+            color: 'rgba(255,255,255,0.2)',
+            animationDelay: `${(i + index) * 0.8}s`,
+            pointerEvents: 'none',
+            zIndex: 0
+          }}>
+            {Icon && <Icon size={24} style={{ opacity: 0.7 }} />}
+            {t}
+          </span>
+        );
+      })}
+
+      {/* Texts */}
+      <motion.div 
+        style={{
+          position: 'absolute',
+          ...layout.text,
+          x: textX,
+          y: textY,
+          scale: textScale,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem',
+          width: '90%',
+          maxWidth: '600px',
+          zIndex: 20,
+          pointerEvents // Only this container receives clicks when active
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', justifyContent: layout.text.textAlign === 'right' ? 'flex-end' : layout.text.textAlign === 'center' ? 'flex-start' : 'flex-start' }}>
+          {layout.text.textAlign === 'right' && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="github-link">
+              <FaGithub size={42} />
+            </a>
+          )}
+          <h3 style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', fontWeight: 200, letterSpacing: '-2px', color: '#fff', margin: 0, lineHeight: 1, wordBreak: 'break-word' }}>
+            {project.name}
+          </h3>
+          {layout.text.textAlign !== 'right' && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="github-link">
+              <FaGithub size={42} />
+            </a>
+          )}
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.5rem', lineHeight: '1.6', fontWeight: 300, margin: 0 }}>
+          {project.description}
+        </p>
+      </motion.div>
+
+      {/* Screenshot Placeholder */}
+      <motion.div 
+        style={{
+          position: 'absolute',
+          ...layout.img,
+          x: imgX,
+          y: imgY,
+          scale: imgScale,
+          width: layout.img.width || '45vw',
+          minWidth: '300px',
+          maxWidth: '800px',
+          aspectRatio: '16/9',
+          backgroundColor: 'rgba(255,255,255,0.02)',
+          border: '2px dashed rgba(255,255,255,0.1)',
+          borderRadius: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+          backdropFilter: 'blur(10px)',
+          transition: 'border-color 0.5s ease',
+          zIndex: 10,
+          pointerEvents // Only this container receives clicks when active
+        }} 
+        className="screenshot-placeholder"
+      >
+        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '1.2rem', fontWeight: 300, letterSpacing: '1px', textAlign: 'center', padding: '1rem' }}>
+          [ Captura de {project.name} ]
+        </span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 interface ProjectsProps {
   selectedTech: string;
 }
 
 export default function Projects({ selectedTech }: ProjectsProps) {
-  const filteredProjects = selectedTech === "Todas" 
-    ? projectsData 
-    : projectsData.filter(p => p.tech.includes(selectedTech));
+  let filteredProjects = projectsData;
+  
+  if (selectedTech !== "Todas") {
+    filteredProjects = filteredProjects.filter(p => p.tech.includes(selectedTech));
+  }
 
   return (
-    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-300px' }}>
-      <div className="projects-scroll-container" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '40vh',
-        paddingBottom: '30vh'
-      }}>
-        {filteredProjects.map((project, index) => (
-          <div key={project.name} className="project-sticky-wrapper" style={{
-            position: 'sticky',
-            top: '35vh',
-            zIndex: 30 + index,
-            height: 'fit-content'
-          }}>
-            <div className="minimal-card animate-up delay-2" style={{ 
-              padding: '4rem', 
-              width: '100%',
-              maxWidth: '900px',
-              margin: '0 auto',
-              backgroundColor: 'rgba(10, 10, 15, 0.95)',
-              backdropFilter: 'blur(30px)',
-              boxShadow: '0 -30px 60px rgba(0,0,0,0.7)',
-              borderRadius: '32px',
-              border: '1px solid rgba(255,255,255,0.03)',
-              borderTop: '1px solid rgba(255,255,255,0.08)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2.5rem'
-            }}>
-               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h3 style={{ fontSize: '3.5rem', fontWeight: 200, letterSpacing: '-1px', color: '#fff', margin: 0 }}>
-                  {project.name}
-                </h3>
-                <a href={project.url} target="_blank" rel="noopener noreferrer" className="github-link">
-                  <FaGithub size={36} />
-                </a>
-              </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: '1.35rem', lineHeight: '1.7', fontWeight: 300, maxWidth: '650px', margin: 0 }}>
-                {project.description}
-              </p>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
-                {project.tech.map(t => (
-                  <span key={t} style={{
-                    fontSize: '0.85rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1.5px',
-                    padding: '0.5rem 1.2rem',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'rgba(255,255,255,0.7)',
-                    backgroundColor: 'rgba(255,255,255,0.02)'
-                  }}>{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-        {filteredProjects.length === 0 && (
-          <div style={{ height: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem', marginTop: '4rem' }}>
-              Aún no hay proyectos públicos con esta tecnología.
-            </p>
-          </div>
-        )}
-      </div>
+    <section id="projects" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 30, pointerEvents: 'none' }}>
+      {filteredProjects.map((project, index) => {
+        const layout = projectLayouts[index % projectLayouts.length];
+        return <ProjectItem key={project.name} project={project} index={index} layout={layout} />;
+      })}
+      
+      {filteredProjects.length === 0 && (
+        <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.5rem', zIndex: 40 }}>
+            Aún no hay proyectos públicos con esta tecnología.
+          </p>
+        </div>
+      )}
+
       <style>{`
         .github-link {
           color: rgba(255,255,255,0.3); 
@@ -123,13 +316,20 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           color: #fff; 
           transform: scale(1.15) rotate(5deg);
         }
-        .minimal-card {
-          transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .screenshot-placeholder:hover {
+          border-color: rgba(255,255,255,0.3);
         }
-        .minimal-card:hover {
-          transform: translateY(-8px);
+        .flying-tech {
+          animation: floatAnimation 8s ease-in-out infinite;
+        }
+        @keyframes floatAnimation {
+          0% { transform: translateY(0px) rotate(0deg) scale(1); }
+          33% { transform: translateY(-20px) rotate(5deg) scale(1.1); }
+          66% { transform: translateY(15px) rotate(-5deg) scale(0.9); }
+          100% { transform: translateY(0px) rotate(0deg) scale(1); }
         }
       `}</style>
     </section>
   );
 }
+

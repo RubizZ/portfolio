@@ -1,21 +1,28 @@
 "use client";
 
-import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress } from "react-icons/si";
-import { FaCode, FaJava } from "react-icons/fa";
+import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress, SiPython, SiDjango, SiFlask, SiTensorflow } from "react-icons/si";
+import { FaCode, FaJava, FaLeaf } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const skillsData = [
   { name: "Todas", icon: FaCode },
   { name: "TypeScript", icon: SiTypescript },
   { name: "JavaScript", icon: SiJavascript },
-  { name: "Java", icon: FaJava },
-  { name: "C++", icon: SiCplusplus },
-  { name: "Node.js", icon: SiNodedotjs },
   { name: "React", icon: SiReact },
   { name: "Next.js", icon: SiNextdotjs },
-  { name: "Android", icon: SiAndroid },
+  { name: "Node.js", icon: SiNodedotjs },
+  { name: "Express", icon: SiExpress },
   { name: "HTML", icon: SiHtml5 },
-  { name: "Express", icon: SiExpress }
+  { name: "Java", icon: FaJava },
+  { name: "Android", icon: SiAndroid },
+  { name: "Spring", icon: FaLeaf },
+  { name: "C++", icon: SiCplusplus },
+  { name: "Qt", icon: SiCplusplus },
+  { name: "Unreal", icon: SiCplusplus },
+  { name: "Python", icon: SiPython },
+  { name: "Django", icon: SiDjango },
+  { name: "Flask", icon: SiFlask },
+  { name: "TensorFlow", icon: SiTensorflow }
 ];
 
 interface SkillsProps {
@@ -41,14 +48,19 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
       flexDirection: 'column',
       paddingTop: '4vh',
       opacity,
-      pointerEvents: 'none'
+      pointerEvents: 'none',
+      zIndex: 50
     }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+
+        {/* Dock Principal de Tecnologías */}
         <motion.div 
           className="dock-container" 
           style={{
             pointerEvents,
             display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
             gap: '0.75rem',
             padding: '1rem 1.5rem',
             backgroundColor: 'rgba(255, 255, 255, 0.03)',
@@ -56,7 +68,8 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             borderRadius: '32px',
             border: '1px solid rgba(255, 255, 255, 0.05)',
             boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-            y: dockY
+            y: dockY,
+            maxWidth: '1000px'
           }}
         >
           {skillsData.map(skill => {
@@ -106,6 +119,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             );
           })}
         </motion.div>
+
       </div>
       <style>{`
         .dock-item:hover .icon-wrapper { 
