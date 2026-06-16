@@ -26,9 +26,9 @@ interface SkillsProps {
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const { scrollY } = useScroll();
   
-  const opacity = useTransform(scrollY, [1400, 2050], [0, 1]);
-  const dockY = useTransform(scrollY, [1400, 2050], ['-20vh', '0vh']);
-  const pointerEvents = useTransform(scrollY, [1400, 2050], ['none', 'auto']) as any;
+  const opacity = useTransform(scrollY, [3600, 3650], [0, 1]);
+  const dockY = useTransform(scrollY, [3600, 4250], ['-15vh', '0vh']);
+  const pointerEvents = useTransform(scrollY, [3600, 4250], ['none', 'auto']) as any;
 
   return (
     <motion.div style={{ 
@@ -65,7 +65,10 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             return (
               <div 
                 key={skill.name} 
-                onClick={() => setSelectedTech(skill.name)}
+                onClick={() => {
+                  setSelectedTech(skill.name);
+                  window.scrollTo({ top: 4250, behavior: 'smooth' });
+                }}
                 className="dock-item"
                 style={{
                   position: 'relative',

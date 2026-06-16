@@ -49,7 +49,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
     : projectsData.filter(p => p.tech.includes(selectedTech));
 
   return (
-    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-30vh' }}>
+    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-300px' }}>
       <div className="projects-scroll-container" style={{
         display: 'flex',
         flexDirection: 'column',

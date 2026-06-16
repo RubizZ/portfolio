@@ -15,7 +15,7 @@ export default function PortfolioClient() {
         <TechNetwork />
         <Skills selectedTech={selectedTech} setSelectedTech={setSelectedTech} />
       </div>
-      <div style={{ position: 'relative', zIndex: 30, paddingTop: '170vh' }}>
+      <div style={{ position: 'relative', zIndex: 30, paddingTop: '3900px' }}>
         <Projects selectedTech={selectedTech} />
       </div>
     </div>
