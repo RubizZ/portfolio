@@ -1,26 +1,28 @@
-const projects = [
+import { FaGithub } from "react-icons/fa";
+
+const projectsData = [
   {
     name: "flAIghts",
     description: "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino.",
-    tech: ["TypeScript", "Next.js"],
+    tech: ["TypeScript", "Next.js", "React"],
     url: "https://github.com/RubizZ/flAIghts"
   },
   {
     name: "CollabUp",
     description: "Aplicación de Android para organizar eventos y tareas compartidas con amigos o familia.",
-    tech: ["Android", "Java/Kotlin"],
+    tech: ["Android", "Java"],
     url: "https://github.com/RubizZ/CollabUp"
   },
   {
     name: "VHUB",
     description: "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: ["Web", "Fullstack"],
+    tech: ["TypeScript", "Node.js"],
     url: "https://github.com/RubizZ/VHUB"
   },
   {
     name: "Trendy",
     description: "Aplicación de escritorio sobre una tienda de ropa aplicando ingeniería del software.",
-    tech: ["Java", "Desktop"],
+    tech: ["Java"],
     url: "https://github.com/RubizZ/Trendy"
   },
   {
@@ -32,57 +34,73 @@ const projects = [
   {
     name: "ArenaOfMusic",
     description: "Aplicación web multijugador sobre adivinar canciones escuchando un tiempo limitado.",
-    tech: ["HTML", "JS", "WebSockets"],
+    tech: ["HTML", "JavaScript"],
     url: "https://github.com/RubizZ/ArenaOfMusic"
   }
 ];
 
-export default function Projects() {
+export default function Projects({ selectedTech }) {
+  const filteredProjects = selectedTech === "Todas" 
+    ? projectsData 
+    : projectsData.filter(p => p.tech.includes(selectedTech));
+
   return (
-    <section id="projects" className="container">
-      <h2 className="section-title animate-up delay-1">Proyectos Destacados</h2>
-      <div className="projects-grid animate-up delay-2" style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '2rem'
+    <section id="projects" className="container" style={{ padding: '2rem 2rem 8rem' }}>
+      <h2 className="section-title animate-up delay-1" style={{ marginBottom: '4rem' }}>Proyectos ({filteredProjects.length})</h2>
+      <div className="projects-scroll-container" style={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '60vh',
+        paddingBottom: '30vh'
       }}>
-        {projects.map((project, index) => (
-          <a key={index} href={project.url} target="_blank" rel="noopener noreferrer" className="glass project-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              {project.name}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </h3>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1rem', flexGrow: 1 }}>{project.description}</p>
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {project.tech.map(t => (
-                <span key={t} style={{
-                  fontSize: '0.8rem',
-                  padding: '0.35rem 0.8rem',
-                  borderRadius: '999px',
-                  backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                  color: 'var(--accent)',
-                  fontWeight: '500'
-                }}>{t}</span>
-              ))}
+        {filteredProjects.map((project, index) => (
+          <div key={project.name} className="project-sticky-wrapper" style={{
+            position: 'sticky',
+            top: '20vh',
+            zIndex: index,
+            height: 'fit-content'
+          }}>
+            <div className="glass animate-up delay-2" style={{ 
+              padding: '3rem', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              width: '100%',
+              maxWidth: '850px',
+              margin: '0 auto',
+              backgroundColor: 'var(--bg-color)',
+              boxShadow: '0 -20px 50px rgba(0,0,0,0.6)',
+              borderTop: '1px solid var(--card-border)',
+              borderRadius: '24px'
+            }}>
+               <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                {project.name}
+                <a href={project.url} target="_blank" rel="noopener noreferrer" style={{ opacity: 0.8, color: 'var(--text-main)', transition: 'opacity 0.2s' }}>
+                  <FaGithub size={32} />
+                </a>
+              </h3>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1.25rem', flexGrow: 1, lineHeight: '1.8' }}>{project.description}</p>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                {project.tech.map(t => (
+                  <span key={t} style={{
+                    fontSize: '1rem',
+                    padding: '0.5rem 1.25rem',
+                    borderRadius: '999px',
+                    backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                    color: 'var(--accent)',
+                    fontWeight: '600'
+                  }}>{t}</span>
+                ))}
+              </div>
             </div>
-          </a>
+          </div>
         ))}
+        {filteredProjects.length === 0 && (
+          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem', marginTop: '4rem' }}>
+            Aún no hay proyectos públicos con esta tecnología.
+          </p>
+        )}
       </div>
-      <style>{`
-        .project-card {
-          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-          text-decoration: none;
-        }
-        .project-card:hover {
-          transform: translateY(-8px);
-          border-color: var(--accent);
-          box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
-        }
-      `}</style>
     </section>
   );
 }
