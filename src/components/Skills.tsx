@@ -1,5 +1,8 @@
+"use client";
+
 import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress } from "react-icons/si";
 import { FaCode, FaJava } from "react-icons/fa";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const skillsData = [
   { name: "Todas", icon: FaCode },
@@ -21,73 +24,128 @@ interface SkillsProps {
 }
 
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
+  const { scrollY } = useScroll();
+  
+  const opacity = useTransform(scrollY, [400, 1050], [0, 1]);
+  const titleY = useTransform(scrollY, [400, 1050], ['-20vh', '0vh']);
+  const dockY = useTransform(scrollY, [400, 1050], ['-20vh', '0vh']);
+  const pointerEvents = useTransform(scrollY, [400, 1050], ['none', 'auto']) as any;
+
   return (
-    <section style={{ 
-      position: 'sticky', 
-      top: 0, 
-      zIndex: 20, 
-      height: '100vh', 
-      backgroundColor: 'var(--bg-color)',
-      borderTop: '1px solid var(--card-border)',
-      boxShadow: '0 -20px 50px rgba(0,0,0,0.8)',
+    <motion.div style={{ 
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
       paddingTop: '8vh',
-      pointerEvents: 'auto'
+      opacity,
+      pointerEvents: 'none'
     }}>
-      <div className="container">
-        <h2 className="section-title animate-up delay-1" style={{ marginBottom: '3rem' }}>Tecnologías Principales</h2>
-        <div className="skills-container animate-up delay-2" style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          justifyContent: 'center',
-          maxWidth: '900px',
-          margin: '0 auto'
-        }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <motion.h2 
+          className="section-title" 
+          style={{ 
+            marginBottom: '4rem', 
+            y: titleY,
+            fontSize: '3rem',
+            fontWeight: 300,
+            letterSpacing: '4px',
+            color: 'var(--text-main)',
+            opacity: 0.9
+          }}
+        >
+          TECNOLOGÍAS
+        </motion.h2>
+        
+        <motion.div 
+          className="dock-container" 
+          style={{
+            pointerEvents,
+            display: 'flex',
+            gap: '0.75rem',
+            padding: '1rem 1.5rem',
+            backgroundColor: 'rgba(255, 255, 255, 0.03)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '32px',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+            y: dockY
+          }}
+        >
           {skillsData.map(skill => {
             const Icon = skill.icon;
             const isActive = selectedTech === skill.name;
             return (
-              <button 
+              <div 
                 key={skill.name} 
                 onClick={() => setSelectedTech(skill.name)}
-                className={`glass skill-pill ${isActive ? 'active' : ''}`} 
+                className="dock-item"
                 style={{
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  color: isActive ? '#fff' : 'var(--text-main)',
-                  backgroundColor: isActive ? 'var(--accent)' : 'var(--card-bg)',
+                  position: 'relative',
+                  padding: '1rem',
+                  cursor: 'pointer',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '0.75rem',
-                  border: isActive ? '1px solid var(--accent)' : '1px solid var(--card-border)',
-                  cursor: 'pointer'
+                  gap: '0.5rem'
                 }}
               >
-                <Icon size={18} />
-                {skill.name}
-              </button>
+                <div className="icon-wrapper" style={{
+                  color: isActive ? 'var(--accent)' : 'rgba(255,255,255,0.4)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform: isActive ? 'scale(1.3)' : 'scale(1)'
+                }}>
+                  <Icon size={32} />
+                </div>
+                {isActive && (
+                  <motion.div 
+                    layoutId="dock-indicator" 
+                    style={{
+                      position: 'absolute',
+                      bottom: '0px',
+                      width: '6px',
+                      height: '6px',
+                      backgroundColor: 'var(--accent)',
+                      borderRadius: '50%',
+                      boxShadow: '0 0 10px var(--accent)'
+                    }} 
+                  />
+                )}
+                <div className="dock-tooltip">{skill.name}</div>
+              </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
       <style>{`
-        .skill-pill {
-          transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-          border-radius: 999px !important;
+        .dock-item:hover .icon-wrapper { 
+          transform: scale(1.5) translateY(-8px) !important; 
+          color: #fff !important; 
         }
-        .skill-pill:hover {
-          transform: translateY(-3px) scale(1.05);
-          background-color: rgba(255, 255, 255, 0.08);
-          border-color: var(--accent-secondary);
+        .dock-tooltip {
+          position: absolute; 
+          top: -40px; 
+          background: rgba(0,0,0,0.8); 
+          color: white;
+          padding: 6px 12px; 
+          border-radius: 8px; 
+          font-size: 0.85rem; 
+          opacity: 0;
+          pointer-events: none; 
+          transition: all 0.3s ease; 
+          white-space: nowrap;
+          border: 1px solid rgba(255,255,255,0.1);
+          font-weight: 500;
+          letter-spacing: 1px;
         }
-        .skill-pill.active:hover {
-          background-color: var(--accent-hover);
-          border-color: var(--accent-hover);
+        .dock-item:hover .dock-tooltip { 
+          opacity: 1; 
+          transform: translateY(-5px); 
         }
       `}</style>
-    </section>
+    </motion.div>
   );
 }

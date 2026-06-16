@@ -49,50 +49,57 @@ export default function Projects({ selectedTech }: ProjectsProps) {
     : projectsData.filter(p => p.tech.includes(selectedTech));
 
   return (
-    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-55vh' }}>
+    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-30vh' }}>
       <div className="projects-scroll-container" style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '60vh',
+        gap: '40vh',
         paddingBottom: '30vh'
       }}>
         {filteredProjects.map((project, index) => (
           <div key={project.name} className="project-sticky-wrapper" style={{
             position: 'sticky',
-            top: '32vh',
+            top: '35vh',
             zIndex: 30 + index,
             height: 'fit-content'
           }}>
-            <div className="glass animate-up delay-2" style={{ 
-              padding: '3rem', 
-              display: 'flex', 
-              flexDirection: 'column', 
+            <div className="minimal-card animate-up delay-2" style={{ 
+              padding: '4rem', 
               width: '100%',
-              maxWidth: '850px',
+              maxWidth: '900px',
               margin: '0 auto',
-              backgroundColor: 'var(--bg-color)',
-              boxShadow: '0 -20px 50px rgba(0,0,0,0.8)',
-              borderTop: '1px solid var(--card-border)',
-              borderRadius: '24px',
-              borderLeft: '1px solid var(--card-border)',
-              borderRight: '1px solid var(--card-border)'
+              backgroundColor: 'rgba(10, 10, 15, 0.95)',
+              backdropFilter: 'blur(30px)',
+              boxShadow: '0 -30px 60px rgba(0,0,0,0.7)',
+              borderRadius: '32px',
+              border: '1px solid rgba(255,255,255,0.03)',
+              borderTop: '1px solid rgba(255,255,255,0.08)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '2.5rem'
             }}>
-               <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                {project.name}
-                <a href={project.url} target="_blank" rel="noopener noreferrer" style={{ opacity: 0.8, color: 'var(--text-main)', transition: 'opacity 0.2s' }}>
-                  <FaGithub size={32} />
+               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <h3 style={{ fontSize: '3.5rem', fontWeight: 200, letterSpacing: '-1px', color: '#fff', margin: 0 }}>
+                  {project.name}
+                </h3>
+                <a href={project.url} target="_blank" rel="noopener noreferrer" className="github-link">
+                  <FaGithub size={36} />
                 </a>
-              </h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1.25rem', flexGrow: 1, lineHeight: '1.8' }}>{project.description}</p>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              </div>
+              <p style={{ color: 'var(--text-muted)', fontSize: '1.35rem', lineHeight: '1.7', fontWeight: 300, maxWidth: '650px', margin: 0 }}>
+                {project.description}
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
                 {project.tech.map(t => (
                   <span key={t} style={{
-                    fontSize: '1rem',
-                    padding: '0.5rem 1.25rem',
-                    borderRadius: '999px',
-                    backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                    color: 'var(--accent)',
-                    fontWeight: '600'
+                    fontSize: '0.85rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1.5px',
+                    padding: '0.5rem 1.2rem',
+                    borderRadius: '6px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: 'rgba(255,255,255,0.7)',
+                    backgroundColor: 'rgba(255,255,255,0.02)'
                   }}>{t}</span>
                 ))}
               </div>
@@ -107,6 +114,22 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           </div>
         )}
       </div>
+      <style>{`
+        .github-link {
+          color: rgba(255,255,255,0.3); 
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .github-link:hover {
+          color: #fff; 
+          transform: scale(1.15) rotate(5deg);
+        }
+        .minimal-card {
+          transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .minimal-card:hover {
+          transform: translateY(-8px);
+        }
+      `}</style>
     </section>
   );
 }

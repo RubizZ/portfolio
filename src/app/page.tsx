@@ -1,10 +1,8 @@
-import Hero from "@/components/Hero";
 import PortfolioClient from "@/components/PortfolioClient";
 
 export default function Home() {
   return (
     <main style={{ paddingBottom: '4rem' }}>
-      <Hero />
       <PortfolioClient />
       <footer style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)', marginTop: '6rem', borderTop: '1px solid var(--card-border)' }}>
         <p style={{ marginBottom: '1rem' }}>© {new Date().getFullYear()} Rubén Hidalgo. Construido con Next.js</p>
