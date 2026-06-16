@@ -200,75 +200,71 @@ function ProjectItem({
   const startExit = endEnter + 600;
   const endExit = startExit + 500;
 
+  const transformInput = isLast
+    ? [startEnter, endEnter]
+    : [startEnter, endEnter, startExit, endExit];
+
+  const pointerEventsInput = isLast
+    ? [startEnter - 1, startEnter]
+    : [startEnter - 1, startEnter, endExit, endExit + 1];
+
   // Overall opacity and pointer events
-  const opacity = isLast
-    ? useTransform(scrollY, [startEnter, endEnter], [0, 1])
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [0, 1, 1, 0],
-      );
-  const pointerEvents = isLast
-    ? (useTransform(scrollY, [startEnter - 1, startEnter], ["none", "auto"]) as any)
-    : (useTransform(
-        scrollY,
-        [startEnter - 1, startEnter, endExit, endExit + 1],
-        ["none", "auto", "auto", "none"]
-      ) as any);
+  const opacity = useTransform(
+    scrollY,
+    transformInput,
+    isLast ? [0, 1] : [0, 1, 1, 0]
+  );
+  const pointerEvents = useTransform(
+    scrollY,
+    pointerEventsInput,
+    isLast ? ["none", "auto"] : ["none", "auto", "auto", "none"]
+  ) as any;
 
   // Text transitions mapped to scroll
-  const textX = isLast
-    ? useTransform(scrollY, [startEnter, endEnter], [layout.textInitial.x, 0])
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.textInitial.x, 0, 0, layout.textInitial.x * -1],
-      );
-  const textY = isLast
-    ? useTransform(scrollY, [startEnter, endEnter], [layout.textInitial.y, 0])
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.textInitial.y, 0, 0, layout.textInitial.y * -1],
-      );
-  const textScale = isLast
-    ? useTransform(
-        scrollY,
-        [startEnter, endEnter],
-        [layout.textInitial.scale, 1],
-      )
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.textInitial.scale, 1, 1, layout.textInitial.scale],
-      );
+  const textX = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.textInitial.x, 0]
+      : [layout.textInitial.x, 0, 0, layout.textInitial.x * -1]
+  );
+  const textY = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.textInitial.y, 0]
+      : [layout.textInitial.y, 0, 0, layout.textInitial.y * -1]
+  );
+  const textScale = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.textInitial.scale, 1]
+      : [layout.textInitial.scale, 1, 1, layout.textInitial.scale]
+  );
 
   // Image transitions mapped to scroll
-  const imgX = isLast
-    ? useTransform(scrollY, [startEnter, endEnter], [layout.imgInitial.x, 0])
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1],
-      );
-  const imgY = isLast
-    ? useTransform(scrollY, [startEnter, endEnter], [layout.imgInitial.y, 0])
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1],
-      );
-  const imgScale = isLast
-    ? useTransform(
-        scrollY,
-        [startEnter, endEnter],
-        [layout.imgInitial.scale, 1],
-      )
-    : useTransform(
-        scrollY,
-        [startEnter, endEnter, startExit, endExit],
-        [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale],
-      );
+  const imgX = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.imgInitial.x, 0]
+      : [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1]
+  );
+  const imgY = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.imgInitial.y, 0]
+      : [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1]
+  );
+  const imgScale = useTransform(
+    scrollY,
+    transformInput,
+    isLast
+      ? [layout.imgInitial.scale, 1]
+      : [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale]
+  );
 
   return (
     <motion.div
