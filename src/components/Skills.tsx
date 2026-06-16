@@ -22,42 +22,56 @@ interface SkillsProps {
 
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   return (
-    <section className="container" style={{ padding: '2rem 2rem' }}>
-      <h2 className="section-title animate-up delay-1" style={{ marginBottom: '2rem' }}>Tecnologías Principales</h2>
-      <div className="skills-container animate-up delay-2" style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '1rem',
-        justifyContent: 'center',
-        maxWidth: '900px',
-        margin: '0 auto'
-      }}>
-        {skillsData.map(skill => {
-          const Icon = skill.icon;
-          const isActive = selectedTech === skill.name;
-          return (
-            <button 
-              key={skill.name} 
-              onClick={() => setSelectedTech(skill.name)}
-              className={`glass skill-pill ${isActive ? 'active' : ''}`} 
-              style={{
-                padding: '0.75rem 1.5rem',
-                fontSize: '1rem',
-                fontWeight: '600',
-                color: isActive ? '#fff' : 'var(--text-main)',
-                backgroundColor: isActive ? 'var(--accent)' : 'var(--card-bg)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                border: isActive ? '1px solid var(--accent)' : '1px solid var(--card-border)',
-                cursor: 'pointer'
-              }}
-            >
-              <Icon size={18} />
-              {skill.name}
-            </button>
-          );
-        })}
+    <section style={{ 
+      position: 'sticky', 
+      top: 0, 
+      zIndex: 20, 
+      height: '100vh', 
+      backgroundColor: 'var(--bg-color)',
+      borderTop: '1px solid var(--card-border)',
+      boxShadow: '0 -20px 50px rgba(0,0,0,0.8)',
+      display: 'flex',
+      flexDirection: 'column',
+      paddingTop: '8vh',
+      pointerEvents: 'auto'
+    }}>
+      <div className="container">
+        <h2 className="section-title animate-up delay-1" style={{ marginBottom: '3rem' }}>Tecnologías Principales</h2>
+        <div className="skills-container animate-up delay-2" style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          justifyContent: 'center',
+          maxWidth: '900px',
+          margin: '0 auto'
+        }}>
+          {skillsData.map(skill => {
+            const Icon = skill.icon;
+            const isActive = selectedTech === skill.name;
+            return (
+              <button 
+                key={skill.name} 
+                onClick={() => setSelectedTech(skill.name)}
+                className={`glass skill-pill ${isActive ? 'active' : ''}`} 
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: isActive ? '#fff' : 'var(--text-main)',
+                  backgroundColor: isActive ? 'var(--accent)' : 'var(--card-bg)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  border: isActive ? '1px solid var(--accent)' : '1px solid var(--card-border)',
+                  cursor: 'pointer'
+                }}
+              >
+                <Icon size={18} />
+                {skill.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
       <style>{`
         .skill-pill {

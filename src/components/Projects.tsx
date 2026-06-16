@@ -49,10 +49,8 @@ export default function Projects({ selectedTech }: ProjectsProps) {
     : projectsData.filter(p => p.tech.includes(selectedTech));
 
   return (
-    <section id="projects" className="container" style={{ padding: '2rem 2rem 8rem' }}>
-      <h2 className="section-title animate-up delay-1" style={{ marginBottom: '4rem' }}>Proyectos ({filteredProjects.length})</h2>
+    <section id="projects" style={{ position: 'relative', zIndex: 30, marginTop: '-55vh' }}>
       <div className="projects-scroll-container" style={{
-        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         gap: '60vh',
@@ -61,8 +59,8 @@ export default function Projects({ selectedTech }: ProjectsProps) {
         {filteredProjects.map((project, index) => (
           <div key={project.name} className="project-sticky-wrapper" style={{
             position: 'sticky',
-            top: '20vh',
-            zIndex: index,
+            top: '32vh',
+            zIndex: 30 + index,
             height: 'fit-content'
           }}>
             <div className="glass animate-up delay-2" style={{ 
@@ -73,9 +71,11 @@ export default function Projects({ selectedTech }: ProjectsProps) {
               maxWidth: '850px',
               margin: '0 auto',
               backgroundColor: 'var(--bg-color)',
-              boxShadow: '0 -20px 50px rgba(0,0,0,0.6)',
+              boxShadow: '0 -20px 50px rgba(0,0,0,0.8)',
               borderTop: '1px solid var(--card-border)',
-              borderRadius: '24px'
+              borderRadius: '24px',
+              borderLeft: '1px solid var(--card-border)',
+              borderRight: '1px solid var(--card-border)'
             }}>
                <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 {project.name}
@@ -100,9 +100,11 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           </div>
         ))}
         {filteredProjects.length === 0 && (
-          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem', marginTop: '4rem' }}>
-            Aún no hay proyectos públicos con esta tecnología.
-          </p>
+          <div style={{ height: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem', marginTop: '4rem' }}>
+              Aún no hay proyectos públicos con esta tecnología.
+            </p>
+          </div>
         )}
       </div>
     </section>
