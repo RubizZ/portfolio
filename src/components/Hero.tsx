@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaChevronDown } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
@@ -9,9 +9,12 @@ export default function Hero() {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   const scale = useTransform(scrollY, [0, 400], [1, 0.85]);
   const pointerEvents = useTransform(scrollY, [0, 400], ['auto', 'none']) as any;
+  const arrowOpacity = useTransform(scrollY, [0, 150], [1, 0]);
+  const arrowPointerEvents = useTransform(scrollY, [0, 100], ['auto', 'none']) as any;
 
   return (
-    <motion.div 
+    <>
+      <motion.div 
       style={{ 
         position: 'absolute',
         top: 0,
@@ -45,5 +48,32 @@ export default function Hero() {
         </div>
       </motion.div>
     </motion.div>
+
+      <motion.div 
+        onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
+        style={{
+          position: 'absolute',
+          bottom: '8vh',
+          left: '50%',
+          x: '-50%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.5rem',
+          opacity: arrowOpacity,
+          pointerEvents: arrowPointerEvents,
+          cursor: 'pointer',
+          zIndex: 50
+        }}
+      >
+        <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', letterSpacing: '2px', textTransform: 'uppercase' }}>Tecnologías</span>
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <FaChevronDown size={20} color="var(--text-muted)" />
+        </motion.div>
+      </motion.div>
+    </>
   );
 }

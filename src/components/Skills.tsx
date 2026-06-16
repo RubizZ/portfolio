@@ -26,10 +26,9 @@ interface SkillsProps {
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const { scrollY } = useScroll();
   
-  const opacity = useTransform(scrollY, [400, 1050], [0, 1]);
-  const titleY = useTransform(scrollY, [400, 1050], ['-20vh', '0vh']);
-  const dockY = useTransform(scrollY, [400, 1050], ['-20vh', '0vh']);
-  const pointerEvents = useTransform(scrollY, [400, 1050], ['none', 'auto']) as any;
+  const opacity = useTransform(scrollY, [1400, 2050], [0, 1]);
+  const dockY = useTransform(scrollY, [1400, 2050], ['-20vh', '0vh']);
+  const pointerEvents = useTransform(scrollY, [1400, 2050], ['none', 'auto']) as any;
 
   return (
     <motion.div style={{ 
@@ -40,26 +39,11 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
       height: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      paddingTop: '8vh',
+      paddingTop: '4vh',
       opacity,
       pointerEvents: 'none'
     }}>
       <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <motion.h2 
-          className="section-title" 
-          style={{ 
-            marginBottom: '4rem', 
-            y: titleY,
-            fontSize: '3rem',
-            fontWeight: 300,
-            letterSpacing: '4px',
-            color: 'var(--text-main)',
-            opacity: 0.9
-          }}
-        >
-          TECNOLOGÍAS
-        </motion.h2>
-        
         <motion.div 
           className="dock-container" 
           style={{
