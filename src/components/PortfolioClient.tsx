@@ -26,10 +26,9 @@ export default function PortfolioClient() {
   // Calculate required scroll height:
   // 3600px until filters/projects start
   // 1600px per project
-  // We add ~2050px at the end so the sticky container unsticks ~400px after the last project fully enters,
-  // allowing the footer to smoothly scroll into view without a massive blank gap.
+  // We add 850px at the end so the sticky container unsticks shortly after the last project fully enters (which happens at 650px).
   const scrollHeight = filteredProjects.length > 0 
-    ? 3600 + ((filteredProjects.length - 1) * 1600) + 2050 
+    ? 3600 + ((filteredProjects.length - 1) * 1600) + 850 
     : 4500; // default space if no projects
 
   return (
