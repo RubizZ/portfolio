@@ -148,7 +148,7 @@ const projectLayouts: any[] = [
   }
 ];
 
-function ProjectItem({ project, index, layout }: { project: any, index: number, layout: any }) {
+function ProjectItem({ project, index, layout, isLast }: { project: any, index: number, layout: any, isLast: boolean }) {
   const { scrollY } = useScroll();
   
   // Define scroll ranges for scrubbing
@@ -158,18 +158,34 @@ function ProjectItem({ project, index, layout }: { project: any, index: number, 
   const endExit = startExit + 500;
 
   // Overall opacity and pointer events
-  const opacity = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [0, 1, 1, 0]);
-  const pointerEvents = useTransform(scrollY, [endEnter, startExit], ['none', 'auto']) as any;
+  const opacity = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [0, 1])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [0, 1, 1, 0]);
+  const pointerEvents = isLast 
+    ? useTransform(scrollY, [endEnter, endEnter + 1], ['none', 'auto']) as any
+    : useTransform(scrollY, [endEnter, startExit], ['none', 'auto']) as any;
 
   // Text transitions mapped to scroll
-  const textX = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.x, 0, 0, layout.textInitial.x * -1]);
-  const textY = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.y, 0, 0, layout.textInitial.y * -1]);
-  const textScale = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.scale, 1, 1, layout.textInitial.scale]);
+  const textX = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.textInitial.x, 0])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.x, 0, 0, layout.textInitial.x * -1]);
+  const textY = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.textInitial.y, 0])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.y, 0, 0, layout.textInitial.y * -1]);
+  const textScale = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.textInitial.scale, 1])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.textInitial.scale, 1, 1, layout.textInitial.scale]);
 
   // Image transitions mapped to scroll
-  const imgX = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1]);
-  const imgY = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1]);
-  const imgScale = useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale]);
+  const imgX = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.imgInitial.x, 0])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1]);
+  const imgY = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.imgInitial.y, 0])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1]);
+  const imgScale = isLast 
+    ? useTransform(scrollY, [startEnter, endEnter], [layout.imgInitial.scale, 1])
+    : useTransform(scrollY, [startEnter, endEnter, startExit, endExit], [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale]);
 
   return (
     <motion.div style={{
@@ -296,7 +312,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
     <section id="projects" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 30, pointerEvents: 'none' }}>
       {filteredProjects.map((project, index) => {
         const layout = projectLayouts[index % projectLayouts.length];
-        return <ProjectItem key={project.name} project={project} index={index} layout={layout} />;
+        return <ProjectItem key={project.name} project={project} index={index} layout={layout} isLast={index === filteredProjects.length - 1} />;
       })}
       
       {filteredProjects.length === 0 && (
