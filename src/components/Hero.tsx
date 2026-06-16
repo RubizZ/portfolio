@@ -25,7 +25,7 @@ export default function Hero() {
               <a href="https://github.com/RubizZ" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 <FaGithub size={20} /> GitHub
               </a>
-              <a href="https://linkedin.com/in/ruben" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+              <a href="https://www.linkedin.com/in/rub%C3%A9n-hidalgo-arias-96295134a" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
                 <FaLinkedin size={20} /> LinkedIn
               </a>
             </div>

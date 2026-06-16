@@ -10,7 +10,7 @@ export default function Home() {
         <p style={{ marginBottom: '1rem' }}>© {new Date().getFullYear()} Rubén Hidalgo. Construido con Next.js</p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
           <a href="https://github.com/RubizZ" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>GitHub</a>
-          <a href="https://linkedin.com/in/ruben" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>LinkedIn</a>
+          <a href="https://www.linkedin.com/in/rub%C3%A9n-hidalgo-arias-96295134a" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>LinkedIn</a>
         </div>
       </footer>
     </main>
