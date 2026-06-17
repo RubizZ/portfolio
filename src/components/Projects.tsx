@@ -1,10 +1,6 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import {
-  FaGithub,
-  FaChevronDown,
-  FaChevronUp,
-} from "react-icons/fa";
+import { FaGithub, FaChevronDown, FaChevronUp, FaExternalLinkAlt } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
@@ -57,7 +53,7 @@ const projectLayouts: any[] = [
 function getPseudoRandom(seedStr: string) {
   let hash = 0;
   for (let i = 0; i < seedStr.length; i++) {
-    hash = Math.imul(31, hash) + seedStr.charCodeAt(i) | 0;
+    hash = (Math.imul(31, hash) + seedStr.charCodeAt(i)) | 0;
   }
   return () => {
     hash = Math.imul(hash ^ (hash >>> 15), 2246822519);
@@ -85,7 +81,9 @@ function ProjectItem({
   const textRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [techPositions, setTechPositions] = useState<{ left: string; top: string }[]>([]);
+  const [techPositions, setTechPositions] = useState<
+    { left: string; top: string }[]
+  >([]);
 
   useEffect(() => {
     const calculatePositions = () => {
@@ -129,36 +127,110 @@ function ProjectItem({
           // Extra conservative tech item bounding box
           const tw = 200;
           const th = 70;
-          const techRect = { left: x - tw / 2, right: x + tw / 2, top: y - th / 2, bottom: y + th / 2 };
+          const techRect = {
+            left: x - tw / 2,
+            right: x + tw / 2,
+            top: y - th / 2,
+            bottom: y + th / 2,
+          };
 
           // Padding to give text and images breathing room
           const pad = 40;
-          const textR = { left: tR.left - pad, right: tR.right + pad, top: tR.top - pad, bottom: tR.bottom + pad };
-          const imgR = { left: iR.left - pad, right: iR.right + pad, top: iR.top - pad, bottom: iR.bottom + pad };
+          const textR = {
+            left: tR.left - pad,
+            right: tR.right + pad,
+            top: tR.top - pad,
+            bottom: tR.bottom + pad,
+          };
+          const imgR = {
+            left: iR.left - pad,
+            right: iR.right + pad,
+            top: iR.top - pad,
+            bottom: iR.bottom + pad,
+          };
 
           // Global UI elements to avoid
           const dockR = { left: 0, right: width, top: 0, bottom: 130 }; // Dock + padding
-          const arrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height - 120, bottom: height }; // Next Arrow
-          const prevArrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height * 0.15, bottom: height * 0.25 }; // Prev Arrow
+          const arrowR = {
+            left: width / 2 - 120,
+            right: width / 2 + 120,
+            top: height - 120,
+            bottom: height,
+          }; // Next Arrow
+          const prevArrowR = {
+            left: width / 2 - 120,
+            right: width / 2 + 120,
+            top: height * 0.15,
+            bottom: height * 0.25,
+          }; // Prev Arrow
 
-          const intersectsText = !(techRect.right < textR.left || techRect.left > textR.right || techRect.bottom < textR.top || techRect.top > textR.bottom);
-          const intersectsImg = !(techRect.right < imgR.left || techRect.left > imgR.right || techRect.bottom < imgR.top || techRect.top > imgR.bottom);
-          const intersectsDock = !(techRect.right < dockR.left || techRect.left > dockR.right || techRect.bottom < dockR.top || techRect.top > dockR.bottom);
-          const intersectsArrow = nextProjectName && !(techRect.right < arrowR.left || techRect.left > arrowR.right || techRect.bottom < arrowR.top || techRect.top > arrowR.bottom);
-          const intersectsPrevArrow = prevProjectName && !(techRect.right < prevArrowR.left || techRect.left > prevArrowR.right || techRect.bottom < prevArrowR.top || techRect.top > prevArrowR.bottom);
+          const intersectsText = !(
+            techRect.right < textR.left ||
+            techRect.left > textR.right ||
+            techRect.bottom < textR.top ||
+            techRect.top > textR.bottom
+          );
+          const intersectsImg = !(
+            techRect.right < imgR.left ||
+            techRect.left > imgR.right ||
+            techRect.bottom < imgR.top ||
+            techRect.top > imgR.bottom
+          );
+          const intersectsDock = !(
+            techRect.right < dockR.left ||
+            techRect.left > dockR.right ||
+            techRect.bottom < dockR.top ||
+            techRect.top > dockR.bottom
+          );
+          const intersectsArrow =
+            nextProjectName &&
+            !(
+              techRect.right < arrowR.left ||
+              techRect.left > arrowR.right ||
+              techRect.bottom < arrowR.top ||
+              techRect.top > arrowR.bottom
+            );
+          const intersectsPrevArrow =
+            prevProjectName &&
+            !(
+              techRect.right < prevArrowR.left ||
+              techRect.left > prevArrowR.right ||
+              techRect.bottom < prevArrowR.top ||
+              techRect.top > prevArrowR.bottom
+            );
 
           let intersectsOther = false;
           for (const pos of safePositions) {
             const ox = (parseFloat(pos.left) / 100) * width;
             const oy = (parseFloat(pos.top) / 100) * height;
-            const otherRect = { left: ox - tw / 2, right: ox + tw / 2, top: oy - th / 2, bottom: oy + th / 2 };
-            if (!(techRect.right < otherRect.left || techRect.left > otherRect.right || techRect.bottom < otherRect.top || techRect.top > otherRect.bottom)) {
+            const otherRect = {
+              left: ox - tw / 2,
+              right: ox + tw / 2,
+              top: oy - th / 2,
+              bottom: oy + th / 2,
+            };
+            if (
+              !(
+                techRect.right < otherRect.left ||
+                techRect.left > otherRect.right ||
+                techRect.bottom < otherRect.top ||
+                techRect.top > otherRect.bottom
+              )
+            ) {
               intersectsOther = true;
               break;
             }
           }
 
-          if (!intersectsText && !intersectsImg && !intersectsDock && !intersectsArrow && !intersectsPrevArrow && !intersectsOther) safe = true;
+          if (
+            !intersectsText &&
+            !intersectsImg &&
+            !intersectsDock &&
+            !intersectsArrow &&
+            !intersectsPrevArrow &&
+            !intersectsOther
+          )
+            safe = true;
           attempts++;
         }
 
@@ -179,7 +251,13 @@ function ProjectItem({
       clearTimeout(timeout);
       window.removeEventListener("resize", calculatePositions);
     };
-  }, [project.tech.length, project.name, isLast, nextProjectName, prevProjectName]);
+  }, [
+    project.tech.length,
+    project.name,
+    isLast,
+    nextProjectName,
+    prevProjectName,
+  ]);
   const { scrollY } = useScroll();
 
   // Define scroll ranges for scrubbing
@@ -270,40 +348,41 @@ function ProjectItem({
       }}
     >
       {/* Flying Technologies */}
-      {techPositions.length > 0 && project.tech.map((techName: string, i: number) => {
-        const pos = techPositions[i];
-        if (!pos) return null;
-        const skill = skillsData.find((s) => s.name === techName);
-        const Icon = skill?.icon;
-        
-        return (
-          <motion.span
-            key={techName}
-            className="flying-tech"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            style={{
-              ...pos,
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.6rem",
-              fontSize: "1.1rem",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontWeight: 600,
-              color: "rgba(255,255,255,0.2)",
-              pointerEvents: "none",
-              zIndex: 0,
-              animationDelay: `-${i * 0.8}s`,
-            }}
-          >
-            {Icon && <Icon size={24} style={{ opacity: 0.7 }} />}
-            {techName}
-          </motion.span>
-        );
-      })}
+      {techPositions.length > 0 &&
+        project.tech.map((techName: string, i: number) => {
+          const pos = techPositions[i];
+          if (!pos) return null;
+          const skill = skillsData.find((s) => s.name === techName);
+          const Icon = skill?.icon;
+
+          return (
+            <motion.span
+              key={techName}
+              className="flying-tech"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              style={{
+                ...pos,
+                position: "absolute",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                fontSize: "1.1rem",
+                textTransform: "uppercase",
+                letterSpacing: "2px",
+                fontWeight: 600,
+                color: "rgba(255,255,255,0.2)",
+                pointerEvents: "none",
+                zIndex: 0,
+                animationDelay: `-${i * 0.8}s`,
+              }}
+            >
+              {Icon && <Icon size={24} style={{ opacity: 0.7 }} />}
+              {techName}
+            </motion.span>
+          );
+        })}
 
       {/* Texts */}
       <motion.div
@@ -337,14 +416,44 @@ function ProjectItem({
           }}
         >
           {layout.text.textAlign === "right" && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="github-link"
-            >
-              <FaGithub size={42} />
-            </a>
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              {project.liveUrl && (
+                <div className="github-btn-wrapper">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="github-link"
+                    aria-label="Visitar sitio web"
+                  >
+                    <FaExternalLinkAlt size={36} />
+                  </a>
+                  <div className="github-tag top">
+                    <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "rotate(-90deg)" }}>
+                      <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
+                    </svg>
+                    <span className="github-tag-text">VER WEB</span>
+                  </div>
+                </div>
+              )}
+              <div className="github-btn-wrapper">
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="github-link"
+                  aria-label="Ver en GitHub"
+                >
+                  <FaGithub size={42} />
+                </a>
+                <div className="github-tag left">
+                  <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "scaleX(-1)" }}>
+                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
+                  </svg>
+                  <span className="github-tag-text">VER EN GITHUB</span>
+                </div>
+              </div>
+            </div>
           )}
           <h3
             style={{
@@ -360,14 +469,44 @@ function ProjectItem({
             {project.name}
           </h3>
           {layout.text.textAlign !== "right" && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="github-link"
-            >
-              <FaGithub size={42} />
-            </a>
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              <div className="github-btn-wrapper">
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="github-link"
+                  aria-label="Ver en GitHub"
+                >
+                  <FaGithub size={42} />
+                </a>
+                <div className="github-tag right">
+                  <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0 }}>
+                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
+                  </svg>
+                  <span className="github-tag-text">VER EN GITHUB</span>
+                </div>
+              </div>
+              {project.liveUrl && (
+                <div className="github-btn-wrapper">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="github-link"
+                    aria-label="Visitar sitio web"
+                  >
+                    <FaExternalLinkAlt size={36} />
+                  </a>
+                  <div className="github-tag top">
+                    <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "rotate(-90deg)" }}>
+                      <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
+                    </svg>
+                    <span className="github-tag-text">VER WEB</span>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
         </div>
         <p
@@ -576,12 +715,82 @@ export default function Projects({ selectedTech }: ProjectsProps) {
 
       <style>{`
         .github-link {
-          color: rgba(255,255,255,0.3); 
+          color: rgba(255,255,255,0.4); 
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          text-decoration: none;
+          position: relative;
+          z-index: 2;
+          background-color: var(--bg-color);
+          border-radius: 50%;
+          display: inline-flex;
         }
-        .github-link:hover {
+        .github-btn-wrapper:hover .github-link {
           color: #fff; 
           transform: scale(1.15) rotate(5deg);
+        }
+        .github-btn-wrapper {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .github-tag {
+          position: absolute;
+          top: 70%;
+          display: flex;
+          align-items: flex-start;
+          pointer-events: none;
+          color: rgba(255,255,255,0.3);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .github-btn-wrapper:hover .github-tag {
+          color: rgba(255,255,255,0.9);
+          transform: translateY(4px);
+        }
+        .github-btn-wrapper:hover .github-tag.top {
+          transform: translateX(-50%) translateY(-4px);
+        }
+        .github-tag.top {
+          top: auto;
+          bottom: 70%;
+          left: 50%;
+          flex-direction: column-reverse;
+          align-items: center;
+          margin-top: 0;
+          margin-bottom: 10px;
+          transform: translateX(-50%);
+        }
+        .github-tag.top .github-tag-text {
+          margin-top: 0;
+          margin-bottom: 10px;
+          transform: rotate(-4deg);
+        }
+        .github-tag.left {
+          right: 70%;
+          flex-direction: row-reverse;
+          margin-top: 10px;
+        }
+        .github-tag.right {
+          left: 70%;
+          flex-direction: row;
+          margin-top: 10px;
+        }
+        .github-tag-text {
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          white-space: nowrap;
+          border: 1px dashed currentColor;
+          padding: 0.3rem 0.5rem;
+          border-radius: 4px;
+          transform: rotate(-4deg);
+          background: rgba(0,0,0,0.4);
+          backdrop-filter: blur(4px);
+          margin-top: 10px;
+        }
+        .github-tag.left .github-tag-text {
+          transform: rotate(4deg);
         }
         .screenshot-placeholder:hover {
           border-color: rgba(255,255,255,0.3);

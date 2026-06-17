@@ -5,6 +5,7 @@ export interface Project {
   description: string;
   tech: SkillName[];
   url: string;
+  liveUrl?: string;
 }
 
 export const projectsData: Project[] = [
@@ -33,6 +34,7 @@ export const projectsData: Project[] = [
       "Docker",
     ],
     url: "https://github.com/RubizZ/flAIghts",
+    liveUrl: "https://flaights.es",
   },
   {
     name: "CollabUp",
@@ -62,6 +64,7 @@ export const projectsData: Project[] = [
       "HTML",
     ],
     url: "https://github.com/RubizZ/VHUB",
+    liveUrl: "https://vhub-psi.vercel.app/",
   },
   {
     name: "Trendy",
