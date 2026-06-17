@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">Hola, soy Rubén Hidalgo 👋</h1>
 
-## Getting Started
+<p align="center">
+  <a href="#">
+    <img src="https://img.shields.io/badge/🌍_Mi_Portfolio-Visitar_Web-007396?style=for-the-badge&logoColor=white" alt="Portfolio Web">
+  </a>
+  <a href="https://www.linkedin.com/in/ruben-hidalgo-arias/">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+</p>
 
-First, run the development server:
+<p align="center">
+  <em>Desarrollador de Software apasionado por la creación de arquitecturas sólidas, la Inteligencia Artificial y las experiencias web dinámicas.</em>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🚀 Sobre mí
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- 🎓 Aplicando principios de Ingeniería del Software para construir aplicaciones escalables y eficientes.
+- 💡 Me encanta explorar el ecosistema del desarrollo backend, la inteligencia artificial y el despliegue en la nube.
+- 🧩 Actualmente construyendo y mejorando mi [Portfolio interactivo](#) con Next.js y animaciones avanzadas.
+- 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/ruben-hidalgo-arias/).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 💻 Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+**Inteligencia Artificial y Datos**  
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Web & Backend**  
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Infraestructura y DevOps**  
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![AWS S3](https://img.shields.io/badge/AWS_S3-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🏆 Proyectos Destacados
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Aquí puedes encontrar algunos de los proyectos en los que he trabajado:*
+
+- **[flAIghts](https://github.com/RubizZ/flAIghts)** - Plataforma inteligente impulsada por IA que optimiza y recomienda rutas de vuelo. *(AWS S3, Docker, Node.js, React...)*
+- **[VHUB](https://github.com/RubizZ/VHUB)** - Hub de contenidos en vídeo con un backend robusto y arquitectura moderna. *(React, TypeScript, Node.js, Express, S3...)*
+- **[typed-express-pipeline](https://github.com/RubizZ/typed-express-pipeline)** - Librería open-source en Node.js/TypeScript sin dependencias para tipado estricto y encadenamiento seguro de middlewares en Express.
+- **[ArenaOfMusic](https://github.com/RubizZ/ArenaOfMusic)** - Juego web multijugador competitivo basado en adivinar canciones en tiempo real. *(Java, Spring, Thymeleaf, JavaScript...)*
+- **[Trendy](https://github.com/RubizZ/Trendy)** - Aplicación de escritorio sobre gestión y tienda de ropa aplicando diseño y arquitectura de software. *(Java, MySQL)*
+
+---
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=RubizZ&show_icons=true&theme=radical&hide_border=true" alt="Estadísticas de GitHub de RubizZ" />
+</p>

@@ -12,7 +12,6 @@ import {
   SiScikitlearn,
   SiPandas,
   SiNumpy,
-  SiPytorch,
   SiJupyter,
   SiCss,
   SiTailwindcss,
@@ -132,6 +131,15 @@ export const skillsData: SkillNode[] = [
     y: 45,
     ecosystem: 1,
   },
+  {
+    id: 8,
+    name: "Axios",
+    icon: SiAxios,
+    color: "#5A29E4",
+    x: 85,
+    y: 45,
+    ecosystem: 1,
+  },
 
   // Node.js (Ecosistema 2)
   {
@@ -159,15 +167,6 @@ export const skillsData: SkillNode[] = [
     color: "#F7DF1E",
     x: 25,
     y: 78,
-    ecosystem: 2,
-  },
-  {
-    id: 8,
-    name: "Axios",
-    icon: SiAxios,
-    color: "#5A29E4",
-    x: 85,
-    y: 45,
     ecosystem: 2,
   },
   {
@@ -298,15 +297,6 @@ export const skillsData: SkillNode[] = [
     color: "#013243",
     x: 80,
     y: 35,
-    ecosystem: 4,
-  },
-  {
-    id: 37,
-    name: "PyTorch",
-    icon: SiPytorch,
-    color: "#EE4C2C",
-    x: 25,
-    y: 75,
     ecosystem: 4,
   },
   {
