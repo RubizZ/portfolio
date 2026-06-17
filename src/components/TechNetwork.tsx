@@ -155,7 +155,7 @@ export default function TechNetwork() {
   const o1 = useTransform(scrollY, [400, 600, 1000, 1200], [0, 1, 1, 0]);
   const y1 = useTransform(scrollY, [400, 600], [40, 0]);
   const s1 = useTransform(scrollY, [400, 600], [0.85, 1]);
-  const l1 = useTransform(scrollY, [600, 800, 1000, 1200], [0, 0.4, 0.4, 0]);
+  const l1 = useTransform(scrollY, [400, 600, 1000, 1200], [0, 0.4, 0.4, 0]);
 
   const nodes1 = skillsData.filter((s) => s.ecosystem === 1);
   const conn1 = generateConnections(nodes1);
@@ -164,7 +164,7 @@ export default function TechNetwork() {
   const o2 = useTransform(scrollY, [1200, 1400, 1800, 2000], [0, 1, 1, 0]);
   const y2 = useTransform(scrollY, [1200, 1400], [40, 0]);
   const s2 = useTransform(scrollY, [1200, 1400], [0.85, 1]);
-  const l2 = useTransform(scrollY, [1400, 1600, 1800, 2000], [0, 0.4, 0.4, 0]);
+  const l2 = useTransform(scrollY, [1200, 1400, 1800, 2000], [0, 0.4, 0.4, 0]);
 
   const nodes2 = skillsData.filter((s) => s.ecosystem === 2);
   const conn2 = generateConnections(nodes2);
@@ -173,7 +173,7 @@ export default function TechNetwork() {
   const o3 = useTransform(scrollY, [2000, 2200, 2600, 2800], [0, 1, 1, 0]);
   const y3 = useTransform(scrollY, [2000, 2200], [40, 0]);
   const s3 = useTransform(scrollY, [2000, 2200], [0.85, 1]);
-  const l3 = useTransform(scrollY, [2200, 2400, 2600, 2800], [0, 0.4, 0.4, 0]);
+  const l3 = useTransform(scrollY, [2000, 2200, 2600, 2800], [0, 0.4, 0.4, 0]);
 
   const nodes3 = skillsData.filter((s) => s.ecosystem === 3);
   const conn3 = generateConnections(nodes3);
@@ -182,7 +182,7 @@ export default function TechNetwork() {
   const o4 = useTransform(scrollY, [2800, 3000, 3400, 3600], [0, 1, 1, 0]);
   const y4 = useTransform(scrollY, [2800, 3000], [40, 0]);
   const s4 = useTransform(scrollY, [2800, 3000], [0.85, 1]);
-  const l4 = useTransform(scrollY, [3000, 3200, 3400, 3600], [0, 0.4, 0.4, 0]);
+  const l4 = useTransform(scrollY, [2800, 3000, 3400, 3600], [0, 0.4, 0.4, 0]);
 
   const nodes4 = skillsData.filter((s) => s.ecosystem === 4);
   const conn4 = generateConnections(nodes4);
@@ -191,7 +191,7 @@ export default function TechNetwork() {
   const o5 = useTransform(scrollY, [3600, 3800, 4200, 4400], [0, 1, 1, 0]);
   const y5 = useTransform(scrollY, [3600, 3800], [40, 0]);
   const s5 = useTransform(scrollY, [3600, 3800], [0.85, 1]);
-  const l5 = useTransform(scrollY, [3800, 4000, 4200, 4400], [0, 0.4, 0.4, 0]);
+  const l5 = useTransform(scrollY, [3600, 3800, 4200, 4400], [0, 0.4, 0.4, 0]);
 
   const nodes5 = skillsData.filter((s) => s.ecosystem === 5);
   const conn5 = generateConnections(nodes5);
@@ -371,6 +371,8 @@ export default function TechNetwork() {
               width: "100%",
               height: "100%",
               opacity: eco.l,
+              y: eco.y,
+              scale: eco.s,
             }}
           >
             {eco.connections.map((conn, idx) => {
@@ -413,31 +415,25 @@ export default function TechNetwork() {
                     top: `${node.y}%`,
                     left: `${node.x}%`,
                     transform: "translate(-50%, -50%)",
+                    width: "70px",
+                    height: "70px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255, 255, 255, 0.05)",
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
-                    gap: "0.8rem",
+                    justifyContent: "center",
+                    boxShadow: `0 0 30px ${node.color}44`,
+                    color: node.color,
                   }}
                 >
-                  <div
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(255, 255, 255, 0.02)",
-                      backdropFilter: "blur(10px)",
-                      border: "1px solid rgba(255, 255, 255, 0.05)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: `0 0 30px ${node.color}44`,
-                      color: node.color,
-                    }}
-                  >
-                    <Icon size={36} />
-                  </div>
+                  <Icon size={36} />
                   <span
                     style={{
+                      position: "absolute",
+                      top: "calc(100% + 0.8rem)",
+                      whiteSpace: "nowrap",
                       fontSize: "0.9rem",
                       color: "rgba(255,255,255,0.6)",
                       letterSpacing: "2px",
