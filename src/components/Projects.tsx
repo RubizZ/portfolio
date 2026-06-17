@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import {
   FaGithub,
   FaChevronDown,
+  FaChevronUp,
 } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
@@ -72,12 +73,14 @@ function ProjectItem({
   layout,
   isLast,
   nextProjectName,
+  prevProjectName,
 }: {
   project: Project;
   index: number;
   layout: any;
   isLast: boolean;
   nextProjectName?: string;
+  prevProjectName?: string;
 }) {
   const textRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -135,12 +138,14 @@ function ProjectItem({
 
           // Global UI elements to avoid
           const dockR = { left: 0, right: width, top: 0, bottom: 130 }; // Dock + padding
-          const arrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height - 120, bottom: height };
+          const arrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height - 120, bottom: height }; // Next Arrow
+          const prevArrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height * 0.15, bottom: height * 0.25 }; // Prev Arrow
 
           const intersectsText = !(techRect.right < textR.left || techRect.left > textR.right || techRect.bottom < textR.top || techRect.top > textR.bottom);
           const intersectsImg = !(techRect.right < imgR.left || techRect.left > imgR.right || techRect.bottom < imgR.top || techRect.top > imgR.bottom);
           const intersectsDock = !(techRect.right < dockR.left || techRect.left > dockR.right || techRect.bottom < dockR.top || techRect.top > dockR.bottom);
-          const intersectsArrow = !isLast && !(techRect.right < arrowR.left || techRect.left > arrowR.right || techRect.bottom < arrowR.top || techRect.top > arrowR.bottom);
+          const intersectsArrow = nextProjectName && !(techRect.right < arrowR.left || techRect.left > arrowR.right || techRect.bottom < arrowR.top || techRect.top > arrowR.bottom);
+          const intersectsPrevArrow = prevProjectName && !(techRect.right < prevArrowR.left || techRect.left > prevArrowR.right || techRect.bottom < prevArrowR.top || techRect.top > prevArrowR.bottom);
 
           let intersectsOther = false;
           for (const pos of safePositions) {
@@ -153,7 +158,7 @@ function ProjectItem({
             }
           }
 
-          if (!intersectsText && !intersectsImg && !intersectsDock && !intersectsArrow && !intersectsOther) safe = true;
+          if (!intersectsText && !intersectsImg && !intersectsDock && !intersectsArrow && !intersectsPrevArrow && !intersectsOther) safe = true;
           attempts++;
         }
 
@@ -419,6 +424,45 @@ function ProjectItem({
         </span>
       </motion.div>
 
+      {/* Arrow to Previous Project */}
+      {prevProjectName && (
+        <motion.div
+          onClick={() =>
+            window.scrollTo({ top: endEnter - 1600, behavior: "smooth" })
+          }
+          style={{
+            position: "absolute",
+            top: "17vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.5rem",
+            cursor: "pointer",
+            zIndex: 50,
+            pointerEvents,
+          }}
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaChevronUp size={20} color="var(--text-muted)" />
+          </motion.div>
+          <span
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-muted)",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+            }}
+          >
+            Anterior: {prevProjectName}
+          </span>
+        </motion.div>
+      )}
+
       {/* Arrow to Next Project */}
       {nextProjectName && (
         <motion.div
@@ -500,6 +544,9 @@ export default function Projects({ selectedTech }: ProjectsProps) {
               index < filteredProjects.length - 1
                 ? filteredProjects[index + 1].name
                 : undefined
+            }
+            prevProjectName={
+              index > 0 ? filteredProjects[index - 1].name : undefined
             }
           />
         );
