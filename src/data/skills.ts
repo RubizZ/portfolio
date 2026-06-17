@@ -41,15 +41,15 @@ export interface SkillNode {
 export const skillsData: SkillNode[] = [
   { id: 0, name: "Todas", icon: FaCode },
   // Frontend (Ecosistema 1)
-  { id: 1, name: "React", icon: SiReact, color: "#61DAFB", x: 18, y: 35, ecosystem: 1 },
-  { id: 5, name: "Next.js", icon: SiNextdotjs, color: "#ffffff", x: 35, y: 20, ecosystem: 1 },
-  { id: 6, name: "Vite", icon: SiVite, color: "#646CFF", x: 75, y: 65, ecosystem: 1 },
-  { id: 7, name: "React Query", icon: SiReactquery, color: "#FF4154", x: 60, y: 25, ecosystem: 1 },
-  { id: 13, name: "HTML", icon: SiHtml5, color: "#E34F26", x: 48, y: 25, ecosystem: 1 },
-  { id: 14, name: "CSS", icon: SiCss, color: "#1572B6", x: 80, y: 75, ecosystem: 1 },
-  { id: 15, name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", x: 30, y: 50, ecosystem: 1 },
+  { id: 1, name: "React", icon: SiReact, color: "#61DAFB", x: 20, y: 50, ecosystem: 1 },
+  { id: 5, name: "Next.js", icon: SiNextdotjs, color: "#ffffff", x: 50, y: 20, ecosystem: 1 },
+  { id: 6, name: "Vite", icon: SiVite, color: "#646CFF", x: 80, y: 30, ecosystem: 1 },
+  { id: 7, name: "React Query", icon: SiReactquery, color: "#FF4154", x: 75, y: 70, ecosystem: 1 },
+  { id: 13, name: "HTML", icon: SiHtml5, color: "#E34F26", x: 25, y: 25, ecosystem: 1 },
+  { id: 14, name: "CSS", icon: SiCss, color: "#1572B6", x: 35, y: 75, ecosystem: 1 },
+  { id: 15, name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", x: 55, y: 80, ecosystem: 1 },
   { id: 16, name: "Three.js", icon: SiThreedotjs, color: "#ffffff", x: 65, y: 45, ecosystem: 1 },
-  { id: 12, name: "i18next", icon: SiI18Next, color: "#26A69A", x: 20, y: 60, ecosystem: 1 },
+  { id: 12, name: "i18next", icon: SiI18Next, color: "#26A69A", x: 40, y: 45, ecosystem: 1 },
 
   // Node.js (Ecosistema 2)
   { id: 2, name: "TypeScript", icon: SiTypescript, color: "#3178C6", x: 82, y: 22, ecosystem: 2 },

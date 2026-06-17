@@ -7,9 +7,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "RubizZ - Software Engineer",
+  title: "Rubén Hidalgo - Software Engineer",
   description:
-    "Portafolio personal de RubizZ. Proyectos de software, conocimientos y soluciones.",
+    "Portafolio personal de Rubén Hidalgo. Proyectos de software, conocimientos y soluciones.",
 };
 
 export default function RootLayout({
