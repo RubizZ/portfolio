@@ -40,6 +40,8 @@ import {
   SiNumpy,
   SiPytorch,
   SiJupyter,
+  SiOllama,
+  SiThymeleaf,
 } from "react-icons/si";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -82,6 +84,8 @@ const techIcons: Record<string, any> = {
   Jupyter: SiJupyter,
   tsoa: FaCode,
   Orval: FaCode,
+  Ollama: SiOllama,
+  Thymeleaf: SiThymeleaf,
 };
 
 export const projectsData = [
@@ -93,7 +97,6 @@ export const projectsData = [
       "TypeScript",
       "Vite",
       "React",
-      "Python",
       "HTML",
       "CSS",
       "Tailwind CSS",
@@ -109,6 +112,8 @@ export const projectsData = [
       "tsoa",
       "Zod",
       "Orval",
+      "Ollama",
+      "Docker",
     ],
     url: "https://github.com/RubizZ/flAIghts",
   },
@@ -137,6 +142,7 @@ export const projectsData = [
       "S3",
       "Redis",
       "Axios",
+      "HTML",
     ],
     url: "https://github.com/RubizZ/VHUB",
   },
@@ -158,7 +164,7 @@ export const projectsData = [
     name: "ArenaOfMusic",
     description:
       "Juego web multijugador competitivo basado en la música, donde los jugadores adivinan canciones en tiempo limitado.",
-    tech: ["HTML", "JavaScript", "Java", "CSS", "Python", "Docker"],
+    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS", "Docker"],
     url: "https://github.com/RubizZ/ArenaOfMusic",
   },
 ];

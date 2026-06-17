@@ -32,6 +32,8 @@ import {
   SiRedis,
   SiMongoose,
   SiOpenai,
+  SiOllama,
+  SiThymeleaf,
 } from "react-icons/si";
 import { FaCode, FaJava, FaLeaf, FaAndroid, FaAws } from "react-icons/fa";
 
@@ -242,6 +244,15 @@ export const skillsData: SkillNode[] = [
     y: 70,
     ecosystem: 3,
   },
+  {
+    id: 44,
+    name: "Thymeleaf",
+    icon: SiThymeleaf,
+    color: "#005F0F",
+    x: 60,
+    y: 85,
+    ecosystem: 3,
+  },
 
   // Python (Ecosistema 4)
   {
@@ -388,6 +399,15 @@ export const skillsData: SkillNode[] = [
     color: "#880000",
     x: 75,
     y: 55,
+    ecosystem: 5,
+  },
+  {
+    id: 43,
+    name: "Ollama",
+    icon: SiOllama,
+    color: "#ffffff",
+    x: 55,
+    y: 85,
     ecosystem: 5,
   },
 ];
