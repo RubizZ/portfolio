@@ -179,7 +179,7 @@ function ProjectItem({
       clearTimeout(timeout);
       window.removeEventListener("resize", calculatePositions);
     };
-  }, [project.tech.length, project.name, isLast]);
+  }, [project.tech.length, project.name, isLast, nextProjectName, prevProjectName]);
   const { scrollY } = useScroll();
 
   // Define scroll ranges for scrubbing
