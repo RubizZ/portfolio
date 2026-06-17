@@ -1,12 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "./Hero";
 import TechNetwork from "./TechNetwork";
 import Skills from "./Skills";
 import Projects, { projectsData } from "./Projects";
+import InteractiveBackground from "./InteractiveBackground";
 
 export default function PortfolioClient() {
   const [selectedTech, setSelectedTech] = useState<string>("Todas");
+
+  useEffect(() => {
+    // Canvas handles the interaction now
+  }, []);
 
   let filteredProjects = projectsData;
   if (selectedTech !== "Todas") {
@@ -23,6 +28,7 @@ export default function PortfolioClient() {
 
   return (
     <>
+      <InteractiveBackground />
       <div style={{ position: 'relative' }}>
         <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: 40, pointerEvents: 'none' }}>
           <Hero />

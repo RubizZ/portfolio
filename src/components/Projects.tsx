@@ -89,7 +89,27 @@ export const projectsData = [
     name: "flAIghts",
     description:
       "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
-    tech: ["TypeScript", "Vite", "React", "Python", "HTML", "CSS", "Tailwind CSS", "MongoDB", "Three.js", "React Query", "Axios", "i18next", "S3", "Express", "Mongoose", "OpenAI SDK", "tsoa", "Zod", "Orval"],
+    tech: [
+      "TypeScript",
+      "Vite",
+      "React",
+      "Python",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "MongoDB",
+      "Three.js",
+      "React Query",
+      "Axios",
+      "i18next",
+      "S3",
+      "Express",
+      "Mongoose",
+      "OpenAI SDK",
+      "tsoa",
+      "Zod",
+      "Orval",
+    ],
     url: "https://github.com/RubizZ/flAIghts",
   },
   {
@@ -103,7 +123,21 @@ export const projectsData = [
     name: "VHUB",
     description:
       "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Zod", "S3", "Redis", "Axios"],
+    tech: [
+      "TypeScript",
+      "Next.js",
+      "React",
+      "Node.js",
+      "Docker",
+      "CSS",
+      "Prisma",
+      "PostgreSQL",
+      "Supabase",
+      "Zod",
+      "S3",
+      "Redis",
+      "Axios",
+    ],
     url: "https://github.com/RubizZ/VHUB",
   },
   {
@@ -254,12 +288,12 @@ function ProjectItem({
   const opacity = useTransform(
     scrollY,
     transformInput,
-    isLast ? [0, 1] : [0, 1, 1, 0]
+    isLast ? [0, 1] : [0, 1, 1, 0],
   );
   const pointerEvents = useTransform(
     scrollY,
     pointerEventsInput,
-    isLast ? ["none", "auto"] : ["none", "auto", "auto", "none"]
+    isLast ? ["none", "auto"] : ["none", "auto", "auto", "none"],
   ) as any;
 
   // Text transitions mapped to scroll
@@ -268,21 +302,21 @@ function ProjectItem({
     transformInput,
     isLast
       ? [layout.textInitial.x, 0]
-      : [layout.textInitial.x, 0, 0, layout.textInitial.x * -1]
+      : [layout.textInitial.x, 0, 0, layout.textInitial.x * -1],
   );
   const textY = useTransform(
     scrollY,
     transformInput,
     isLast
       ? [layout.textInitial.y, 0]
-      : [layout.textInitial.y, 0, 0, layout.textInitial.y * -1]
+      : [layout.textInitial.y, 0, 0, layout.textInitial.y * -1],
   );
   const textScale = useTransform(
     scrollY,
     transformInput,
     isLast
       ? [layout.textInitial.scale, 1]
-      : [layout.textInitial.scale, 1, 1, layout.textInitial.scale]
+      : [layout.textInitial.scale, 1, 1, layout.textInitial.scale],
   );
 
   // Image transitions mapped to scroll
@@ -291,21 +325,21 @@ function ProjectItem({
     transformInput,
     isLast
       ? [layout.imgInitial.x, 0]
-      : [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1]
+      : [layout.imgInitial.x, 0, 0, layout.imgInitial.x * -1],
   );
   const imgY = useTransform(
     scrollY,
     transformInput,
     isLast
       ? [layout.imgInitial.y, 0]
-      : [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1]
+      : [layout.imgInitial.y, 0, 0, layout.imgInitial.y * -1],
   );
   const imgScale = useTransform(
     scrollY,
     transformInput,
     isLast
       ? [layout.imgInitial.scale, 1]
-      : [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale]
+      : [layout.imgInitial.scale, 1, 1, layout.imgInitial.scale],
   );
 
   return (
@@ -327,7 +361,7 @@ function ProjectItem({
         // Use safe spots assigned to this specific layout to avoid text/image overlap
         const pos = layout.techSpots[i % layout.techSpots.length];
         const cycle = Math.floor(i / layout.techSpots.length);
-        
+
         // Offset for elements that exceed the available spots
         const offsetX = cycle * ((i % 2 === 0 ? 1 : -1) * 12); // vw offset
         const offsetY = cycle * ((i % 3 === 0 ? 1 : -1) * 15); // vh offset
