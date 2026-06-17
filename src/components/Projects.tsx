@@ -1,3 +1,5 @@
+"use client";
+import { useRef, useState, useEffect } from "react";
 import {
   FaGithub,
   FaCode,
@@ -175,70 +177,30 @@ const projectLayouts: any[] = [
     img: { bottom: "10%", right: "10%" },
     textInitial: { x: -300, y: 0, scale: 1 },
     imgInitial: { x: 300, y: 0, scale: 1 },
-    techSpots: [
-      { bottom: "15%", left: "15%" },
-      { top: "40%", right: "15%" },
-      { bottom: "20%", left: "45%" },
-      { top: "35%", left: "55%" },
-      { top: "60%", right: "10%" },
-      { bottom: "30%", left: "10%" },
-    ],
   },
   {
     text: { bottom: "15%", right: "10%", textAlign: "right" },
     img: { top: "35%", left: "10%" },
     textInitial: { x: 300, y: 0, scale: 1 },
     imgInitial: { x: -300, y: 0, scale: 1 },
-    techSpots: [
-      { bottom: "15%", left: "15%" },
-      { top: "35%", right: "15%" },
-      { bottom: "15%", right: "50%" },
-      { top: "35%", left: "55%" },
-      { top: "55%", right: "10%" },
-      { top: "65%", left: "10%" },
-    ],
   },
   {
     text: { top: "45%", right: "10%", textAlign: "right" },
     img: { bottom: "15%", left: "10%" },
     textInitial: { x: 0, y: -300, scale: 1 },
     imgInitial: { x: 0, y: 300, scale: 1 },
-    techSpots: [
-      { top: "35%", left: "15%" },
-      { bottom: "15%", right: "15%" },
-      { top: "45%", left: "10%" },
-      { bottom: "15%", left: "55%" },
-      { top: "35%", right: "50%" },
-      { bottom: "35%", left: "5%" },
-    ],
   },
   {
     text: { bottom: "20%", left: "15%" },
     img: { top: "35%", right: "15%" },
     textInitial: { x: 0, y: 0, scale: 0.5 },
     imgInitial: { x: 0, y: 0, scale: 1.5 },
-    techSpots: [
-      { top: "35%", left: "15%" },
-      { bottom: "15%", right: "15%" },
-      { top: "35%", left: "45%" },
-      { bottom: "20%", right: "45%" },
-      { top: "55%", left: "10%" },
-      { top: "65%", right: "10%" },
-    ],
   },
   {
     text: { top: "50%", left: "8%", transform: "translateY(-50%)" },
     img: { top: "50%", right: "8%", transform: "translateY(-50%)" },
     textInitial: { x: -300, y: 0, scale: 1 },
     imgInitial: { x: 300, y: 0, scale: 1 },
-    techSpots: [
-      { top: "35%", left: "45%" },
-      { bottom: "15%", left: "45%" },
-      { bottom: "10%", left: "15%" },
-      { bottom: "10%", right: "15%" },
-      { top: "35%", left: "15%" },
-      { top: "35%", right: "15%" },
-    ],
   },
   {
     text: {
@@ -250,16 +212,24 @@ const projectLayouts: any[] = [
     img: { bottom: "10%", left: "50%", transform: "translateX(-50%)" },
     textInitial: { x: 0, y: -200, scale: 1 },
     imgInitial: { x: 0, y: 200, scale: 1 },
-    techSpots: [
-      { top: "50%", left: "15%" },
-      { top: "50%", right: "15%" },
-      { bottom: "15%", left: "15%" },
-      { bottom: "15%", right: "15%" },
-      { top: "35%", left: "15%" },
-      { top: "35%", right: "15%" },
-    ],
   },
 ];
+
+// Generador pseudoaleatorio determinista para las posiciones de las tecnologías
+function getPseudoRandom(seedStr: string) {
+  let hash = 0;
+  for (let i = 0; i < seedStr.length; i++) {
+    hash = Math.imul(31, hash) + seedStr.charCodeAt(i) | 0;
+  }
+  return () => {
+    hash = Math.imul(hash ^ (hash >>> 15), 2246822519);
+    hash = Math.imul(hash ^ (hash >>> 13), 3266489917);
+    hash = hash ^ (hash >>> 16);
+    return (hash >>> 0) / 4294967296;
+  };
+}
+
+
 
 function ProjectItem({
   project,
@@ -274,6 +244,102 @@ function ProjectItem({
   isLast: boolean;
   nextProjectName?: string;
 }) {
+  const textRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [techPositions, setTechPositions] = useState<{ left: string; top: string }[]>([]);
+
+  useEffect(() => {
+    const calculatePositions = () => {
+      if (!textRef.current || !imgRef.current || !containerRef.current) return;
+
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+
+      // Use offset to ignore framer-motion transforms
+      const tR = {
+        left: textRef.current.offsetLeft,
+        right: textRef.current.offsetLeft + textRef.current.offsetWidth,
+        top: textRef.current.offsetTop,
+        bottom: textRef.current.offsetTop + textRef.current.offsetHeight,
+      };
+
+      const iR = {
+        left: imgRef.current.offsetLeft,
+        right: imgRef.current.offsetLeft + imgRef.current.offsetWidth,
+        top: imgRef.current.offsetTop,
+        bottom: imgRef.current.offsetTop + imgRef.current.offsetHeight,
+      };
+
+      const safePositions: { left: string; top: string }[] = [];
+      const MAX_ATTEMPTS = 500;
+      const prng = getPseudoRandom(project.name);
+
+      for (let i = 0; i < project.tech.length; i++) {
+        let safe = false;
+        let attempts = 0;
+        let x = 0;
+        let y = 0;
+
+        while (!safe && attempts < MAX_ATTEMPTS) {
+          const px = 5 + prng() * 90; // 5% to 95%
+          const py = 5 + prng() * 90;
+
+          x = (px / 100) * width;
+          y = (py / 100) * height;
+
+          // Extra conservative tech item bounding box
+          const tw = 200;
+          const th = 70;
+          const techRect = { left: x - tw / 2, right: x + tw / 2, top: y - th / 2, bottom: y + th / 2 };
+
+          // Padding to give text and images breathing room
+          const pad = 40;
+          const textR = { left: tR.left - pad, right: tR.right + pad, top: tR.top - pad, bottom: tR.bottom + pad };
+          const imgR = { left: iR.left - pad, right: iR.right + pad, top: iR.top - pad, bottom: iR.bottom + pad };
+
+          // Global UI elements to avoid
+          const dockR = { left: 0, right: width, top: 0, bottom: 130 }; // Dock + padding
+          const arrowR = { left: width / 2 - 120, right: width / 2 + 120, top: height - 120, bottom: height };
+
+          const intersectsText = !(techRect.right < textR.left || techRect.left > textR.right || techRect.bottom < textR.top || techRect.top > textR.bottom);
+          const intersectsImg = !(techRect.right < imgR.left || techRect.left > imgR.right || techRect.bottom < imgR.top || techRect.top > imgR.bottom);
+          const intersectsDock = !(techRect.right < dockR.left || techRect.left > dockR.right || techRect.bottom < dockR.top || techRect.top > dockR.bottom);
+          const intersectsArrow = !isLast && !(techRect.right < arrowR.left || techRect.left > arrowR.right || techRect.bottom < arrowR.top || techRect.top > arrowR.bottom);
+
+          let intersectsOther = false;
+          for (const pos of safePositions) {
+            const ox = (parseFloat(pos.left) / 100) * width;
+            const oy = (parseFloat(pos.top) / 100) * height;
+            const otherRect = { left: ox - tw / 2, right: ox + tw / 2, top: oy - th / 2, bottom: oy + th / 2 };
+            if (!(techRect.right < otherRect.left || techRect.left > otherRect.right || techRect.bottom < otherRect.top || techRect.top > otherRect.bottom)) {
+              intersectsOther = true;
+              break;
+            }
+          }
+
+          if (!intersectsText && !intersectsImg && !intersectsDock && !intersectsArrow && !intersectsOther) safe = true;
+          attempts++;
+        }
+
+        safePositions.push({
+          left: `${(x / width) * 100}%`,
+          top: `${(y / height) * 100}%`,
+        });
+      }
+
+      setTechPositions(safePositions);
+    };
+
+    // Calculate after a brief delay to ensure DOM is fully painted (images, fonts, layout complete)
+    const timeout = setTimeout(calculatePositions, 100);
+    window.addEventListener("resize", calculatePositions);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("resize", calculatePositions);
+    };
+  }, [project.tech.length, project.name]);
   const { scrollY } = useScroll();
 
   // Define scroll ranges for scrubbing
@@ -350,6 +416,7 @@ function ProjectItem({
 
   return (
     <motion.div
+      ref={containerRef}
       style={{
         position: "absolute",
         top: 0,
@@ -357,30 +424,26 @@ function ProjectItem({
         width: "100%",
         height: "100vh",
         opacity,
-        pointerEvents: "none", // NEVER block the whole screen
+        pointerEvents: "none",
         zIndex: 30 + index,
         overflow: "hidden",
       }}
     >
       {/* Flying Technologies */}
-      {project.tech.map((t: string, i: number) => {
-        // Use safe spots assigned to this specific layout to avoid text/image overlap
-        const pos = layout.techSpots[i % layout.techSpots.length];
-        const cycle = Math.floor(i / layout.techSpots.length);
-
-        // Offset for elements that exceed the available spots
-        const offsetX = cycle * ((i % 2 === 0 ? 1 : -1) * 12); // vw offset
-        const offsetY = cycle * ((i % 3 === 0 ? 1 : -1) * 15); // vh offset
-
-        const Icon = techIcons[t];
+      {techPositions.length > 0 && project.tech.map((techName: string, i: number) => {
+        const Icon = techIcons[techName];
+        const pos = techPositions[i];
+        if (!pos) return null;
+        
         return (
-          <span
-            key={t}
+          <motion.span
+            key={techName}
             className="flying-tech"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
             style={{
               ...pos,
-              marginLeft: `${offsetX}vw`,
-              marginTop: `${offsetY}vh`,
               position: "absolute",
               display: "flex",
               alignItems: "center",
@@ -390,19 +453,20 @@ function ProjectItem({
               letterSpacing: "2px",
               fontWeight: 600,
               color: "rgba(255,255,255,0.2)",
-              animationDelay: `${(i + index) * 0.8}s`,
               pointerEvents: "none",
               zIndex: 0,
+              animationDelay: `-${i * 0.8}s`,
             }}
           >
             {Icon && <Icon size={24} style={{ opacity: 0.7 }} />}
-            {t}
-          </span>
+            {techName}
+          </motion.span>
         );
       })}
 
       {/* Texts */}
       <motion.div
+        ref={textRef}
         style={{
           position: "absolute",
           ...layout.text,
@@ -480,6 +544,8 @@ function ProjectItem({
 
       {/* Screenshot Placeholder */}
       <motion.div
+        ref={imgRef}
+        className="screenshot-placeholder"
         style={{
           position: "absolute",
           ...layout.img,
@@ -502,7 +568,6 @@ function ProjectItem({
           zIndex: 10,
           pointerEvents, // Only this container receives clicks when active
         }}
-        className="screenshot-placeholder"
       >
         <span
           style={{
