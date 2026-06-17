@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { skillsData } from "../data/skills";
 import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
 
@@ -13,6 +13,35 @@ interface SkillsProps {
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const { scrollY } = useScroll();
   const carouselRef = useRef<HTMLDivElement>(null);
+  const dockRef = useRef<HTMLDivElement>(null);
+
+  const [indicatorX, setIndicatorX] = useState(0);
+  const [indicatorVisible, setIndicatorVisible] = useState(false);
+
+  const updateIndicator = () => {
+    if (!dockRef.current) return;
+    // Delay slightly to allow layout shifts
+    requestAnimationFrame(() => {
+      if (!dockRef.current) return;
+      const activeEl = dockRef.current.querySelector(`[data-tech="${selectedTech}"]`) as HTMLElement;
+      if (activeEl) {
+        const dockRect = dockRef.current.getBoundingClientRect();
+        const elRect = activeEl.getBoundingClientRect();
+        const x = elRect.left - dockRect.left + (elRect.width / 2);
+        setIndicatorX(x);
+        setIndicatorVisible(true);
+      }
+    });
+  };
+
+  useEffect(() => {
+    updateIndicator();
+  }, [selectedTech]);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, []);
   
   const opacity = useTransform(scrollY, [4400, 4450], [0, 1]);
   const dockY = useTransform(scrollY, [4400, 5050], ['-15vh', '0vh']);
@@ -75,6 +104,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
         {/* Dock Principal de Tecnologías */}
         <motion.div 
+          ref={dockRef}
           className="dock-container" 
           style={{
             pointerEvents,
@@ -91,8 +121,10 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             maxWidth: '800px'
           }}
         >
+          <LayoutGroup>
           {/* Botón Todas */}
           <div 
+            data-tech="Todas"
             onClick={() => {
               setSelectedTech("Todas");
               window.scrollTo({ top: 5050, behavior: 'smooth' });
@@ -116,20 +148,6 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             }}>
               <FaCode size={28} />
             </div>
-            {selectedTech === "Todas" && (
-              <motion.div 
-                layoutId="dock-indicator" 
-                style={{
-                  position: 'absolute',
-                  bottom: '0px',
-                  width: '6px',
-                  height: '6px',
-                  backgroundColor: 'var(--accent)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 10px var(--accent)'
-                }} 
-              />
-            )}
             <div className="dock-tooltip">Todas</div>
           </div>
 
@@ -154,6 +172,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           {/* Carrusel de Ecosistemas */}
           <div 
             ref={carouselRef}
+            onScroll={updateIndicator}
             className="carousel-container"
             style={{
               display: 'flex',
@@ -195,6 +214,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                     return (
                       <div 
                         key={skill.name} 
+                        data-tech={skill.name}
                         onClick={() => {
                           setSelectedTech(skill.name);
                           window.scrollTo({ top: 5050, behavior: 'smooth' });
@@ -217,20 +237,6 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                         }}>
                           <Icon size={28} />
                         </div>
-                        {isActive && (
-                          <motion.div 
-                            layoutId="dock-indicator" 
-                            style={{
-                              position: 'absolute',
-                              bottom: '-5px',
-                              width: '6px',
-                              height: '6px',
-                              backgroundColor: 'var(--accent)',
-                              borderRadius: '50%',
-                              boxShadow: '0 0 10px var(--accent)'
-                            }} 
-                          />
-                        )}
                         <div className="dock-tooltip">{skill.name}</div>
                       </div>
                     );
@@ -249,6 +255,25 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           >
             <FaChevronRight size={20} />
           </button>
+          </LayoutGroup>
+
+          {/* Indicador Global Flotante */}
+          <motion.div
+            animate={{ x: indicatorX, opacity: indicatorVisible ? 1 : 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '-3px',
+              width: '6px',
+              height: '6px',
+              backgroundColor: 'var(--accent)',
+              borderRadius: '50%',
+              boxShadow: '0 0 10px var(--accent)',
+              pointerEvents: 'none',
+              zIndex: 100
+            }}
+          />
 
         </motion.div>
 
