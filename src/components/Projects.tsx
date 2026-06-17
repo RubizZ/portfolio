@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
-import { skillsData } from "../data/skills";
+import { skillsData, SkillName } from "../data/skills";
 
 const projectLayouts: any[] = [
   {
@@ -174,7 +174,7 @@ function ProjectItem({
       clearTimeout(timeout);
       window.removeEventListener("resize", calculatePositions);
     };
-  }, [project.tech.length, project.name]);
+  }, [project.tech.length, project.name, isLast]);
   const { scrollY } = useScroll();
 
   // Define scroll ranges for scrubbing
@@ -462,7 +462,7 @@ function ProjectItem({
 }
 
 interface ProjectsProps {
-  selectedTech: string;
+  selectedTech: SkillName;
 }
 
 export default function Projects({ selectedTech }: ProjectsProps) {

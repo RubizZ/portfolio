@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
-import { skillsData } from "../data/skills";
+import { skillsData, SkillName } from "../data/skills";
 import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
 
 interface SkillsProps {
-  selectedTech: string;
-  setSelectedTech: (tech: string) => void;
+  selectedTech: SkillName;
+  setSelectedTech: (tech: SkillName) => void;
 }
 
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
@@ -26,7 +26,9 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
 
 
-  const updateIndicator = (type: "spring" | "instant" = "instant") => {
+  const updateIndicatorRef = useRef<((type?: "spring" | "instant") => void) | null>(null);
+
+  const updateIndicator = useCallback((type: "spring" | "instant" = "instant") => {
     if (!dockRef.current) return;
     setTransitionType(type);
     
@@ -59,18 +61,28 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
         }
         setIndicatorVisible(true);
       }
-  };
+  }, [selectedTech, indicatorX, carouselBounds.left, carouselBounds.right]);
+
+  useLayoutEffect(() => {
+    updateIndicatorRef.current = updateIndicator;
+  }, [updateIndicator]);
 
   useLayoutEffect(() => {
     if (selectedTech !== "Todas" && previousTechRef.current === "Todas") {
       setIsFlyingFromTodas(true);
     }
     previousTechRef.current = selectedTech;
-    updateIndicator("spring");
+    if (updateIndicatorRef.current) {
+      updateIndicatorRef.current("spring");
+    }
   }, [selectedTech]);
 
   useEffect(() => {
-    const handleResize = () => updateIndicator("instant");
+    const handleResize = () => {
+      if (updateIndicatorRef.current) {
+        updateIndicatorRef.current("instant");
+      }
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
