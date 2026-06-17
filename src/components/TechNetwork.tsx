@@ -504,6 +504,31 @@ export default function TechNetwork() {
           <FaChevronDown size={20} color="var(--text-muted)" />
         </motion.div>
       </motion.div>
+      {/* Flecha a Python */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 3200, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          bottom: "8vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow3Opacity,
+          pointerEvents: arrow3PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Siguiente: Python
+        </span>
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronDown size={20} color="var(--text-muted)" />
+        </motion.div>
+      </motion.div>
 
       {/* Flecha a Infraestructura */}
       <motion.div
