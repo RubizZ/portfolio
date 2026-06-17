@@ -4,6 +4,7 @@ import {
   FaJava,
   FaLeaf,
   FaChevronDown,
+  FaAws,
 } from "react-icons/fa";
 import {
   SiTypescript,
@@ -16,6 +17,7 @@ import {
   SiExpress,
   SiPython,
   SiTensorflow,
+  SiScikitlearn,
   SiCss,
   SiTailwindcss,
   SiMongodb,
@@ -31,6 +33,13 @@ import {
   SiJest,
   SiI18Next,
   SiZod,
+  SiRedis,
+  SiMongoose,
+  SiOpenai,
+  SiPandas,
+  SiNumpy,
+  SiPytorch,
+  SiJupyter,
 } from "react-icons/si";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -49,6 +58,7 @@ const techIcons: Record<string, any> = {
   Spring: FaLeaf,
   Python: SiPython,
   TensorFlow: SiTensorflow,
+  "Scikit-Learn": SiScikitlearn,
   MongoDB: SiMongodb,
   "Three.js": SiThreedotjs,
   Docker: SiDocker,
@@ -62,6 +72,16 @@ const techIcons: Record<string, any> = {
   Jest: SiJest,
   i18next: SiI18Next,
   Zod: SiZod,
+  S3: FaAws,
+  Redis: SiRedis,
+  Mongoose: SiMongoose,
+  "OpenAI SDK": SiOpenai,
+  Pandas: SiPandas,
+  NumPy: SiNumpy,
+  PyTorch: SiPytorch,
+  Jupyter: SiJupyter,
+  tsoa: FaCode,
+  Orval: FaCode,
 };
 
 export const projectsData = [
@@ -69,7 +89,7 @@ export const projectsData = [
     name: "flAIghts",
     description:
       "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
-    tech: ["TypeScript", "Vite", "React", "Python", "HTML", "CSS", "Tailwind CSS", "MongoDB", "Three.js", "React Query", "Axios", "i18next"],
+    tech: ["TypeScript", "Vite", "React", "Python", "HTML", "CSS", "Tailwind CSS", "MongoDB", "Three.js", "React Query", "Axios", "i18next", "S3", "Express", "Mongoose", "OpenAI SDK", "tsoa", "Zod", "Orval"],
     url: "https://github.com/RubizZ/flAIghts",
   },
   {
@@ -83,7 +103,7 @@ export const projectsData = [
     name: "VHUB",
     description:
       "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Zod"],
+    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Zod", "S3", "Redis", "Axios"],
     url: "https://github.com/RubizZ/VHUB",
   },
   {

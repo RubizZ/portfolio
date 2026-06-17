@@ -9,6 +9,11 @@ import {
   SiExpress,
   SiPython,
   SiTensorflow,
+  SiScikitlearn,
+  SiPandas,
+  SiNumpy,
+  SiPytorch,
+  SiJupyter,
   SiCss,
   SiTailwindcss,
   SiMongodb,
@@ -24,8 +29,11 @@ import {
   SiJest,
   SiI18Next,
   SiZod,
+  SiRedis,
+  SiMongoose,
+  SiOpenai,
 } from "react-icons/si";
-import { FaCode, FaJava, FaLeaf, FaAndroid } from "react-icons/fa";
+import { FaCode, FaJava, FaLeaf, FaAndroid, FaAws } from "react-icons/fa";
 
 export interface SkillNode {
   id: number;
@@ -59,6 +67,8 @@ export const skillsData: SkillNode[] = [
   { id: 10, name: "Zod", icon: SiZod, color: "#3068b7", x: 42, y: 65, ecosystem: 2 },
   { id: 11, name: "Jest", icon: SiJest, color: "#C21325", x: 68, y: 80, ecosystem: 2 },
   { id: 23, name: "Express", icon: SiExpress, color: "#ffffff", x: 55, y: 78, ecosystem: 2 },
+  { id: 39, name: "tsoa", icon: FaCode, color: "#007ACC", x: 30, y: 65, ecosystem: 2 },
+  { id: 40, name: "OpenAI SDK", icon: SiOpenai, color: "#412991", x: 20, y: 35, ecosystem: 2 },
 
   // Java (Ecosistema 3)
   { id: 24, name: "Java", icon: FaJava, color: "#007396", x: 20, y: 50, ecosystem: 3 },
@@ -66,8 +76,13 @@ export const skillsData: SkillNode[] = [
   { id: 26, name: "Spring", icon: FaLeaf, color: "#6DB33F", x: 80, y: 70, ecosystem: 3 },
 
   // Python (Ecosistema 4)
-  { id: 30, name: "Python", icon: SiPython, color: "#3776AB", x: 30, y: 40, ecosystem: 4 },
+  { id: 30, name: "Python", icon: SiPython, color: "#3776AB", x: 25, y: 35, ecosystem: 4 },
   { id: 33, name: "TensorFlow", icon: SiTensorflow, color: "#FF6F00", x: 70, y: 60, ecosystem: 4 },
+  { id: 34, name: "Scikit-Learn", icon: SiScikitlearn, color: "#F7931E", x: 45, y: 70, ecosystem: 4 },
+  { id: 35, name: "Pandas", icon: SiPandas, color: "#150458", x: 50, y: 25, ecosystem: 4 },
+  { id: 36, name: "NumPy", icon: SiNumpy, color: "#013243", x: 80, y: 35, ecosystem: 4 },
+  { id: 37, name: "PyTorch", icon: SiPytorch, color: "#EE4C2C", x: 25, y: 75, ecosystem: 4 },
+  { id: 38, name: "Jupyter", icon: SiJupyter, color: "#F37626", x: 75, y: 80, ecosystem: 4 },
 
   // Infraestructura (Ecosistema 5)
   { id: 17, name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", x: 18, y: 28, ecosystem: 5 },
@@ -75,5 +90,8 @@ export const skillsData: SkillNode[] = [
   { id: 19, name: "MongoDB", icon: SiMongodb, color: "#47A248", x: 82, y: 35, ecosystem: 5 },
   { id: 9, name: "Prisma", icon: SiPrisma, color: "#2D3748", x: 50, y: 50, ecosystem: 5 },
   { id: 20, name: "Supabase", icon: SiSupabase, color: "#3ECF8E", x: 25, y: 65, ecosystem: 5 },
+  { id: 21, name: "Redis", icon: SiRedis, color: "#DC382D", x: 35, y: 45, ecosystem: 5 },
   { id: 22, name: "Docker", icon: SiDocker, color: "#2496ED", x: 60, y: 25, ecosystem: 5 },
+  { id: 41, name: "S3", icon: FaAws, color: "#FF9900", x: 65, y: 75, ecosystem: 5 },
+  { id: 42, name: "Mongoose", icon: SiMongoose, color: "#880000", x: 75, y: 55, ecosystem: 5 },
 ];
