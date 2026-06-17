@@ -164,7 +164,7 @@ export const projectsData = [
     name: "ArenaOfMusic",
     description:
       "Juego web multijugador competitivo basado en la música, donde los jugadores adivinan canciones en tiempo limitado.",
-    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS", "Docker"],
+    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS"],
     url: "https://github.com/RubizZ/ArenaOfMusic",
   },
 ];
