@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { skillsData } from "../data/skills";
 import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
@@ -17,30 +17,62 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
   const [indicatorX, setIndicatorX] = useState(0);
   const [indicatorVisible, setIndicatorVisible] = useState(false);
+  const [transitionType, setTransitionType] = useState<"spring" | "instant">("spring");
+  const [fadeKey, setFadeKey] = useState(0);
 
-  const updateIndicator = () => {
+  const previousTechRef = useRef(selectedTech);
+  const [isFlyingFromTodas, setIsFlyingFromTodas] = useState(false);
+  const [carouselBounds, setCarouselBounds] = useState({ left: 0, right: 0 });
+
+
+
+  const updateIndicator = (type: "spring" | "instant" = "instant") => {
     if (!dockRef.current) return;
-    // Delay slightly to allow layout shifts
-    requestAnimationFrame(() => {
-      if (!dockRef.current) return;
-      const activeEl = dockRef.current.querySelector(`[data-tech="${selectedTech}"]`) as HTMLElement;
-      if (activeEl) {
+    setTransitionType(type);
+    
+    const activeEl = dockRef.current.querySelector(`[data-tech="${selectedTech}"]`) as HTMLElement;
+    if (activeEl) {
         const dockRect = dockRef.current.getBoundingClientRect();
         const elRect = activeEl.getBoundingClientRect();
         const x = elRect.left - dockRect.left + (elRect.width / 2);
+        let finalType = type;
+
+        if (selectedTech === "Todas" && type === "spring") {
+          const dockWidth = dockRect.width;
+          const rightBoundary = dockWidth - carouselBounds.right;
+          // If the old position was hidden by the carousel bounds
+          if (indicatorX < carouselBounds.left || indicatorX > rightBoundary) {
+            finalType = "instant";
+            setFadeKey(k => k + 1); // Remounts to trigger a teleport with fade-in
+          }
+        }
+
+        setTransitionType(finalType);
         setIndicatorX(x);
+
+        if (carouselRef.current) {
+          const carouselRect = carouselRef.current.getBoundingClientRect();
+          setCarouselBounds({
+            left: Math.max(0, carouselRect.left - dockRect.left),
+            right: Math.max(0, dockRect.right - carouselRect.right)
+          });
+        }
         setIndicatorVisible(true);
       }
-    });
   };
 
-  useEffect(() => {
-    updateIndicator();
+  useLayoutEffect(() => {
+    if (selectedTech !== "Todas" && previousTechRef.current === "Todas") {
+      setIsFlyingFromTodas(true);
+    }
+    previousTechRef.current = selectedTech;
+    updateIndicator("spring");
   }, [selectedTech]);
 
   useEffect(() => {
-    window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
+    const handleResize = () => updateIndicator("instant");
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
   
   const opacity = useTransform(scrollY, [4400, 4450], [0, 1]);
@@ -172,7 +204,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           {/* Carrusel de Ecosistemas */}
           <div 
             ref={carouselRef}
-            onScroll={updateIndicator}
+            onScroll={() => updateIndicator("instant")}
             className="carousel-container"
             style={{
               display: 'flex',
@@ -257,23 +289,38 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           </button>
           </LayoutGroup>
 
-          {/* Indicador Global Flotante */}
-          <motion.div
-            animate={{ x: indicatorX, opacity: indicatorVisible ? 1 : 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            style={{
-              position: 'absolute',
-              bottom: '12px',
-              left: '-3px',
-              width: '6px',
-              height: '6px',
-              backgroundColor: 'var(--accent)',
-              borderRadius: '50%',
-              boxShadow: '0 0 10px var(--accent)',
-              pointerEvents: 'none',
-              zIndex: 100
-            }}
-          />
+          {/* Wrapper de enmascaramiento estático para la bola */}
+          <div style={{
+            position: 'absolute',
+            left: 0, top: 0, right: 0, bottom: 0,
+            pointerEvents: 'none',
+            zIndex: 100,
+            clipPath: `inset(0px ${carouselBounds.right}px 0px ${(selectedTech === "Todas" || isFlyingFromTodas) ? 0 : carouselBounds.left}px)`
+          }}>
+            {/* Indicador Global Flotante */}
+            <motion.div
+              key={fadeKey}
+              initial={{ opacity: 0, x: indicatorX }}
+              animate={{ x: indicatorX, opacity: indicatorVisible ? 1 : 0 }}
+              onAnimationComplete={() => setIsFlyingFromTodas(false)}
+              transition={{ 
+                x: transitionType === "spring" 
+                  ? { type: "spring", stiffness: 400, damping: 30 } 
+                  : { type: "tween", duration: 0 },
+                opacity: { duration: 0.2 } // Fade duration
+              }}
+              style={{
+                position: 'absolute',
+                bottom: '12px',
+                left: '-3px',
+                width: '6px',
+                height: '6px',
+                backgroundColor: 'var(--accent)',
+                borderRadius: '50%',
+                boxShadow: '0 0 10px var(--accent)'
+              }}
+            />
+          </div>
 
         </motion.div>
 
