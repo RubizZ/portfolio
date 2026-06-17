@@ -28,7 +28,7 @@ export default function PortfolioClient() {
   // 1600px per project
   // We add 850px at the end so the sticky container unsticks shortly after the last project fully enters (which happens at 650px).
   const scrollHeight = filteredProjects.length > 0 
-    ? 4400 + ((filteredProjects.length - 1) * 1600) + 850 
+    ? 4400 + ((filteredProjects.length - 1) * 1600) + 1600 
     : 5300; // default space if no projects
 
   return (

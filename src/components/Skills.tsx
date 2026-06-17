@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { skillsData } from "../data/skills";
+import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
 
 interface SkillsProps {
   selectedTech: string;
@@ -10,10 +12,50 @@ interface SkillsProps {
 
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const { scrollY } = useScroll();
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   const opacity = useTransform(scrollY, [4400, 4450], [0, 1]);
   const dockY = useTransform(scrollY, [4400, 5050], ['-15vh', '0vh']);
   const pointerEvents = useTransform(scrollY, [4400, 5050], ['none', 'auto']) as any;
+
+  // Group skills by ecosystem
+  const ecosystems = [1, 2, 3, 4, 5];
+  const ecosystemWatermarks: Record<number, React.ReactNode> = {
+    1: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>FRONTEND</span>,
+    2: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>NODE.JS</span>,
+    3: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>JAVA</span>,
+    4: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>PYTHON</span>,
+    5: (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 0.85, fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+        <span>INFRA &</span>
+        <span>DATOS</span>
+      </div>
+    )
+  };
+  
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const { scrollLeft, clientWidth } = carouselRef.current;
+      const currentIndex = Math.round(scrollLeft / clientWidth);
+      const totalSlides = ecosystems.length;
+      
+      if (direction === 'left') {
+        if (currentIndex <= 0) {
+          // Wrap to the last slide
+          carouselRef.current.scrollTo({ left: (totalSlides - 1) * clientWidth, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollTo({ left: (currentIndex - 1) * clientWidth, behavior: 'smooth' });
+        }
+      } else {
+        if (currentIndex >= totalSlides - 1) {
+          // Wrap to the first slide
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollTo({ left: (currentIndex + 1) * clientWidth, behavior: 'smooth' });
+        }
+      }
+    }
+  };
 
   return (
     <motion.div style={{ 
@@ -29,7 +71,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
       pointerEvents: 'none',
       zIndex: 50
     }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
 
         {/* Dock Principal de Tecnologías */}
         <motion.div 
@@ -37,9 +79,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           style={{
             pointerEvents,
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '0.75rem',
+            alignItems: 'center',
             padding: '1rem 1.5rem',
             backgroundColor: 'rgba(255, 255, 255, 0.03)',
             backdropFilter: 'blur(20px)',
@@ -47,66 +87,190 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             border: '1px solid rgba(255, 255, 255, 0.05)',
             boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
             y: dockY,
-            maxWidth: '1000px'
+            width: '90%',
+            maxWidth: '800px'
           }}
         >
-          {skillsData.map(skill => {
-            const Icon = skill.icon;
-            const isActive = selectedTech === skill.name;
-            return (
-              <div 
-                key={skill.name} 
-                onClick={() => {
-                  setSelectedTech(skill.name);
-                  window.scrollTo({ top: 5050, behavior: 'smooth' });
-                }}
-                className="dock-item"
+          {/* Botón Todas */}
+          <div 
+            onClick={() => {
+              setSelectedTech("Todas");
+              window.scrollTo({ top: 5050, behavior: 'smooth' });
+            }}
+            className="dock-item"
+            style={{
+              position: 'relative',
+              padding: '1rem 0.5rem',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem',
+              flexShrink: 0
+            }}
+          >
+            <div className="icon-wrapper" style={{
+              color: selectedTech === "Todas" ? 'var(--accent)' : 'rgba(255,255,255,0.4)',
+              transition: 'all 0.3s ease',
+              transform: selectedTech === "Todas" ? 'scale(1.3)' : 'scale(1)'
+            }}>
+              <FaCode size={28} />
+            </div>
+            {selectedTech === "Todas" && (
+              <motion.div 
+                layoutId="dock-indicator" 
                 style={{
-                  position: 'relative',
-                  padding: '1rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
-              >
-                <div className="icon-wrapper" style={{
-                  color: isActive ? 'var(--accent)' : 'rgba(255,255,255,0.4)',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: isActive ? 'scale(1.3)' : 'scale(1)'
-                }}>
-                  <Icon size={32} />
+                  position: 'absolute',
+                  bottom: '0px',
+                  width: '6px',
+                  height: '6px',
+                  backgroundColor: 'var(--accent)',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 10px var(--accent)'
+                }} 
+              />
+            )}
+            <div className="dock-tooltip">Todas</div>
+          </div>
+
+          {/* Separador Visual */}
+          <div style={{
+            width: '2px',
+            height: '40px',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            margin: '0 1rem',
+            flexShrink: 0
+          }} />
+
+          {/* Flecha Izquierda */}
+          <button 
+            onClick={() => scrollCarousel('left')}
+            className="nav-arrow"
+            style={{ flexShrink: 0, background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: '0.5rem' }}
+          >
+            <FaChevronLeft size={20} />
+          </button>
+
+          {/* Carrusel de Ecosistemas */}
+          <div 
+            ref={carouselRef}
+            className="carousel-container"
+            style={{
+              display: 'flex',
+              overflowX: 'auto',
+              scrollSnapType: 'x mandatory',
+              scrollBehavior: 'smooth',
+              flexGrow: 1,
+              scrollbarWidth: 'none', // Firefox
+              msOverflowStyle: 'none', // IE/Edge
+              paddingTop: '45px',
+              paddingBottom: '45px',
+              marginTop: '-45px',
+              marginBottom: '-45px'
+            }}
+          >
+            {ecosystems.map(ecoId => {
+              const ecoSkills = skillsData.filter(s => s.ecosystem === ecoId);
+              return (
+                <div 
+                  key={ecoId}
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: '100%',
+                    scrollSnapAlign: 'start',
+                    padding: '0 0.5rem'
+                  }}
+                >
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', display: 'flex', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.03)', letterSpacing: '8px', fontWeight: 900, zIndex: 0, pointerEvents: 'none' }}>
+                    {ecosystemWatermarks[ecoId]}
+                  </div>
+                  <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
+                  {ecoSkills.map(skill => {
+                    const Icon = skill.icon;
+                    const isActive = selectedTech === skill.name;
+                    return (
+                      <div 
+                        key={skill.name} 
+                        onClick={() => {
+                          setSelectedTech(skill.name);
+                          window.scrollTo({ top: 5050, behavior: 'smooth' });
+                        }}
+                        className="dock-item"
+                        style={{
+                          position: 'relative',
+                          padding: '0.5rem',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}
+                      >
+                        <div className="icon-wrapper" style={{
+                          color: isActive ? 'var(--accent)' : 'rgba(255,255,255,0.4)',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          transform: isActive ? 'scale(1.3)' : 'scale(1)'
+                        }}>
+                          <Icon size={28} />
+                        </div>
+                        {isActive && (
+                          <motion.div 
+                            layoutId="dock-indicator" 
+                            style={{
+                              position: 'absolute',
+                              bottom: '-5px',
+                              width: '6px',
+                              height: '6px',
+                              backgroundColor: 'var(--accent)',
+                              borderRadius: '50%',
+                              boxShadow: '0 0 10px var(--accent)'
+                            }} 
+                          />
+                        )}
+                        <div className="dock-tooltip">{skill.name}</div>
+                      </div>
+                    );
+                  })}
+                  </div>
                 </div>
-                {isActive && (
-                  <motion.div 
-                    layoutId="dock-indicator" 
-                    style={{
-                      position: 'absolute',
-                      bottom: '0px',
-                      width: '6px',
-                      height: '6px',
-                      backgroundColor: 'var(--accent)',
-                      borderRadius: '50%',
-                      boxShadow: '0 0 10px var(--accent)'
-                    }} 
-                  />
-                )}
-                <div className="dock-tooltip">{skill.name}</div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Flecha Derecha */}
+          <button 
+            onClick={() => scrollCarousel('right')}
+            className="nav-arrow"
+            style={{ flexShrink: 0, background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: '0.5rem' }}
+          >
+            <FaChevronRight size={20} />
+          </button>
+
         </motion.div>
 
       </div>
       <style>{`
+        .carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+        .nav-arrow {
+          transition: all 0.3s ease;
+        }
+        .nav-arrow:hover {
+          color: white !important;
+          transform: scale(1.2);
+        }
         .dock-item:hover .icon-wrapper { 
-          transform: scale(1.5) translateY(-8px) !important; 
+          transform: scale(1.4) translateY(-5px) !important; 
           color: #fff !important; 
         }
         .dock-tooltip {
           position: absolute; 
-          top: -40px; 
+          top: -35px; 
           background: rgba(0,0,0,0.8); 
           color: white;
           padding: 6px 12px; 
@@ -119,6 +283,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           border: 1px solid rgba(255,255,255,0.1);
           font-weight: 500;
           letter-spacing: 1px;
+          z-index: 100;
         }
         .dock-item:hover .dock-tooltip { 
           opacity: 1; 

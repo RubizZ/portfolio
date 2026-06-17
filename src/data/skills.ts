@@ -21,7 +21,6 @@ import {
   SiPrisma,
   SiPostgresql,
   SiSupabase,
-  SiRedis,
   SiJest,
   SiI18Next,
   SiZod,
@@ -76,6 +75,5 @@ export const skillsData: SkillNode[] = [
   { id: 19, name: "MongoDB", icon: SiMongodb, color: "#47A248", x: 82, y: 35, ecosystem: 5 },
   { id: 9, name: "Prisma", icon: SiPrisma, color: "#2D3748", x: 50, y: 50, ecosystem: 5 },
   { id: 20, name: "Supabase", icon: SiSupabase, color: "#3ECF8E", x: 25, y: 65, ecosystem: 5 },
-  { id: 21, name: "Redis", icon: SiRedis, color: "#DC382D", x: 70, y: 70, ecosystem: 5 },
   { id: 22, name: "Docker", icon: SiDocker, color: "#2496ED", x: 60, y: 25, ecosystem: 5 },
 ];

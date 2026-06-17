@@ -28,7 +28,6 @@ import {
   SiPrisma,
   SiPostgresql,
   SiSupabase,
-  SiRedis,
   SiJest,
   SiI18Next,
   SiZod,
@@ -60,7 +59,6 @@ const techIcons: Record<string, any> = {
   Prisma: SiPrisma,
   PostgreSQL: SiPostgresql,
   Supabase: SiSupabase,
-  Redis: SiRedis,
   Jest: SiJest,
   i18next: SiI18Next,
   Zod: SiZod,
@@ -85,7 +83,7 @@ const projectsData = [
     name: "VHUB",
     description:
       "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Redis", "Zod"],
+    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Zod"],
     url: "https://github.com/RubizZ/VHUB",
   },
   {
@@ -308,6 +306,12 @@ function ProjectItem({
       {project.tech.map((t: string, i: number) => {
         // Use safe spots assigned to this specific layout to avoid text/image overlap
         const pos = layout.techSpots[i % layout.techSpots.length];
+        const cycle = Math.floor(i / layout.techSpots.length);
+        
+        // Offset for elements that exceed the available spots
+        const offsetX = cycle * ((i % 2 === 0 ? 1 : -1) * 12); // vw offset
+        const offsetY = cycle * ((i % 3 === 0 ? 1 : -1) * 15); // vh offset
+
         const Icon = techIcons[t];
         return (
           <span
@@ -315,6 +319,8 @@ function ProjectItem({
             className="flying-tech"
             style={{
               ...pos,
+              marginLeft: `${offsetX}vw`,
+              marginTop: `${offsetY}vh`,
               position: "absolute",
               display: "flex",
               alignItems: "center",
