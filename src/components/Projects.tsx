@@ -64,7 +64,7 @@ const techIcons: Record<string, any> = {
   Zod: SiZod,
 };
 
-const projectsData = [
+export const projectsData = [
   {
     name: "flAIghts",
     description:

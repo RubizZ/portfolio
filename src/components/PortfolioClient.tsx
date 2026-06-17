@@ -3,17 +3,7 @@ import { useState } from "react";
 import Hero from "./Hero";
 import TechNetwork from "./TechNetwork";
 import Skills from "./Skills";
-import Projects from "./Projects";
-
-// Duplicate minimal data needed for height calculation
-const projectsData = [
-  { tech: ["TypeScript", "Next.js", "React"] },
-  { tech: ["Android", "Java"] },
-  { tech: ["TypeScript", "Node.js"] },
-  { tech: ["Java"] },
-  { tech: ["TypeScript", "Node.js", "Express"] },
-  { tech: ["HTML", "JavaScript"] }
-];
+import Projects, { projectsData } from "./Projects";
 
 export default function PortfolioClient() {
   const [selectedTech, setSelectedTech] = useState<string>("Todas");
