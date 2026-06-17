@@ -1,29 +1,7 @@
 "use client";
 
-import { SiTypescript, SiJavascript, SiCplusplus, SiNodedotjs, SiReact, SiNextdotjs, SiAndroid, SiHtml5, SiExpress, SiPython, SiDjango, SiFlask, SiTensorflow } from "react-icons/si";
-import { FaCode, FaJava, FaLeaf } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-const skillsData = [
-  { name: "Todas", icon: FaCode },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "JavaScript", icon: SiJavascript },
-  { name: "React", icon: SiReact },
-  { name: "Next.js", icon: SiNextdotjs },
-  { name: "Node.js", icon: SiNodedotjs },
-  { name: "Express", icon: SiExpress },
-  { name: "HTML", icon: SiHtml5 },
-  { name: "Java", icon: FaJava },
-  { name: "Android", icon: SiAndroid },
-  { name: "Spring", icon: FaLeaf },
-  { name: "C++", icon: SiCplusplus },
-  { name: "Qt", icon: SiCplusplus },
-  { name: "Unreal", icon: SiCplusplus },
-  { name: "Python", icon: SiPython },
-  { name: "Django", icon: SiDjango },
-  { name: "Flask", icon: SiFlask },
-  { name: "TensorFlow", icon: SiTensorflow }
-];
+import { skillsData } from "../data/skills";
 
 interface SkillsProps {
   selectedTech: string;
@@ -33,9 +11,9 @@ interface SkillsProps {
 export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const { scrollY } = useScroll();
   
-  const opacity = useTransform(scrollY, [3600, 3650], [0, 1]);
-  const dockY = useTransform(scrollY, [3600, 4250], ['-15vh', '0vh']);
-  const pointerEvents = useTransform(scrollY, [3600, 4250], ['none', 'auto']) as any;
+  const opacity = useTransform(scrollY, [4400, 4450], [0, 1]);
+  const dockY = useTransform(scrollY, [4400, 5050], ['-15vh', '0vh']);
+  const pointerEvents = useTransform(scrollY, [4400, 5050], ['none', 'auto']) as any;
 
   return (
     <motion.div style={{ 
@@ -80,7 +58,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                 key={skill.name} 
                 onClick={() => {
                   setSelectedTech(skill.name);
-                  window.scrollTo({ top: 4250, behavior: 'smooth' });
+                  window.scrollTo({ top: 5050, behavior: 'smooth' });
                 }}
                 className="dock-item"
                 style={{

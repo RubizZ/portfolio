@@ -7,11 +7,16 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "RubizZ - Software Developer",
-  description: "Portafolio personal de RubizZ. Proyectos de software, tecnologías y soluciones.",
+  title: "RubizZ - Software Engineer",
+  description:
+    "Portafolio personal de RubizZ. Proyectos de software, conocimientos y soluciones.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="es" className={inter.variable}>
       <body>{children}</body>

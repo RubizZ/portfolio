@@ -28,8 +28,8 @@ export default function PortfolioClient() {
   // 1600px per project
   // We add 850px at the end so the sticky container unsticks shortly after the last project fully enters (which happens at 650px).
   const scrollHeight = filteredProjects.length > 0 
-    ? 3600 + ((filteredProjects.length - 1) * 1600) + 850 
-    : 4500; // default space if no projects
+    ? 4400 + ((filteredProjects.length - 1) * 1600) + 850 
+    : 5300; // default space if no projects
 
   return (
     <>
@@ -56,7 +56,7 @@ export default function PortfolioClient() {
           <button 
             onClick={() => {
               setSelectedTech("Todas");
-              window.scrollTo({ top: 4250, behavior: 'smooth' });
+              window.scrollTo({ top: 5050, behavior: 'smooth' });
             }}
             style={{
               padding: '1rem 2.5rem',

@@ -1,20 +1,72 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  SiTypescript,
-  SiJavascript,
-  SiNodedotjs,
-  SiReact,
-  SiNextdotjs,
-  SiExpress,
-  SiCplusplus,
-  SiPython,
-  SiDjango,
-  SiFlask,
-  SiTensorflow,
-} from "react-icons/si";
-import { FaJava, FaAndroid, FaLeaf, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { skillsData, SkillNode } from "../data/skills";
+
+const generateConnections = (nodes: SkillNode[]) => {
+  const connections: [number, number][] = [];
+  if (nodes.length < 2) return connections;
+
+  // 1. Árbol de Expansión Mínima (MST) para garantizar una única componente conexa
+  const connected = new Set<number>([0]);
+  
+  while (connected.size < nodes.length) {
+    let minD = Infinity;
+    let bestFrom = -1;
+    let bestTo = -1;
+
+    // Buscar la arista más corta entre un nodo conectado y uno no conectado
+    for (const from of connected) {
+      for (let to = 0; to < nodes.length; to++) {
+        if (!connected.has(to)) {
+          const dx = (nodes[from].x || 0) - (nodes[to].x || 0);
+          const dy = (nodes[from].y || 0) - (nodes[to].y || 0);
+          const d = dx * dx + dy * dy;
+          if (d < minD) {
+            minD = d;
+            bestFrom = from;
+            bestTo = to;
+          }
+        }
+      }
+    }
+
+    if (bestFrom !== -1 && bestTo !== -1) {
+      connections.push([Math.min(bestFrom, bestTo), Math.max(bestFrom, bestTo)]);
+      connected.add(bestTo);
+    }
+  }
+
+  // 2. Añadir conexiones extra para darle aspecto de red o telaraña (no solo un árbol)
+  for (let i = 0; i < nodes.length; i++) {
+    let minD = Infinity;
+    let nearest = -1;
+
+    // Buscar el vecino más cercano a cada nodo
+    for (let j = 0; j < nodes.length; j++) {
+      if (i === j) continue;
+      const dx = (nodes[i].x || 0) - (nodes[j].x || 0);
+      const dy = (nodes[i].y || 0) - (nodes[j].y || 0);
+      const d = dx * dx + dy * dy;
+      if (d < minD) {
+        minD = d;
+        nearest = j;
+      }
+    }
+
+    if (nearest !== -1) {
+      const a = Math.min(i, nearest);
+      const b = Math.max(i, nearest);
+      // Añadir la arista si no estaba ya en el MST
+      if (!connections.some((c) => c[0] === a && c[1] === b)) {
+        connections.push([a, b]);
+      }
+    }
+  }
+
+  return connections;
+};
 
 export default function TechNetwork() {
   const { scrollY } = useScroll();
@@ -30,17 +82,19 @@ export default function TechNetwork() {
   const arrow3PointerEvents = useTransform(scrollY, [1999, 2000, 2800, 2801], ["none", "auto", "auto", "none"]) as any;
 
   const arrow4Opacity = useTransform(scrollY, [2800, 3000, 3400, 3600], [0, 1, 1, 0]);
+  const arrow5Opacity = useTransform(scrollY, [3600, 3800, 4200, 4400], [0, 1, 1, 0]);
   const arrow4PointerEvents = useTransform(scrollY, [2799, 2800, 3600, 3601], ["none", "auto", "auto", "none"]) as any;
+  const arrow5PointerEvents = useTransform(scrollY, [3599, 3600, 4400, 4401], ["none", "auto", "auto", "none"]) as any;
 
   // Master Sidebar Opacity
   const sidebarOpacity = useTransform(
     scrollY,
-    [400, 600, 3400, 3600],
+    [400, 600, 4200, 4400],
     [0, 1, 1, 0],
   );
   const sidebarPointerEvents = useTransform(
     scrollY,
-    [399, 400, 3600, 3601],
+    [399, 400, 4200, 4201],
     ["none", "auto", "auto", "none"],
   ) as any;
 
@@ -65,6 +119,11 @@ export default function TechNetwork() {
     [2800, 3000, 3400, 3600],
     [0.3, 1, 1, 0.3],
   );
+  const menuOpacity5 = useTransform(
+    scrollY,
+    [3600, 3800, 4200, 4400],
+    [0.3, 1, 1, 0.3],
+  );
 
   const menuScale1 = useTransform(
     scrollY,
@@ -86,6 +145,11 @@ export default function TechNetwork() {
     [2800, 3000, 3400, 3600],
     [1, 1.2, 1.2, 1],
   );
+  const menuScale5 = useTransform(
+    scrollY,
+    [3600, 3800, 4200, 4400],
+    [1, 1.2, 1.2, 1],
+  );
 
   // Ecosistema 1: JS/TS (400 - 1200)
   const o1 = useTransform(scrollY, [400, 600, 1000, 1200], [0, 1, 1, 0]);
@@ -93,49 +157,8 @@ export default function TechNetwork() {
   const s1 = useTransform(scrollY, [400, 600], [0.85, 1]);
   const l1 = useTransform(scrollY, [600, 800, 1000, 1200], [0, 0.4, 0.4, 0]);
 
-  const nodes1 = [
-    { id: 1, icon: SiReact, x: 20, y: 30, color: "#61DAFB", name: "React" },
-    {
-      id: 2,
-      icon: SiTypescript,
-      x: 80,
-      y: 25,
-      color: "#3178C6",
-      name: "TypeScript",
-    },
-    {
-      id: 3,
-      icon: SiNodedotjs,
-      x: 50,
-      y: 50,
-      color: "#339933",
-      name: "Node.js",
-    },
-    {
-      id: 4,
-      icon: SiJavascript,
-      x: 30,
-      y: 70,
-      color: "#F7DF1E",
-      name: "JavaScript",
-    },
-    {
-      id: 5,
-      icon: SiNextdotjs,
-      x: 70,
-      y: 75,
-      color: "#ffffff",
-      name: "Next.js",
-    },
-  ];
-  const conn1 = [
-    [0, 2],
-    [1, 2],
-    [2, 3],
-    [2, 4],
-    [0, 3],
-    [1, 4],
-  ];
+  const nodes1 = skillsData.filter((s) => s.ecosystem === 1);
+  const conn1 = generateConnections(nodes1);
 
   // Ecosistema 2: Java (1200 - 2000)
   const o2 = useTransform(scrollY, [1200, 1400, 1800, 2000], [0, 1, 1, 0]);
@@ -143,16 +166,8 @@ export default function TechNetwork() {
   const s2 = useTransform(scrollY, [1200, 1400], [0.85, 1]);
   const l2 = useTransform(scrollY, [1400, 1600, 1800, 2000], [0, 0.4, 0.4, 0]);
 
-  const nodes2 = [
-    { id: 1, icon: FaJava, x: 50, y: 30, color: "#007396", name: "Java" },
-    { id: 2, icon: FaAndroid, x: 25, y: 65, color: "#3DDC84", name: "Android" },
-    { id: 3, icon: FaLeaf, x: 75, y: 65, color: "#6DB33F", name: "Spring" },
-  ];
-  const conn2 = [
-    [0, 1],
-    [0, 2],
-    [1, 2],
-  ];
+  const nodes2 = skillsData.filter((s) => s.ecosystem === 2);
+  const conn2 = generateConnections(nodes2);
 
   // Ecosistema 3: C++ (2000 - 2800)
   const o3 = useTransform(scrollY, [2000, 2200, 2600, 2800], [0, 1, 1, 0]);
@@ -160,22 +175,8 @@ export default function TechNetwork() {
   const s3 = useTransform(scrollY, [2000, 2200], [0.85, 1]);
   const l3 = useTransform(scrollY, [2200, 2400, 2600, 2800], [0, 0.4, 0.4, 0]);
 
-  const nodes3 = [
-    { id: 1, icon: SiCplusplus, x: 50, y: 50, color: "#00599C", name: "C++" },
-    { id: 2, icon: SiCplusplus, x: 20, y: 30, color: "#00599C", name: "Qt" },
-    {
-      id: 3,
-      icon: SiCplusplus,
-      x: 80,
-      y: 70,
-      color: "#00599C",
-      name: "Unreal",
-    },
-  ];
-  const conn3 = [
-    [0, 1],
-    [0, 2],
-  ];
+  const nodes3 = skillsData.filter((s) => s.ecosystem === 3);
+  const conn3 = generateConnections(nodes3);
 
   // Ecosistema 4: Python (2800 - 3600)
   const o4 = useTransform(scrollY, [2800, 3000, 3400, 3600], [0, 1, 1, 0]);
@@ -183,31 +184,24 @@ export default function TechNetwork() {
   const s4 = useTransform(scrollY, [2800, 3000], [0.85, 1]);
   const l4 = useTransform(scrollY, [3000, 3200, 3400, 3600], [0, 0.4, 0.4, 0]);
 
-  const nodes4 = [
-    { id: 1, icon: SiPython, x: 50, y: 50, color: "#3776AB", name: "Python" },
-    { id: 2, icon: SiDjango, x: 20, y: 30, color: "#092E20", name: "Django" },
-    { id: 3, icon: SiFlask, x: 80, y: 30, color: "#ffffff", name: "Flask" },
-    {
-      id: 4,
-      icon: SiTensorflow,
-      x: 50,
-      y: 80,
-      color: "#FF6F00",
-      name: "TensorFlow",
-    },
-  ];
-  const conn4 = [
-    [0, 1],
-    [0, 2],
-    [0, 3],
-    [1, 2],
-  ];
+  const nodes4 = skillsData.filter((s) => s.ecosystem === 4);
+  const conn4 = generateConnections(nodes4);
+
+  // Ecosistema 5: Infraestructura (3600 - 4400)
+  const o5 = useTransform(scrollY, [3600, 3800, 4200, 4400], [0, 1, 1, 0]);
+  const y5 = useTransform(scrollY, [3600, 3800], [40, 0]);
+  const s5 = useTransform(scrollY, [3600, 3800], [0.85, 1]);
+  const l5 = useTransform(scrollY, [3800, 4000, 4200, 4400], [0, 0.4, 0.4, 0]);
+
+  const nodes5 = skillsData.filter((s) => s.ecosystem === 5);
+  const conn5 = generateConnections(nodes5);
 
   const ecosystems = [
     { nodes: nodes1, connections: conn1, o: o1, y: y1, s: s1, l: l1 },
     { nodes: nodes2, connections: conn2, o: o2, y: y2, s: s2, l: l2 },
     { nodes: nodes3, connections: conn3, o: o3, y: y3, s: s3, l: l3 },
     { nodes: nodes4, connections: conn4, o: o4, y: y4, s: s4, l: l4 },
+    { nodes: nodes5, connections: conn5, o: o5, y: y5, s: s5, l: l5 },
   ];
 
   return (
@@ -272,7 +266,7 @@ export default function TechNetwork() {
               letterSpacing: "2px",
             }}
           >
-            01_ WEB
+            01_ FRONTEND
           </span>
         </motion.div>
         <motion.div
@@ -292,7 +286,7 @@ export default function TechNetwork() {
               letterSpacing: "2px",
             }}
           >
-            02_ JAVA
+            02_ NODE.JS
           </span>
         </motion.div>
         <motion.div
@@ -312,7 +306,7 @@ export default function TechNetwork() {
               letterSpacing: "2px",
             }}
           >
-            03_ C++
+            03_ JAVA
           </span>
         </motion.div>
         <motion.div
@@ -333,6 +327,26 @@ export default function TechNetwork() {
             }}
           >
             04_ PYTHON
+          </span>
+        </motion.div>
+        <motion.div
+          style={{
+            opacity: menuOpacity5,
+            scale: menuScale5,
+            transformOrigin: "left",
+            cursor: "pointer",
+          }}
+          onClick={() => window.scrollTo({ top: 4000, behavior: "smooth" })}
+        >
+          <span
+            style={{
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              color: "var(--text-main)",
+              letterSpacing: "2px",
+            }}
+          >
+            05_ INFRA & DATOS
           </span>
         </motion.div>
       </motion.div>
@@ -458,14 +472,14 @@ export default function TechNetwork() {
         }}
       >
         <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
-          Siguiente: Java
+          Siguiente: Node.js
         </span>
         <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
           <FaChevronDown size={20} color="var(--text-muted)" />
         </motion.div>
       </motion.div>
 
-      {/* Flecha a C++ */}
+      {/* Flecha a Python */}
       <motion.div
         onClick={() => window.scrollTo({ top: 2400, behavior: "smooth" })}
         style={{
@@ -484,42 +498,16 @@ export default function TechNetwork() {
         }}
       >
         <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
-          Siguiente: C++
+          Siguiente: Java
         </span>
         <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
           <FaChevronDown size={20} color="var(--text-muted)" />
         </motion.div>
       </motion.div>
 
-      {/* Flecha a Python */}
+      {/* Flecha a Infraestructura */}
       <motion.div
-        onClick={() => window.scrollTo({ top: 3200, behavior: "smooth" })}
-        style={{
-          position: "absolute",
-          bottom: "8vh",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.5rem",
-          opacity: arrow3Opacity,
-          pointerEvents: arrow3PointerEvents,
-          cursor: "pointer",
-          zIndex: 50,
-        }}
-      >
-        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
-          Siguiente: Python
-        </span>
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
-          <FaChevronDown size={20} color="var(--text-muted)" />
-        </motion.div>
-      </motion.div>
-
-      {/* Flecha a Proyectos */}
-      <motion.div
-        onClick={() => window.scrollTo({ top: 4250, behavior: "smooth" })}
+        onClick={() => window.scrollTo({ top: 4000, behavior: "smooth" })}
         style={{
           position: "absolute",
           bottom: "8vh",
@@ -531,6 +519,32 @@ export default function TechNetwork() {
           gap: "0.5rem",
           opacity: arrow4Opacity,
           pointerEvents: arrow4PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Siguiente: Infraestructura
+        </span>
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronDown size={20} color="var(--text-muted)" />
+        </motion.div>
+      </motion.div>
+
+      {/* Flecha a Proyectos */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 5050, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          bottom: "8vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow5Opacity,
+          pointerEvents: arrow5PointerEvents,
           cursor: "pointer",
           zIndex: 50,
         }}

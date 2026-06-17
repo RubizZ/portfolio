@@ -8,7 +8,6 @@ import {
 import {
   SiTypescript,
   SiJavascript,
-  SiCplusplus,
   SiNodedotjs,
   SiReact,
   SiNextdotjs,
@@ -16,9 +15,23 @@ import {
   SiHtml5,
   SiExpress,
   SiPython,
-  SiDjango,
-  SiFlask,
   SiTensorflow,
+  SiCss,
+  SiTailwindcss,
+  SiMongodb,
+  SiThreedotjs,
+  SiDocker,
+  SiMysql,
+  SiVite,
+  SiReactquery,
+  SiAxios,
+  SiPrisma,
+  SiPostgresql,
+  SiSupabase,
+  SiRedis,
+  SiJest,
+  SiI18Next,
+  SiZod,
 } from "react-icons/si";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -30,30 +43,41 @@ const techIcons: Record<string, any> = {
   "Node.js": SiNodedotjs,
   Express: SiExpress,
   HTML: SiHtml5,
+  CSS: SiCss,
+  "Tailwind CSS": SiTailwindcss,
   Java: FaJava,
   Android: SiAndroid,
   Spring: FaLeaf,
-  "C++": SiCplusplus,
-  Qt: SiCplusplus,
-  Unreal: SiCplusplus,
   Python: SiPython,
-  Django: SiDjango,
-  Flask: SiFlask,
   TensorFlow: SiTensorflow,
+  MongoDB: SiMongodb,
+  "Three.js": SiThreedotjs,
+  Docker: SiDocker,
+  MySQL: SiMysql,
+  Vite: SiVite,
+  "React Query": SiReactquery,
+  Axios: SiAxios,
+  Prisma: SiPrisma,
+  PostgreSQL: SiPostgresql,
+  Supabase: SiSupabase,
+  Redis: SiRedis,
+  Jest: SiJest,
+  i18next: SiI18Next,
+  Zod: SiZod,
 };
 
 const projectsData = [
   {
     name: "flAIghts",
     description:
-      "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino.",
-    tech: ["TypeScript", "Next.js", "React"],
+      "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
+    tech: ["TypeScript", "Vite", "React", "Python", "HTML", "CSS", "Tailwind CSS", "MongoDB", "Three.js", "React Query", "Axios", "i18next"],
     url: "https://github.com/RubizZ/flAIghts",
   },
   {
     name: "CollabUp",
     description:
-      "Aplicación de Android para organizar eventos y tareas compartidas con amigos o familia.",
+      "Aplicación de Android desarrollada en Java para la organización simultánea y colaborativa de eventos y tareas compartidas.",
     tech: ["Android", "Java"],
     url: "https://github.com/RubizZ/CollabUp",
   },
@@ -61,28 +85,28 @@ const projectsData = [
     name: "VHUB",
     description:
       "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: ["TypeScript", "Node.js"],
+    tech: ["TypeScript", "Next.js", "React", "Node.js", "Docker", "CSS", "Prisma", "PostgreSQL", "Supabase", "Redis", "Zod"],
     url: "https://github.com/RubizZ/VHUB",
   },
   {
     name: "Trendy",
     description:
-      "Aplicación de escritorio sobre una tienda de ropa aplicando ingeniería del software.",
-    tech: ["Java"],
+      "Aplicación de escritorio sobre una tienda de ropa aplicando principios de Ingeniería del Software.",
+    tech: ["Java", "MySQL"],
     url: "https://github.com/RubizZ/Trendy",
   },
   {
     name: "typed-express-pipeline",
     description:
-      "Librería Node.js para facilitar el tipado y encadenamiento de middleware en Express.",
-    tech: ["TypeScript", "Node.js", "Express"],
+      "Librería Node.js sin dependencias para facilitar el tipado estricto y el encadenamiento seguro de middlewares en Express.",
+    tech: ["TypeScript", "Node.js", "Express", "JavaScript", "Jest"],
     url: "https://github.com/RubizZ/typed-express-pipeline",
   },
   {
     name: "ArenaOfMusic",
     description:
-      "Aplicación web multijugador sobre adivinar canciones escuchando un tiempo limitado.",
-    tech: ["HTML", "JavaScript"],
+      "Juego web multijugador competitivo basado en la música, donde los jugadores adivinan canciones en tiempo limitado.",
+    tech: ["HTML", "JavaScript", "Java", "CSS", "Python", "Docker"],
     url: "https://github.com/RubizZ/ArenaOfMusic",
   },
 ];
@@ -195,8 +219,8 @@ function ProjectItem({
   const { scrollY } = useScroll();
 
   // Define scroll ranges for scrubbing
-  const startEnter = 3600 + index * 1600;
-  const endEnter = startEnter + 650; // Syncs perfectly with 3600->4250 dockY animation for the first item
+  const startEnter = 4400 + index * 1600;
+  const endEnter = startEnter + 650; // Syncs perfectly with 4400->5050 dockY animation for the first item
   const startExit = endEnter + 600;
   const endExit = startExit + 500;
 
