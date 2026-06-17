@@ -76,7 +76,7 @@ export default function Hero() {
                 <FaGithub size={20} /> GitHub
               </a>
               <a
-                href="https://www.linkedin.com/in/rub%C3%A9n-hidalgo-arias-96295134a"
+                href="https://www.linkedin.com/in/ruben-hidalgo-arias"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline"
