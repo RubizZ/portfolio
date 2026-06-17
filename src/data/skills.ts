@@ -36,9 +36,17 @@ import {
 } from "react-icons/si";
 import { FaCode, FaJava, FaLeaf, FaAndroid, FaAws } from "react-icons/fa";
 
+export type SkillName = 
+  | "Todas" | "React" | "Next.js" | "Vite" | "React Query" | "HTML" | "CSS" 
+  | "Tailwind CSS" | "Three.js" | "i18next" | "Axios" | "TypeScript" | "Node.js" 
+  | "JavaScript" | "Zod" | "Jest" | "Express" | "OpenAI SDK" | "Java" | "Android" 
+  | "Spring" | "Thymeleaf" | "Python" | "TensorFlow" | "Scikit-Learn" | "Pandas" 
+  | "NumPy" | "Jupyter" | "PostgreSQL" | "MySQL" | "MongoDB" | "Prisma" 
+  | "Supabase" | "Redis" | "Docker" | "S3" | "Mongoose" | "Ollama";
+
 export interface SkillNode {
   id: number;
-  name: string;
+  name: SkillName;
   icon: any;
   color?: string;
   x?: number;
@@ -196,15 +204,7 @@ export const skillsData: SkillNode[] = [
     y: 78,
     ecosystem: 2,
   },
-  {
-    id: 39,
-    name: "tsoa",
-    icon: FaCode,
-    color: "#007ACC",
-    x: 30,
-    y: 65,
-    ecosystem: 2,
-  },
+
   {
     id: 40,
     name: "OpenAI SDK",

@@ -2,174 +2,11 @@
 import { useRef, useState, useEffect } from "react";
 import {
   FaGithub,
-  FaCode,
-  FaJava,
-  FaLeaf,
   FaChevronDown,
-  FaAws,
 } from "react-icons/fa";
-import {
-  SiTypescript,
-  SiJavascript,
-  SiNodedotjs,
-  SiReact,
-  SiNextdotjs,
-  SiAndroid,
-  SiHtml5,
-  SiExpress,
-  SiPython,
-  SiTensorflow,
-  SiScikitlearn,
-  SiCss,
-  SiTailwindcss,
-  SiMongodb,
-  SiThreedotjs,
-  SiDocker,
-  SiMysql,
-  SiVite,
-  SiReactquery,
-  SiAxios,
-  SiPrisma,
-  SiPostgresql,
-  SiSupabase,
-  SiJest,
-  SiI18Next,
-  SiZod,
-  SiRedis,
-  SiMongoose,
-  SiOpenai,
-  SiPandas,
-  SiNumpy,
-  SiPytorch,
-  SiJupyter,
-  SiOllama,
-  SiThymeleaf,
-} from "react-icons/si";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-const techIcons: Record<string, any> = {
-  TypeScript: SiTypescript,
-  JavaScript: SiJavascript,
-  React: SiReact,
-  "Next.js": SiNextdotjs,
-  "Node.js": SiNodedotjs,
-  Express: SiExpress,
-  HTML: SiHtml5,
-  CSS: SiCss,
-  "Tailwind CSS": SiTailwindcss,
-  Java: FaJava,
-  Android: SiAndroid,
-  Spring: FaLeaf,
-  Python: SiPython,
-  TensorFlow: SiTensorflow,
-  "Scikit-Learn": SiScikitlearn,
-  MongoDB: SiMongodb,
-  "Three.js": SiThreedotjs,
-  Docker: SiDocker,
-  MySQL: SiMysql,
-  Vite: SiVite,
-  "React Query": SiReactquery,
-  Axios: SiAxios,
-  Prisma: SiPrisma,
-  PostgreSQL: SiPostgresql,
-  Supabase: SiSupabase,
-  Jest: SiJest,
-  i18next: SiI18Next,
-  Zod: SiZod,
-  S3: FaAws,
-  Redis: SiRedis,
-  Mongoose: SiMongoose,
-  "OpenAI SDK": SiOpenai,
-  Pandas: SiPandas,
-  NumPy: SiNumpy,
-  PyTorch: SiPytorch,
-  Jupyter: SiJupyter,
-  tsoa: FaCode,
-  Orval: FaCode,
-  Ollama: SiOllama,
-  Thymeleaf: SiThymeleaf,
-};
-
-export const projectsData = [
-  {
-    name: "flAIghts",
-    description:
-      "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
-    tech: [
-      "TypeScript",
-      "Vite",
-      "React",
-      "HTML",
-      "CSS",
-      "Tailwind CSS",
-      "MongoDB",
-      "Three.js",
-      "React Query",
-      "Axios",
-      "i18next",
-      "S3",
-      "Express",
-      "Mongoose",
-      "OpenAI SDK",
-      "tsoa",
-      "Zod",
-      "Orval",
-      "Ollama",
-      "Docker",
-    ],
-    url: "https://github.com/RubizZ/flAIghts",
-  },
-  {
-    name: "CollabUp",
-    description:
-      "Aplicación de Android desarrollada en Java para la organización simultánea y colaborativa de eventos y tareas compartidas.",
-    tech: ["Android", "Java"],
-    url: "https://github.com/RubizZ/CollabUp",
-  },
-  {
-    name: "VHUB",
-    description:
-      "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
-    tech: [
-      "TypeScript",
-      "Next.js",
-      "React",
-      "Node.js",
-      "Docker",
-      "CSS",
-      "Prisma",
-      "PostgreSQL",
-      "Supabase",
-      "Zod",
-      "S3",
-      "Redis",
-      "Axios",
-      "HTML",
-    ],
-    url: "https://github.com/RubizZ/VHUB",
-  },
-  {
-    name: "Trendy",
-    description:
-      "Aplicación de escritorio sobre una tienda de ropa aplicando principios de Ingeniería del Software.",
-    tech: ["Java", "MySQL"],
-    url: "https://github.com/RubizZ/Trendy",
-  },
-  {
-    name: "typed-express-pipeline",
-    description:
-      "Librería Node.js sin dependencias para facilitar el tipado estricto y el encadenamiento seguro de middlewares en Express.",
-    tech: ["TypeScript", "Node.js", "Express", "JavaScript", "Jest"],
-    url: "https://github.com/RubizZ/typed-express-pipeline",
-  },
-  {
-    name: "ArenaOfMusic",
-    description:
-      "Juego web multijugador competitivo basado en la música, donde los jugadores adivinan canciones en tiempo limitado.",
-    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS"],
-    url: "https://github.com/RubizZ/ArenaOfMusic",
-  },
-];
+import { projectsData, Project } from "../data/projects";
+import { skillsData } from "../data/skills";
 
 const projectLayouts: any[] = [
   {
@@ -229,8 +66,6 @@ function getPseudoRandom(seedStr: string) {
   };
 }
 
-
-
 function ProjectItem({
   project,
   index,
@@ -238,7 +73,7 @@ function ProjectItem({
   isLast,
   nextProjectName,
 }: {
-  project: any;
+  project: Project;
   index: number;
   layout: any;
   isLast: boolean;
@@ -431,9 +266,10 @@ function ProjectItem({
     >
       {/* Flying Technologies */}
       {techPositions.length > 0 && project.tech.map((techName: string, i: number) => {
-        const Icon = techIcons[techName];
         const pos = techPositions[i];
         if (!pos) return null;
+        const skill = skillsData.find((s) => s.name === techName);
+        const Icon = skill?.icon;
         
         return (
           <motion.span
