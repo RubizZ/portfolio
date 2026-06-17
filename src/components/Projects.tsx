@@ -1,6 +1,11 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { FaGithub, FaChevronDown, FaChevronUp, FaExternalLinkAlt } from "react-icons/fa";
+import {
+  FaGithub,
+  FaChevronDown,
+  FaChevronUp,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
@@ -372,13 +377,13 @@ function ProjectItem({
                 textTransform: "uppercase",
                 letterSpacing: "2px",
                 fontWeight: 600,
-                color: "rgba(255,255,255,0.2)",
+                color: "rgba(255,255,255,0.14)",
                 pointerEvents: "none",
                 zIndex: 0,
                 animationDelay: `-${i * 0.8}s`,
               }}
             >
-              {Icon && <Icon size={24} style={{ opacity: 0.7 }} />}
+              {Icon && <Icon size={24} style={{ opacity: 0.5 }} />}
               {techName}
             </motion.span>
           );
@@ -429,14 +434,36 @@ function ProjectItem({
                     <FaExternalLinkAlt size={36} />
                   </a>
                   <div className="github-tag top">
-                    <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "rotate(-90deg)" }}>
+                    <svg
+                      width="40"
+                      height="30"
+                      viewBox="0 0 40 30"
+                      style={{
+                        overflow: "visible",
+                        flexShrink: 0,
+                        transform: "rotate(-90deg)",
+                      }}
+                    >
                       <defs>
-                      <mask id={`mask-${index}-svg`}>
-                        <rect x="-20" y="-30" width="80" height="80" fill="white" />
-                        <circle cx="0" cy="0" r="14" fill="black" />
-                      </mask>
-                    </defs>
-                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" mask={`url(#mask-${index}-svg)`} />
+                        <mask id={`mask-${index}-svg`}>
+                          <rect
+                            x="-20"
+                            y="-30"
+                            width="80"
+                            height="80"
+                            fill="white"
+                          />
+                          <circle cx="0" cy="0" r="14" fill="black" />
+                        </mask>
+                      </defs>
+                      <path
+                        d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeDasharray="3 3"
+                        mask={`url(#mask-${index}-svg)`}
+                      />
                     </svg>
                     <span className="github-tag-text">VER WEB</span>
                   </div>
@@ -453,14 +480,36 @@ function ProjectItem({
                   <FaGithub size={42} />
                 </a>
                 <div className="github-tag left">
-                  <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "scaleX(-1)" }}>
+                  <svg
+                    width="40"
+                    height="30"
+                    viewBox="0 0 40 30"
+                    style={{
+                      overflow: "visible",
+                      flexShrink: 0,
+                      transform: "scaleX(-1)",
+                    }}
+                  >
                     <defs>
                       <mask id={`mask-${index}-svg`}>
-                        <rect x="-20" y="-30" width="80" height="80" fill="white" />
+                        <rect
+                          x="-20"
+                          y="-30"
+                          width="80"
+                          height="80"
+                          fill="white"
+                        />
                         <circle cx="0" cy="0" r="14" fill="black" />
                       </mask>
                     </defs>
-                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" mask={`url(#mask-${index}-svg)`} />
+                    <path
+                      d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeDasharray="3 3"
+                      mask={`url(#mask-${index}-svg)`}
+                    />
                   </svg>
                   <span className="github-tag-text">VER EN GITHUB</span>
                 </div>
@@ -493,14 +542,32 @@ function ProjectItem({
                   <FaGithub size={42} />
                 </a>
                 <div className="github-tag right">
-                  <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0 }}>
+                  <svg
+                    width="40"
+                    height="30"
+                    viewBox="0 0 40 30"
+                    style={{ overflow: "visible", flexShrink: 0 }}
+                  >
                     <defs>
                       <mask id={`mask-${index}-svg`}>
-                        <rect x="-20" y="-30" width="80" height="80" fill="white" />
+                        <rect
+                          x="-20"
+                          y="-30"
+                          width="80"
+                          height="80"
+                          fill="white"
+                        />
                         <circle cx="0" cy="0" r="14" fill="black" />
                       </mask>
                     </defs>
-                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" mask={`url(#mask-${index}-svg)`} />
+                    <path
+                      d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeDasharray="3 3"
+                      mask={`url(#mask-${index}-svg)`}
+                    />
                   </svg>
                   <span className="github-tag-text">VER EN GITHUB</span>
                 </div>
@@ -517,14 +584,36 @@ function ProjectItem({
                     <FaExternalLinkAlt size={36} />
                   </a>
                   <div className="github-tag top">
-                    <svg width="40" height="30" viewBox="0 0 40 30" style={{ overflow: "visible", flexShrink: 0, transform: "rotate(-90deg)" }}>
+                    <svg
+                      width="40"
+                      height="30"
+                      viewBox="0 0 40 30"
+                      style={{
+                        overflow: "visible",
+                        flexShrink: 0,
+                        transform: "rotate(-90deg)",
+                      }}
+                    >
                       <defs>
-                      <mask id={`mask-${index}-svg`}>
-                        <rect x="-20" y="-30" width="80" height="80" fill="white" />
-                        <circle cx="0" cy="0" r="14" fill="black" />
-                      </mask>
-                    </defs>
-                    <path d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" mask={`url(#mask-${index}-svg)`} />
+                        <mask id={`mask-${index}-svg`}>
+                          <rect
+                            x="-20"
+                            y="-30"
+                            width="80"
+                            height="80"
+                            fill="white"
+                          />
+                          <circle cx="0" cy="0" r="14" fill="black" />
+                        </mask>
+                      </defs>
+                      <path
+                        d="M 0,-10 C 20,-20 30,20 20,25 C 10,30 10,10 20,10 C 30,10 30,20 40,20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeDasharray="3 3"
+                        mask={`url(#mask-${index}-svg)`}
+                      />
                     </svg>
                     <span className="github-tag-text">VER WEB</span>
                   </div>
@@ -763,10 +852,12 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           pointer-events: none;
           color: rgba(255,255,255,0.3);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          opacity: 0;
         }
         .github-btn-wrapper:hover .github-tag {
           color: rgba(255,255,255,0.9);
           transform: translateY(4px);
+          opacity: 1;
         }
         .github-btn-wrapper:hover .github-tag.top {
           transform: translateX(-50%) translateY(-4px);
