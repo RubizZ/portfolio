@@ -821,8 +821,8 @@ export default function Projects({ selectedTech }: ProjectsProps) {
         }
         @keyframes floatAnimation {
           0% { transform: translateY(0px) rotate(0deg) scale(1); }
-          33% { transform: translateY(-20px) rotate(5deg) scale(1.1); }
-          66% { transform: translateY(15px) rotate(-5deg) scale(0.9); }
+          33% { transform: translateY(-8px) rotate(2deg) scale(1.03); }
+          66% { transform: translateY(6px) rotate(-2deg) scale(0.97); }
           100% { transform: translateY(0px) rotate(0deg) scale(1); }
         }
       `}</style>
