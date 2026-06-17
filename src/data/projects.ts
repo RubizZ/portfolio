@@ -44,7 +44,7 @@ export const projectsData: Project[] = [
   {
     name: "VHUB",
     description:
-      "Plataforma enfocada en gestión y organización, demostrando habilidades de integración de sistemas.",
+      "Plataforma para organizar equipos competitivos con funciones de disponibilidad, estadísticas, leaderboards, chat en tiempo real y editor de estrategias.",
     tech: [
       "TypeScript",
       "Next.js",

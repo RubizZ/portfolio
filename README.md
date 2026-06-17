@@ -55,7 +55,7 @@
 *Aquí puedes encontrar algunos de los proyectos en los que he trabajado:*
 
 - **[flAIghts](https://github.com/RubizZ/flAIghts)** - Plataforma inteligente impulsada por IA que optimiza y recomienda rutas de vuelo. *(AWS S3, Docker, Node.js, React...)*
-- **[VHUB](https://github.com/RubizZ/VHUB)** - Hub de contenidos en vídeo con un backend robusto y arquitectura moderna. *(React, TypeScript, Node.js, Express, S3...)*
+- **[VHUB](https://github.com/RubizZ/VHUB)** - Plataforma para organizar equipos competitivos con funciones de disponibilidad, estadísticas, leaderboards, chat en tiempo real y editor de estrategias. *(React, TypeScript, Node.js, Express, S3...)*
 - **[typed-express-pipeline](https://github.com/RubizZ/typed-express-pipeline)** - Librería open-source en Node.js/TypeScript sin dependencias para tipado estricto y encadenamiento seguro de middlewares en Express.
 - **[ArenaOfMusic](https://github.com/RubizZ/ArenaOfMusic)** - Juego web multijugador competitivo basado en adivinar canciones en tiempo real. *(Java, Spring, Thymeleaf, JavaScript...)*
 - **[Trendy](https://github.com/RubizZ/Trendy)** - Aplicación de escritorio sobre gestión y tienda de ropa aplicando diseño y arquitectura de software. *(Java, MySQL)*
