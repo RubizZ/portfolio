@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import Hero from "./Hero";
 import TechNetwork from "./TechNetwork";
 import Skills from "./Skills";
-import Projects, { projectsData } from "./Projects";
+import Projects from "./Projects";
+import { projectsData } from "../data/projects";
 import InteractiveBackground from "./InteractiveBackground";
 
 export default function PortfolioClient() {
