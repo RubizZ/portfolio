@@ -91,6 +91,8 @@ export default function PortfolioClient() {
               window.scrollTo({ top: 5050, behavior: "smooth" });
             }}
             style={{
+              width: "100%",
+              maxWidth: "350px",
               padding: "1rem 2.5rem",
               backgroundColor: "rgba(255, 255, 255, 0.03)",
               backdropFilter: "blur(20px)",
@@ -130,6 +132,8 @@ export default function PortfolioClient() {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           style={{
+            width: "100%",
+            maxWidth: "350px",
             padding: "1rem 2.5rem",
             backgroundColor: "transparent",
             color: "var(--text-muted)",
