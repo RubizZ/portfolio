@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { skillsData, SkillNode } from "../data/skills";
 
 const generateConnections = (nodes: SkillNode[]) => {
@@ -218,24 +218,6 @@ export default function TechNetwork() {
         alignItems: "center",
       }}
     >
-      <motion.h2
-        style={{
-          position: "absolute",
-          top: "10vh",
-          width: "100%",
-          textAlign: "center",
-          fontSize: "3rem",
-          fontWeight: 300,
-          letterSpacing: "4px",
-          color: "var(--text-main)",
-          opacity: sidebarOpacity,
-          zIndex: 20,
-          pointerEvents: "none",
-        }}
-      >
-        CONOCIMIENTOS
-      </motion.h2>
-
       {/* Menú Lateral */}
       <motion.div
         style={{
@@ -449,7 +431,33 @@ export default function TechNetwork() {
         </div>
       ))}
 
-      {/* Flecha a Java */}
+      {/* Flecha a Bienvenida */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          top: "12vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow1Opacity,
+          pointerEvents: arrow1PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronUp size={20} color="var(--text-muted)" />
+        </motion.div>
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Volver a la Bienvenida
+        </span>
+      </motion.div>
+
+      {/* Flecha a Node.js */}
       <motion.div
         onClick={() => window.scrollTo({ top: 1600, behavior: "smooth" })}
         style={{
@@ -475,7 +483,33 @@ export default function TechNetwork() {
         </motion.div>
       </motion.div>
 
-      {/* Flecha a Python */}
+      {/* Flecha anterior: Frontend */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 800, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          top: "12vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow2Opacity,
+          pointerEvents: arrow2PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronUp size={20} color="var(--text-muted)" />
+        </motion.div>
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Anterior: Frontend
+        </span>
+      </motion.div>
+
+      {/* Flecha a Java */}
       <motion.div
         onClick={() => window.scrollTo({ top: 2400, behavior: "smooth" })}
         style={{
@@ -500,6 +534,32 @@ export default function TechNetwork() {
           <FaChevronDown size={20} color="var(--text-muted)" />
         </motion.div>
       </motion.div>
+      {/* Flecha anterior: Node.js */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 1600, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          top: "12vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow3Opacity,
+          pointerEvents: arrow3PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronUp size={20} color="var(--text-muted)" />
+        </motion.div>
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Anterior: Node.js
+        </span>
+      </motion.div>
+
       {/* Flecha a Python */}
       <motion.div
         onClick={() => window.scrollTo({ top: 3200, behavior: "smooth" })}
@@ -526,6 +586,32 @@ export default function TechNetwork() {
         </motion.div>
       </motion.div>
 
+      {/* Flecha anterior: Java */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 2400, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          top: "12vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow4Opacity,
+          pointerEvents: arrow4PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronUp size={20} color="var(--text-muted)" />
+        </motion.div>
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Anterior: Java
+        </span>
+      </motion.div>
+
       {/* Flecha a Infraestructura */}
       <motion.div
         onClick={() => window.scrollTo({ top: 4000, behavior: "smooth" })}
@@ -550,6 +636,32 @@ export default function TechNetwork() {
         <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
           <FaChevronDown size={20} color="var(--text-muted)" />
         </motion.div>
+      </motion.div>
+
+      {/* Flecha anterior: Python */}
+      <motion.div
+        onClick={() => window.scrollTo({ top: 3200, behavior: "smooth" })}
+        style={{
+          position: "absolute",
+          top: "12vh",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          opacity: arrow5Opacity,
+          pointerEvents: arrow5PointerEvents,
+          cursor: "pointer",
+          zIndex: 50,
+        }}
+      >
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+          <FaChevronUp size={20} color="var(--text-muted)" />
+        </motion.div>
+        <span style={{ fontSize: "0.9rem", color: "var(--text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
+          Anterior: Python
+        </span>
       </motion.div>
 
       {/* Flecha a Proyectos */}

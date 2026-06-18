@@ -73,7 +73,7 @@ export const skillsData: SkillNode[] = [
     icon: SiNextdotjs,
     color: "#ffffff",
     x: 50,
-    y: 20,
+    y: 35,
     ecosystem: 1,
   },
   {
@@ -118,7 +118,7 @@ export const skillsData: SkillNode[] = [
     icon: SiTailwindcss,
     color: "#06B6D4",
     x: 55,
-    y: 80,
+    y: 65,
     ecosystem: 1,
   },
   {
@@ -200,8 +200,8 @@ export const skillsData: SkillNode[] = [
     name: "Express",
     icon: SiExpress,
     color: "#ffffff",
-    x: 55,
-    y: 78,
+    x: 60,
+    y: 70,
     ecosystem: 2,
   },
 
@@ -231,7 +231,7 @@ export const skillsData: SkillNode[] = [
     icon: FaAndroid,
     color: "#3DDC84",
     x: 50,
-    y: 25,
+    y: 35,
     ecosystem: 3,
   },
   {
@@ -248,8 +248,8 @@ export const skillsData: SkillNode[] = [
     name: "Thymeleaf",
     icon: SiThymeleaf,
     color: "#005F0F",
-    x: 60,
-    y: 85,
+    x: 65,
+    y: 75,
     ecosystem: 3,
   },
 
@@ -277,8 +277,8 @@ export const skillsData: SkillNode[] = [
     name: "Scikit-Learn",
     icon: SiScikitlearn,
     color: "#F7931E",
-    x: 45,
-    y: 70,
+    x: 40,
+    y: 65,
     ecosystem: 4,
   },
   {
@@ -287,7 +287,7 @@ export const skillsData: SkillNode[] = [
     icon: SiPandas,
     color: "#150458",
     x: 50,
-    y: 25,
+    y: 35,
     ecosystem: 4,
   },
   {
@@ -324,8 +324,8 @@ export const skillsData: SkillNode[] = [
     name: "MySQL",
     icon: SiMysql,
     color: "#4479A1",
-    x: 45,
-    y: 75,
+    x: 40,
+    y: 70,
     ecosystem: 5,
   },
   {
@@ -369,8 +369,8 @@ export const skillsData: SkillNode[] = [
     name: "Docker",
     icon: SiDocker,
     color: "#2496ED",
-    x: 60,
-    y: 25,
+    x: 65,
+    y: 30,
     ecosystem: 5,
   },
   {
@@ -396,8 +396,8 @@ export const skillsData: SkillNode[] = [
     name: "Ollama",
     icon: SiOllama,
     color: "#ffffff",
-    x: 55,
-    y: 85,
+    x: 60,
+    y: 70,
     ecosystem: 5,
   },
 ];

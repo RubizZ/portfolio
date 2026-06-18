@@ -146,6 +146,47 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
     }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
 
+        {/* Flechas Laterales Grandes para Navegar Ecosistemas */}
+        <motion.div
+          onClick={() => scrollCarousel('left')}
+          style={{
+            position: 'absolute',
+            left: '3%',
+            top: '50%',
+            cursor: 'pointer',
+            pointerEvents: pointerEvents,
+            zIndex: 60,
+          }}
+          className="side-arrow"
+        >
+          <motion.div
+            animate={{ x: [0, -10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaChevronLeft size={40} />
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          onClick={() => scrollCarousel('right')}
+          style={{
+            position: 'absolute',
+            right: '3%',
+            top: '50%',
+            cursor: 'pointer',
+            pointerEvents: pointerEvents,
+            zIndex: 60,
+          }}
+          className="side-arrow"
+        >
+          <motion.div
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaChevronRight size={40} />
+          </motion.div>
+        </motion.div>
+
         {/* Dock Principal de Tecnologías */}
         <motion.div 
           ref={dockRef}
@@ -372,6 +413,14 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
         .dock-item:hover .dock-tooltip { 
           opacity: 1; 
           transform: translateY(-5px); 
+        }
+        .side-arrow {
+          color: rgba(255,255,255,0.3);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .side-arrow:hover {
+          color: #fff;
+          transform: translateY(-50%) scale(1.2) !important;
         }
       `}</style>
     </motion.div>

@@ -676,8 +676,8 @@ function ProjectItem({
         </span>
       </motion.div>
 
-      {/* Arrow to Previous Project */}
-      {prevProjectName && (
+      {/* Arrow to Previous Project or Conocimientos */}
+      {prevProjectName ? (
         <motion.div
           onClick={() =>
             window.scrollTo({ top: endEnter - 1600, behavior: "smooth" })
@@ -711,6 +711,42 @@ function ProjectItem({
             }}
           >
             Anterior: {prevProjectName}
+          </span>
+        </motion.div>
+      ) : (
+        <motion.div
+          onClick={() =>
+            window.scrollTo({ top: 4000, behavior: "smooth" })
+          }
+          style={{
+            position: "absolute",
+            top: "17vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.5rem",
+            cursor: "pointer",
+            zIndex: 50,
+            pointerEvents,
+          }}
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaChevronUp size={20} color="var(--text-muted)" />
+          </motion.div>
+          <span
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-muted)",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+            }}
+          >
+            Volver a Conocimientos
           </span>
         </motion.div>
       )}
