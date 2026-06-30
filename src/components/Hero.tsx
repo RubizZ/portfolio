@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaLinkedin, FaChevronDown } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaChevronDown, FaFileAlt } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
@@ -82,6 +82,14 @@ export default function Hero() {
                 className="btn btn-outline"
               >
                 <FaLinkedin size={20} /> LinkedIn
+              </a>
+              <a
+                href="/cv.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                <FaFileAlt size={20} /> CV
               </a>
             </div>
           </div>
