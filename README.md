@@ -1,7 +1,7 @@
 <h1 align="center">Hola, soy Rubén Hidalgo 👋</h1>
 
 <p align="center">
-  <a href="#">
+  <a href="https://rubizz.github.io/portfolio">
     <img src="https://img.shields.io/badge/🌍_Mi_Portfolio-Visitar_Web-007396?style=for-the-badge&logoColor=white" alt="Portfolio Web">
   </a>
   <a href="https://www.linkedin.com/in/ruben-hidalgo-arias/">
@@ -19,7 +19,8 @@
 
 - 🎓 Aplicando principios de Ingeniería del Software para construir aplicaciones escalables y eficientes.
 - 💡 Me encanta explorar el ecosistema del desarrollo backend, la inteligencia artificial y el despliegue en la nube.
-- 🧩 Actualmente construyendo y mejorando mi [Portfolio interactivo](#) con Next.js y animaciones avanzadas.
+- 💼 Actualmente de prácticas en **NTT Data** trabajando para el cliente **BBVA** con arquitectura Cells y Lit (Web Components).
+- 🚀 Finalizando mi Trabajo de Fin de Grado (**flAIghts**) en inteligencia artificial aplicada.
 - 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/ruben-hidalgo-arias/).
 
 ---

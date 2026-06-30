@@ -51,12 +51,13 @@ export interface SkillNode {
   color?: string;
   x?: number;
   y?: number;
-  ecosystem?: number; // 1: WEB, 2: JAVA, 3: C++, 4: PYTHON
+  ecosystem: number; // 1: Frontend, 2: Node.js, 3: Java, 4: Python, 5: Infra/Datos
+  hidden?: boolean;
 }
 
 // Fuente de verdad para todas las habilidades (Skills) y Conocimientos (TechNetwork)
 export const skillsData: SkillNode[] = [
-  { id: 0, name: "Todas", icon: FaCode },
+  { id: 0, name: "Todas", icon: FaCode, ecosystem: 0 },
   // Frontend (Ecosistema 1)
   {
     id: 1,
@@ -255,63 +256,69 @@ export const skillsData: SkillNode[] = [
 
   // Python (Ecosistema 4)
   {
-    id: 30,
+    id: 17,
     name: "Python",
     icon: SiPython,
     color: "#3776AB",
-    x: 25,
-    y: 35,
+    x: 50,
+    y: 50,
     ecosystem: 4,
+    hidden: true,
   },
   {
-    id: 33,
+    id: 18,
     name: "TensorFlow",
     icon: SiTensorflow,
     color: "#FF6F00",
-    x: 70,
-    y: 60,
+    x: 35,
+    y: 25,
     ecosystem: 4,
+    hidden: true,
   },
   {
-    id: 34,
+    id: 19,
     name: "Scikit-Learn",
     icon: SiScikitlearn,
     color: "#F7931E",
-    x: 40,
-    y: 65,
+    x: 65,
+    y: 35,
     ecosystem: 4,
+    hidden: true,
   },
   {
-    id: 35,
+    id: 20,
     name: "Pandas",
     icon: SiPandas,
     color: "#150458",
-    x: 50,
-    y: 35,
+    x: 25,
+    y: 65,
     ecosystem: 4,
+    hidden: true,
   },
   {
-    id: 36,
+    id: 21,
     name: "NumPy",
     icon: SiNumpy,
     color: "#013243",
-    x: 80,
-    y: 35,
+    x: 75,
+    y: 70,
     ecosystem: 4,
+    hidden: true,
   },
   {
-    id: 38,
+    id: 22,
     name: "Jupyter",
     icon: SiJupyter,
     color: "#F37626",
-    x: 75,
-    y: 80,
+    x: 50,
+    y: 85,
     ecosystem: 4,
+    hidden: true,
   },
 
   // Infraestructura (Ecosistema 5)
   {
-    id: 17,
+    id: 50,
     name: "PostgreSQL",
     icon: SiPostgresql,
     color: "#4169E1",

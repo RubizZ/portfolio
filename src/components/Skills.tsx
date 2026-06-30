@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { skillsData, SkillName } from "../data/skills";
+import { SCROLL } from "../utils/scrollController";
 import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
 
 interface SkillsProps {
@@ -87,9 +88,11 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  const opacity = useTransform(scrollY, [4400, 4450], [0, 1]);
-  const dockY = useTransform(scrollY, [4400, 5050], ['-15vh', '0vh']);
-  const pointerEvents = useTransform(scrollY, [4400, 5050], ['none', 'auto']) as any;
+  const start = SCROLL.getTechNetworkEnd();
+  const end = SCROLL.getSkillsEnd();
+  const opacity = useTransform(scrollY, [start, start + 50], [0, 1]);
+  const dockY = useTransform(scrollY, [start, end], ['-15vh', '0vh']);
+  const pointerEvents = useTransform(scrollY, [start, end], ['none', 'auto']) as any;
 
   // Group skills by ecosystem
   const ecosystems = [1, 2, 3, 4, 5];
@@ -212,7 +215,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             data-tech="Todas"
             onClick={() => {
               setSelectedTech("Todas");
-              window.scrollTo({ top: 5050, behavior: 'smooth' });
+              window.scrollTo({ top: SCROLL.getSkillsEnd(), behavior: 'smooth' });
             }}
             className="dock-item"
             style={{
@@ -302,7 +305,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                         data-tech={skill.name}
                         onClick={() => {
                           setSelectedTech(skill.name);
-                          window.scrollTo({ top: 5050, behavior: 'smooth' });
+                          window.scrollTo({ top: SCROLL.getSkillsEnd(), behavior: 'smooth' });
                         }}
                         className="dock-item"
                         style={{

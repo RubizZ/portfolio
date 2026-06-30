@@ -12,7 +12,7 @@ export const projectsData: Project[] = [
   {
     name: "flAIghts",
     description:
-      "Aplicación web que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
+      "Aplicación web (Trabajo de Fin de Grado) que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos de IA.",
     tech: [
       "TypeScript",
       "Vite",

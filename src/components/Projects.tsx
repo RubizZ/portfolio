@@ -9,6 +9,8 @@ import {
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
+import { SCROLL } from "../utils/scrollController";
+import { activeEcosystems } from "../data/ecosystems";
 
 const projectLayouts: any[] = [
   {
@@ -265,9 +267,8 @@ function ProjectItem({
   ]);
   const { scrollY } = useScroll();
 
-  // Define scroll ranges for scrubbing
-  const startEnter = 4400 + index * 1600;
-  const endEnter = startEnter + 650; // Syncs perfectly with 4400->5050 dockY animation for the first item
+  const startEnter = SCROLL.getProjectStart(index);
+  const endEnter = startEnter + SCROLL.SKILLS_GAP; // Syncs perfectly with dockY animation for the first item
   const startExit = endEnter + 600;
   const endExit = startExit + 500;
 
@@ -680,7 +681,7 @@ function ProjectItem({
       {prevProjectName ? (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: endEnter - 1600, behavior: "smooth" })
+            window.scrollTo({ top: SCROLL.getProjectStart(index - 1), behavior: "smooth" })
           }
           style={{
             position: "absolute",
@@ -716,7 +717,7 @@ function ProjectItem({
       ) : (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: 4000, behavior: "smooth" })
+            window.scrollTo({ top: SCROLL.getEcosystemCenter(activeEcosystems.length - 1), behavior: "smooth" })
           }
           style={{
             position: "absolute",
@@ -755,7 +756,7 @@ function ProjectItem({
       {nextProjectName && (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: endEnter + 1600, behavior: "smooth" })
+            window.scrollTo({ top: SCROLL.getProjectStart(index + 1), behavior: "smooth" })
           }
           style={{
             position: "absolute",
