@@ -10,7 +10,8 @@
 </p>
 
 <p align="center">
-  <em>Desarrollador de Software apasionado por la creación de arquitecturas sólidas, la Inteligencia Artificial y las experiencias web dinámicas.</em>
+  <em>Desarrollador de Software apasionado por la creación de arquitecturas sólidas, la Inteligencia Artificial y las experiencias web dinámicas.</em><br><br>
+  <strong>✨ Nota:</strong> Este repositorio, además de ser mi perfil de GitHub, contiene el <strong>código fuente (Next.js + Framer Motion) de mi <a href="https://rubizz.github.io/portfolio">Portfolio Interactivo 3D</a></strong>.
 </p>
 
 ---

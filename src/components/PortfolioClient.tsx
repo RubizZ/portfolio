@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Hero from "./Hero";
+import Experience from "./Experience";
 import TechNetwork from "./TechNetwork";
 import Skills from "./Skills";
 import Projects from "./Projects";
@@ -37,6 +38,7 @@ export default function PortfolioClient() {
           }}
         >
           <Hero />
+          <Experience />
           <TechNetwork />
           <Skills
             selectedTech={selectedTech}
@@ -53,45 +55,6 @@ export default function PortfolioClient() {
         >
           {/* Scroll track for the motion animations */}
         </div>
-      </div>
-
-      {/* Experiencia Laboral */}
-      <div style={{
-          position: "relative",
-          zIndex: 50,
-          backgroundColor: "rgba(10, 10, 15, 0.4)",
-          backdropFilter: "blur(10px)",
-          padding: "6rem 2rem",
-          display: "flex",
-          justifyContent: "center",
-          borderTop: "1px solid rgba(255, 255, 255, 0.05)"
-      }}>
-          <div style={{ maxWidth: "800px", width: "100%" }}>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", marginBottom: "3rem", textAlign: "center", color: "#fff", fontWeight: 200, letterSpacing: "2px" }}>
-                  Experiencia Laboral
-              </h2>
-              
-              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                  <div style={{ 
-                      padding: "2rem", 
-                      borderRadius: "24px", 
-                      backgroundColor: "rgba(255, 255, 255, 0.02)", 
-                      border: "1px solid rgba(255, 255, 255, 0.05)",
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
-                  }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", marginBottom: "0.5rem", gap: "1rem" }}>
-                          <h3 style={{ fontSize: "1.5rem", margin: 0, color: "#fff", fontWeight: 600 }}>NTT Data <span style={{ color: "var(--text-muted)", fontSize: "1.1rem", fontWeight: 400 }}>→ cliente BBVA</span></h3>
-                          <span style={{ color: "var(--accent)", fontWeight: 600, letterSpacing: "1px", fontSize: "0.9rem", textTransform: "uppercase" }}>Mar 2026 – Actualidad</span>
-                      </div>
-                      <h4 style={{ color: "var(--text-muted)", fontSize: "1.1rem", marginTop: 0, marginBottom: "1.5rem", fontWeight: 400 }}>Software Engineer Intern</h4>
-                      <ul style={{ color: "var(--text-main)", display: "flex", flexDirection: "column", gap: "0.8rem", paddingLeft: "1.2rem", lineHeight: "1.6", fontWeight: 300 }}>
-                          <li>Desarrollo de componentes y páginas web con la arquitectura <strong>BBVA Cells</strong> sobre <strong>Lit</strong> (Web Components nativos) en un contexto fintech real.</li>
-                          <li>Análisis e inmersión en código de soluciones BBVA en producción, comprendiendo el stack tecnológico y arquitecturas propietarias a gran escala.</li>
-                          <li>Aprendizaje del ciclo de vida completo de soluciones funcionales en entorno bancario empresarial con metodologías ágiles.</li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
       </div>
 
       <div

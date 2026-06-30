@@ -121,7 +121,7 @@ export default function Hero() {
             textTransform: "uppercase",
           }}
         >
-          Conocimientos
+          Experiencia
         </span>
         <motion.div
           animate={{ y: [0, 10, 0] }}

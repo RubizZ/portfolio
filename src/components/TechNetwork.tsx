@@ -93,7 +93,7 @@ function SidebarMenuItem({ eco, index, scrollY }: { eco: Ecosystem; index: numbe
           letterSpacing: "2px",
         }}
       >
-        {eco.name}
+        {`0${index + 1}_ ${eco.name}`}
       </span>
     </motion.div>
   );
@@ -192,8 +192,8 @@ function NavigationArrow({
   const isFirst = index === 0;
   const isLast = index === totalEcos - 1;
 
-  const prevTitle = isFirst ? "Volver a la Bienvenida" : `Anterior: ${activeEcosystems[index - 1].shortName}`;
-  const prevTarget = isFirst ? 0 : SCROLL.getEcosystemCenter(index - 1);
+  const prevTitle = isFirst ? "Volver a Experiencia" : `Anterior: ${activeEcosystems[index - 1].shortName}`;
+  const prevTarget = isFirst ? 800 : SCROLL.getEcosystemCenter(index - 1);
 
   const nextTitle = isLast ? "Proyectos" : `Siguiente: ${activeEcosystems[index + 1].shortName}`;
   const nextTarget = isLast ? SCROLL.getSkillsEnd() : SCROLL.getEcosystemCenter(index + 1);
@@ -261,12 +261,12 @@ export default function TechNetwork() {
 
   const sidebarOpacity = useTransform(
     scrollY,
-    [SCROLL.HERO_END, SCROLL.HERO_END + 200, networkEnd - 200, networkEnd],
+    [SCROLL.EXPERIENCE_END, SCROLL.EXPERIENCE_END + 200, networkEnd - 200, networkEnd],
     [0, 1, 1, 0],
   );
   const sidebarPointerEvents = useTransform(
     scrollY,
-    [SCROLL.HERO_END - 1, SCROLL.HERO_END, networkEnd, networkEnd + 1],
+    [SCROLL.EXPERIENCE_END - 1, SCROLL.EXPERIENCE_END, networkEnd, networkEnd + 1],
     ["none", "auto", "auto", "none"],
   ) as any;
 

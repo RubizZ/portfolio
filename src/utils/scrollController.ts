@@ -2,16 +2,17 @@ import { activeEcosystems } from '../data/ecosystems';
 
 export const SCROLL = {
   HERO_END: 400,
+  EXPERIENCE_END: 1200,
   ECOSYSTEM_STEP: 800,
   ECOSYSTEM_OVERLAP: 200,
   PROJECT_STEP: 1600,
   SKILLS_GAP: 650,
 
-  getEcosystemStart: (index: number) => SCROLL.HERO_END + index * SCROLL.ECOSYSTEM_STEP,
-  getEcosystemEnd: (index: number) => SCROLL.HERO_END + (index + 1) * SCROLL.ECOSYSTEM_STEP,
-  getEcosystemCenter: (index: number) => SCROLL.HERO_END + (index + 0.5) * SCROLL.ECOSYSTEM_STEP,
+  getEcosystemStart: (index: number) => SCROLL.EXPERIENCE_END + index * SCROLL.ECOSYSTEM_STEP,
+  getEcosystemEnd: (index: number) => SCROLL.EXPERIENCE_END + (index + 1) * SCROLL.ECOSYSTEM_STEP,
+  getEcosystemCenter: (index: number) => SCROLL.EXPERIENCE_END + (index + 0.5) * SCROLL.ECOSYSTEM_STEP,
 
-  getTechNetworkEnd: () => SCROLL.HERO_END + activeEcosystems.length * SCROLL.ECOSYSTEM_STEP,
+  getTechNetworkEnd: () => SCROLL.EXPERIENCE_END + activeEcosystems.length * SCROLL.ECOSYSTEM_STEP,
 
   getSkillsEnd: () => SCROLL.getTechNetworkEnd() + SCROLL.SKILLS_GAP,
 
