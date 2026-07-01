@@ -208,7 +208,7 @@ function NavigationArrow({
         className="global-nav-up"
         style={{
           position: "absolute",
-          top: "12vh",
+          top: "8vh",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",

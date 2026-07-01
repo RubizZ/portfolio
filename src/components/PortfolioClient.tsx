@@ -61,6 +61,7 @@ export default function PortfolioClient() {
     };
 
     const handleWheel = (e: WheelEvent) => {
+      if ((e.target as Element).closest('#mobile-filters-modal')) return;
       const lastCheckpoint = checkpoints[checkpoints.length - 1];
       const currentY = window.scrollY;
 
@@ -86,6 +87,7 @@ export default function PortfolioClient() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      if ((e.target as Element).closest('#mobile-filters-modal')) return;
       const touchY = e.touches[0].clientY;
       const diff = touchStartY === 0 ? 0 : touchStartY - touchY;
 
