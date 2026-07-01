@@ -80,7 +80,7 @@ export default function LanguageSwitcher({ lang }: { lang: Locale }) {
           alt={current.label}
           width={22}
           height={16}
-          style={{ width: "22px", height: "auto", borderRadius: "2px" }}
+          style={{ borderRadius: "2px" }}
         />
       </button>
 
@@ -140,7 +140,7 @@ export default function LanguageSwitcher({ lang }: { lang: Locale }) {
                   alt={label} 
                   width={20}
                   height={15}
-                  style={{ width: "20px", height: "auto", borderRadius: "2px" }} 
+                  style={{ borderRadius: "2px" }}
                 />
                 {label}
                 {isActive && (
