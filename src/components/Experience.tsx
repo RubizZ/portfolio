@@ -66,7 +66,7 @@ export default function Experience() {
         className="global-nav-up"
         style={{
           position: "absolute",
-          top: "12vh",
+          top: "6vh",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",

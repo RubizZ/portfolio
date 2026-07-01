@@ -52,11 +52,10 @@ const projectLayouts: any[] = [
   {
     text: {
       top: "35%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      textAlign: "center",
+      right: "5%",
+      textAlign: "right",
     },
-    img: { bottom: "10%", left: "50%", transform: "translateX(-50%)" },
+    img: { bottom: "10%", right: "5%" },
     textInitial: { x: 0, y: -200, scale: 1 },
     imgInitial: { x: 0, y: 200, scale: 1 },
   },
