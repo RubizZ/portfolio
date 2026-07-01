@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { Locale } from "../lib/getDictionary";
 
 const LANGS: { locale: Locale; flagUrl: string; label: string }[] = [
@@ -74,9 +75,11 @@ export default function LanguageSwitcher({ lang }: { lang: Locale }) {
             open ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.08)")
         }
       >
-        <img 
+        <Image 
           src={current.flagUrl} 
           alt={current.label}
+          width={22}
+          height={16}
           style={{ width: "22px", height: "auto", borderRadius: "2px" }}
         />
       </button>
@@ -132,9 +135,11 @@ export default function LanguageSwitcher({ lang }: { lang: Locale }) {
                       "transparent";
                 }}
               >
-                <img 
+                <Image 
                   src={flagUrl} 
                   alt={label} 
+                  width={20}
+                  height={15}
                   style={{ width: "20px", height: "auto", borderRadius: "2px" }} 
                 />
                 {label}
