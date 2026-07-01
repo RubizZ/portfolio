@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "greeting": "Hi, I'm ",
+    "role": "Software Engineer · Full Stack",
+    "subtitle": "Software Engineer focused on building efficient, elegant solutions centred on solving real problems.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "cv": "CV",
+    "switchLang": "ES",
+    "experienceNav": "Experience"
+  },
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "tech": "Knowledge",
+    "skills": "Skills",
+    "projects": "Projects"
+  },
+  "experience": {
+    "title": "Experience",
+    "company": "NTT DATA",
+    "client": "→ client BBVA",
+    "date": "Apr 2026 – Present",
+    "role": "Software Engineer Intern",
+    "bullets": [
+      "Developed components and web pages using the BBVA Cells architecture built on Lit (native Web Components) in a real fintech environment.",
+      "Analysed and deep-dived into BBVA production code, gaining understanding of large-scale proprietary technology stacks and architectures.",
+      "Learned the full lifecycle of functional solutions in an enterprise banking environment following Agile methodologies."
+    ]
+  },
+  "tech": {
+    "backToExp": "Back to Experience",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "ecosystems": {
+    "frontend": { "name": "FRONTEND", "shortName": "Frontend" },
+    "nodejs": { "name": "NODE.JS", "shortName": "Node.js" },
+    "java": { "name": "JAVA", "shortName": "Java" },
+    "python": { "name": "PYTHON", "shortName": "Python" },
+    "infra": { "name": "INFRA & DATA", "shortName": "Infrastructure" }
+  },
+  "skills": {
+    "title": "My Skills",
+    "all": "All",
+    "filters": "Filters"
+  },
+  "projects": {
+    "title": "My Projects",
+    "live": "LIVE SITE",
+    "github": "VIEW GITHUB",
+    "empty": "No public projects yet using this technology.",
+    "techUsed": "Technologies used",
+    "close": "Close",
+    "prev": "Previous",
+    "next": "Next",
+    "backToSkills": "Back to Skills",
+    "items": {
+      "vhub": "Platform to organize competitive teams with availability, statistics, leaderboards, real-time chat, and strategy editor features.",
+      "flaights": "Web application (Bachelor's Thesis) that calculates the optimal flight route from an origin to a destination using algorithms and AI.",
+      "trendy": "Desktop application for a clothing store applying Software Engineering principles.",
+      "typed-express-pipeline": "Dependency-free Node.js library to facilitate strict typing and safe middleware chaining in Express.",
+      "collabup": "Android application developed in Java for simultaneous and collaborative organization of events and shared tasks.",
+      "arenaofmusic": "Competitive multiplayer music-based web game where players guess songs within a time limit."
+    }
+  },
+  "end": {
+    "reachedEndFiltered": "You have reached the end of the {tech} projects.",
+    "reachedEnd": "You have reached the end of the portfolio.",
+    "clearFilter": "Clear filter and view all",
+    "backToHome": "Back to Welcome"
+  },
+  "footer": {
+    "built": "Built with Next.js"
+  }
+}

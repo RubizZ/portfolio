@@ -17,6 +17,7 @@ import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
 import { activeEcosystems } from "../data/ecosystems";
+import { Dictionary } from "../lib/getDictionary";
 
 const projectLayouts: any[] = [
   {
@@ -82,6 +83,7 @@ function ProjectItem({
   isLast,
   nextProjectName,
   prevProjectName,
+  dict,
 }: {
   project: Project;
   index: number;
@@ -89,6 +91,7 @@ function ProjectItem({
   isLast: boolean;
   nextProjectName?: string;
   prevProjectName?: string;
+  dict: Dictionary;
 }) {
   const textRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -530,7 +533,7 @@ function ProjectItem({
                       mask={`url(#mask-${index}-svg)`}
                     />
                   </svg>
-                  <span className="github-tag-text">VER EN GITHUB</span>
+                  <span className="github-tag-text">{dict.projects.github}</span>
                 </div>
               </div>
             </div>
@@ -588,7 +591,7 @@ function ProjectItem({
                       mask={`url(#mask-${index}-svg)`}
                     />
                   </svg>
-                  <span className="github-tag-text">VER EN GITHUB</span>
+                  <span className="github-tag-text">{dict.projects.github}</span>
                 </div>
               </div>
               {project.liveUrl && (
@@ -634,7 +637,7 @@ function ProjectItem({
                         mask={`url(#mask-${index}-svg)`}
                       />
                     </svg>
-                    <span className="github-tag-text">VER WEB</span>
+                    <span className="github-tag-text">{dict.projects.live}</span>
                   </div>
                 </div>
               )}
@@ -649,7 +652,7 @@ function ProjectItem({
             margin: 0,
           }}
         >
-          {project.description}
+          {dict.projects.items[project.name.toLowerCase()]}
         </p>
 
         {/* Botón de tecnologías para móvil */}
@@ -755,7 +758,7 @@ function ProjectItem({
               textTransform: "uppercase",
             }}
           >
-            Anterior: {prevProjectName}
+            {dict.projects.prev}: {prevProjectName}
           </span>
         </motion.div>
       ) : (
@@ -796,7 +799,7 @@ function ProjectItem({
               textAlign: "center",
             }}
           >
-            Volver a Conocimientos
+            {dict.projects.backToSkills}
           </span>
         </motion.div>
       )}
@@ -833,7 +836,7 @@ function ProjectItem({
               textTransform: "uppercase",
             }}
           >
-            Siguiente: {nextProjectName}
+            {dict.projects.next}: {nextProjectName}
           </span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -888,7 +891,7 @@ function ProjectItem({
                 color: "#fff",
               }}
             >
-              Tecnologías usadas
+              {dict.projects.techUsed}
             </h4>
             <div
               style={{
@@ -940,7 +943,7 @@ function ProjectItem({
                 cursor: "pointer",
               }}
             >
-              Cerrar
+              {dict.projects.close}
             </button>
           </motion.div>
         </div>
@@ -949,11 +952,13 @@ function ProjectItem({
   );
 }
 
-interface ProjectsProps {
-  selectedTech: SkillName;
-}
-
-export default function Projects({ selectedTech }: ProjectsProps) {
+export default function Projects({
+  selectedTech,
+  dict,
+}: {
+  selectedTech: SkillName | "Todas";
+  dict: Dictionary;
+}) {
   let filteredProjects = projectsData;
 
   if (selectedTech !== "Todas") {
@@ -997,6 +1002,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
             prevProjectName={
               index > 0 ? filteredProjects[index - 1].name : undefined
             }
+            dict={dict}
           />
         );
       })}
@@ -1019,7 +1025,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
               zIndex: 40,
             }}
           >
-            Aún no hay proyectos públicos con esta tecnología.
+            {dict.projects.empty}
           </p>
         </motion.div>
       )}

@@ -67,7 +67,9 @@ const generateConnections = (nodes: SkillNode[]) => {
 
 // Subcomponentes para manejar los hooks de manera dinámica
 
-function SidebarMenuItem({ eco, index, scrollY }: { eco: Ecosystem; index: number; scrollY: MotionValue<number> }) {
+import type { Dictionary } from "../lib/getDictionary";
+
+function SidebarMenuItem({ eco, index, scrollY, dict }: { eco: Ecosystem; index: number; scrollY: MotionValue<number>; dict: Dictionary }) {
   const start = SCROLL.getEcosystemStart(index);
   const end = SCROLL.getEcosystemEnd(index);
   const center = SCROLL.getEcosystemCenter(index);
@@ -95,13 +97,13 @@ function SidebarMenuItem({ eco, index, scrollY }: { eco: Ecosystem; index: numbe
           letterSpacing: "2px",
         }}
       >
-        {`0${index + 1}_ ${eco.name}`}
+        {`0${index + 1}_ ${dict.ecosystems[eco.dictKey].name}`}
       </span>
     </motion.div>
   );
 }
 
-function EcosystemLayer({ eco, index, scrollY }: { eco: Ecosystem; index: number; scrollY: MotionValue<number> }) {
+function EcosystemLayer({ eco, index, scrollY, dict }: { eco: Ecosystem; index: number; scrollY: MotionValue<number>; dict: Dictionary }) {
   const start = SCROLL.getEcosystemStart(index);
   const end = SCROLL.getEcosystemEnd(index);
 
@@ -175,13 +177,14 @@ function EcosystemLayer({ eco, index, scrollY }: { eco: Ecosystem; index: number
 function NavigationArrow({ 
   index, 
   scrollY, 
-  totalEcos 
+  totalEcos,
+  dict
 }: { 
   index: number; 
   scrollY: MotionValue<number>;
   totalEcos: number;
+  dict: Dictionary;
 }) {
-  // El arrow `index` se activa durante el rango del ecosistema `index`.
   const start = SCROLL.getEcosystemStart(index);
   const end = SCROLL.getEcosystemEnd(index);
 
@@ -195,10 +198,10 @@ function NavigationArrow({
   const isFirst = index === 0;
   const isLast = index === totalEcos - 1;
 
-  const prevTitle = isFirst ? "Volver a Experiencia" : `Anterior: ${activeEcosystems[index - 1].shortName}`;
+  const prevTitle = isFirst ? dict.tech.backToExp : `${dict.tech.prev}: ${dict.ecosystems[activeEcosystems[index - 1].dictKey].shortName}`;
   const prevTarget = isFirst ? 800 : SCROLL.getEcosystemCenter(index - 1);
 
-  const nextTitle = isLast ? "Proyectos" : `Siguiente: ${activeEcosystems[index + 1].shortName}`;
+  const nextTitle = isLast ? dict.nav.projects : `${dict.tech.next}: ${dict.ecosystems[activeEcosystems[index + 1].dictKey].shortName}`;
   const nextTarget = isLast ? SCROLL.getSkillsEnd() : SCROLL.getEcosystemCenter(index + 1);
 
   return (
@@ -258,7 +261,7 @@ function NavigationArrow({
   );
 }
 
-export default function TechNetwork() {
+export default function TechNetwork({ dict }: { dict: Dictionary }) {
   const { scrollY } = useScroll();
 
   const totalEcos = activeEcosystems.length;
@@ -303,16 +306,16 @@ export default function TechNetwork() {
         }}
       >
         {activeEcosystems.map((eco, i) => (
-          <SidebarMenuItem key={eco.id} eco={eco} index={i} scrollY={scrollY} />
+          <SidebarMenuItem key={eco.id} eco={eco} index={i} scrollY={scrollY} dict={dict} />
         ))}
       </motion.div>
 
       {activeEcosystems.map((eco, i) => (
-        <EcosystemLayer key={eco.id} eco={eco} index={i} scrollY={scrollY} />
+        <EcosystemLayer key={eco.id} eco={eco} index={i} scrollY={scrollY} dict={dict} />
       ))}
 
       {activeEcosystems.map((eco, i) => (
-        <NavigationArrow key={`nav-${eco.id}`} index={i} totalEcos={totalEcos} scrollY={scrollY} />
+        <NavigationArrow key={`nav-${eco.id}`} index={i} totalEcos={totalEcos} scrollY={scrollY} dict={dict} />
       ))}
     </div>
   );

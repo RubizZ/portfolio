@@ -11,6 +11,7 @@ import { createPortal } from "react-dom";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
+import type { Dictionary } from "../lib/getDictionary";
 import { activeEcosystems } from "../data/ecosystems";
 import {
   FaChevronLeft,
@@ -22,9 +23,14 @@ import {
 interface SkillsProps {
   selectedTech: SkillName;
   setSelectedTech: (tech: SkillName) => void;
+  dict: Dictionary;
 }
 
-export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
+export default function Skills({
+  selectedTech,
+  setSelectedTech,
+  dict,
+}: SkillsProps) {
   const { scrollY } = useScroll();
   const carouselRef = useRef<HTMLDivElement>(null);
   const dockRef = useRef<HTMLDivElement>(null);
@@ -146,26 +152,40 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
   // Group skills by ecosystem
   const ecosystems = activeEcosystems.map((e) => e.id);
-  const ecosystemWatermarks: Record<number, React.ReactNode> = {
-    1: <span style={{ fontSize: "clamp(1rem, 6vw, 5rem)" }}>FRONTEND</span>,
-    2: <span style={{ fontSize: "clamp(1rem, 6vw, 5rem)" }}>NODE.JS</span>,
-    3: <span style={{ fontSize: "clamp(1rem, 6vw, 5rem)" }}>JAVA</span>,
-    4: <span style={{ fontSize: "clamp(1rem, 6vw, 5rem)" }}>PYTHON</span>,
-    5: (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          lineHeight: 0.85,
-          fontSize: "clamp(0.8rem, 4vw, 2.5rem)",
-        }}
-      >
-        <span>INFRA &</span>
-        <span>DATOS</span>
-      </div>
-    ),
-  };
+  const ecosystemWatermarks = activeEcosystems.reduce(
+    (acc, eco) => {
+      const ecoName = dict.ecosystems[eco.dictKey].name;
+      const isLong = ecoName.length > 10;
+      
+      acc[eco.id] = (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: isLong ? 0.85 : 1,
+            fontSize: isLong
+              ? "clamp(0.8rem, 4vw, 2.5rem)"
+              : "clamp(1rem, 6vw, 5rem)",
+            textAlign: "center",
+            maxWidth: "350px",
+          }}
+        >
+          {isLong && ecoName.includes(" & ") ? (
+            <>
+              <span>{ecoName.split(" & ")[0]} &</span>
+              <span>{ecoName.split(" & ")[1]}</span>
+            </>
+          ) : (
+            <span>{ecoName}</span>
+          )}
+        </div>
+      );
+      return acc;
+    },
+    {} as Record<number, React.ReactNode>,
+  );
 
   const scrollCarousel = (direction: "left" | "right") => {
     if (carouselRef.current) {
@@ -283,9 +303,18 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                 <FaCode size="clamp(20px, 4vw, 28px)" />
               </div>
               {isMobile && (
-                <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', marginTop: '-2px', fontWeight: 500 }}>Todas</div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "rgba(255,255,255,0.4)",
+                    marginTop: "-2px",
+                    fontWeight: 500,
+                  }}
+                >
+                  {dict.skills.all}
+                </div>
               )}
-              <div className="dock-tooltip">Todas</div>
+              <div className="dock-tooltip">{dict.skills.all}</div>
             </div>
 
             {/* Filtro Activo (Móvil) */}
@@ -333,8 +362,8 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                       );
                     }
                     return (
-                      <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>
-                        {selectedTech}
+                      <span style={{ fontSize: "1.2rem", fontWeight: "600" }}>
+                        {dict.skills.all}
                       </span>
                     );
                   })()}
@@ -367,8 +396,17 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                 >
                   <FaFilter size={24} />
                 </div>
-                <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', marginTop: '0px', fontWeight: 500 }}>Filtros</div>
-                <div className="dock-tooltip">Filtros</div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "rgba(255,255,255,0.4)",
+                    marginTop: "0px",
+                    fontWeight: 500,
+                  }}
+                >
+                  {dict.skills.filters}
+                </div>
+                <div className="dock-tooltip">{dict.skills.filters}</div>
               </div>
             )}
 
@@ -673,7 +711,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
               }}
             >
               <h2 style={{ fontSize: "1.5rem", color: "#fff", margin: 0 }}>
-                Filtros
+                {dict.skills.filters}
               </h2>
               <button
                 onClick={() => setShowMobileFilters(false)}
@@ -685,7 +723,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                   cursor: "pointer",
                 }}
               >
-                Cerrar
+                {dict.projects.close}
               </button>
             </div>
 
@@ -706,10 +744,22 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
                 return (
                   <div key={ecoId}>
-                    <h3 style={{ fontSize: '0.9rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1rem' }}>
-                      {ecoData?.name || `Ecosistema ${ecoId}`}
+                    <h3
+                      style={{
+                        fontSize: "0.9rem",
+                        color: "var(--accent)",
+                        textTransform: "uppercase",
+                        letterSpacing: "1px",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      {ecoData
+                        ? dict.ecosystems[ecoData.dictKey].name
+                        : `Ecosistema ${ecoId}`}
                     </h3>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div
+                      style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+                    >
                       {ecoSkills.map((skill) => {
                         const Icon = skill.icon;
                         const isActive = selectedTech === skill.name;

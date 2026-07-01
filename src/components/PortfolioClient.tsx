@@ -9,8 +9,14 @@ import { projectsData } from "../data/projects";
 import { SkillName } from "../data/skills";
 import InteractiveBackground from "./InteractiveBackground";
 import { SCROLL } from "../utils/scrollController";
+import type { Locale, Dictionary } from "../lib/getDictionary";
 
-export default function PortfolioClient() {
+interface PortfolioClientProps {
+  lang: Locale;
+  dict: Dictionary;
+}
+
+export default function PortfolioClient({ lang, dict }: PortfolioClientProps) {
   const [selectedTech, setSelectedTech] = useState<SkillName>("Todas");
 
   let filteredProjects = projectsData;
@@ -135,14 +141,15 @@ export default function PortfolioClient() {
             pointerEvents: "none",
           }}
         >
-          <Hero />
-          <Experience />
-          <TechNetwork />
+          <Hero lang={lang} dict={dict.hero} />
+          <Experience dict={dict} />
+          <TechNetwork dict={dict} />
           <Skills
             selectedTech={selectedTech}
             setSelectedTech={setSelectedTech}
+            dict={dict}
           />
-          <Projects selectedTech={selectedTech} />
+          <Projects selectedTech={selectedTech} dict={dict} />
         </div>
         <div
           className="scroll-track-container"
@@ -192,8 +199,8 @@ export default function PortfolioClient() {
           }}
         >
           {selectedTech !== "Todas"
-            ? `Has llegado al final de los proyectos de ${selectedTech}.`
-            : "Has llegado al final del portfolio."}
+            ? dict.end.reachedEndFiltered.replace("{tech}", selectedTech)
+            : dict.end.reachedEnd}
         </p>
 
         {selectedTech !== "Todas" && (
@@ -224,7 +231,7 @@ export default function PortfolioClient() {
               transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
             }}
           >
-            Quitar filtro y ver todos
+            {dict.end.clearFilter}
           </button>
         )}
 
@@ -250,7 +257,7 @@ export default function PortfolioClient() {
             transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
           }}
         >
-          Volver a la Bienvenida
+          {dict.end.backToHome}
         </button>
       </div>
     </>

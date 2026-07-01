@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "greeting": "Hola, soy ",
+    "role": "Software Engineer · Full Stack",
+    "subtitle": "Software Engineer enfocado en crear soluciones eficientes, elegantes y centradas en resolver problemas reales.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "cv": "CV",
+    "switchLang": "EN",
+    "experienceNav": "Experiencia"
+  },
+  "nav": {
+    "home": "Inicio",
+    "experience": "Experiencia",
+    "tech": "Conocimientos",
+    "skills": "Habilidades",
+    "projects": "Proyectos"
+  },
+  "experience": {
+    "title": "Experiencia Laboral",
+    "company": "NTT DATA",
+    "client": "→ cliente BBVA",
+    "date": "Abr 2026 – Actualidad",
+    "role": "Software Engineer Intern",
+    "bullets": [
+      "Desarrollo de componentes y páginas web con la arquitectura BBVA Cells sobre Lit (Web Components nativos) en un contexto fintech real.",
+      "Análisis e inmersión en código de soluciones BBVA en producción, comprendiendo el stack tecnológico y arquitecturas propietarias a gran escala.",
+      "Aprendizaje del ciclo de vida completo de soluciones funcionales en entorno bancario empresarial con metodologías ágiles."
+    ]
+  },
+  "tech": {
+    "backToExp": "Volver a Experiencia",
+    "prev": "Anterior",
+    "next": "Siguiente"
+  },
+  "ecosystems": {
+    "frontend": { "name": "FRONTEND", "shortName": "Frontend" },
+    "nodejs": { "name": "NODE.JS", "shortName": "Node.js" },
+    "java": { "name": "JAVA", "shortName": "Java" },
+    "python": { "name": "PYTHON", "shortName": "Python" },
+    "infra": { "name": "INFRA & DATOS", "shortName": "Infraestructura" }
+  },
+  "skills": {
+    "title": "Mis Habilidades",
+    "all": "Todas",
+    "filters": "Filtros"
+  },
+  "projects": {
+    "title": "Mis Proyectos",
+    "live": "VER WEB",
+    "github": "VER EN GITHUB",
+    "empty": "Aún no hay proyectos públicos con esta tecnología.",
+    "techUsed": "Tecnologías usadas",
+    "close": "Cerrar",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "backToSkills": "Volver a Conocimientos",
+    "items": {
+      "vhub": "Plataforma para organizar equipos competitivos con funciones de disponibilidad, estadísticas, leaderboards, chat en tiempo real y editor de estrategias.",
+      "flaights": "Aplicación web (Trabajo de Fin de Grado) que calcula la ruta aérea óptima desde un origen a un destino usando algoritmos e IA.",
+      "trendy": "Aplicación de escritorio sobre una tienda de ropa aplicando principios de Ingeniería del Software.",
+      "typed-express-pipeline": "Librería Node.js sin dependencias para facilitar el tipado estricto y el encadenamiento seguro de middlewares en Express.",
+      "collabup": "Aplicación de Android desarrollada en Java para la organización simultánea y colaborativa de eventos y tareas compartidas.",
+      "arenaofmusic": "Juego web multijugador competitivo basado en la música, donde los jugadores adivinan canciones en tiempo limitado."
+    }
+  },
+  "end": {
+    "reachedEndFiltered": "Has llegado al final de los proyectos de {tech}.",
+    "reachedEnd": "Has llegado al final del portfolio.",
+    "clearFilter": "Quitar filtro y ver todos",
+    "backToHome": "Volver a la Bienvenida"
+  },
+  "footer": {
+    "built": "Construido con Next.js"
+  }
+}

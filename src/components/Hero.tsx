@@ -2,8 +2,23 @@
 
 import { FaGithub, FaLinkedin, FaChevronDown, FaFileAlt } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
+import type { Locale } from "../lib/getDictionary";
 
-export default function Hero() {
+interface HeroProps {
+  lang: Locale;
+  dict: {
+    greeting: string;
+    role: string;
+    subtitle: string;
+    github: string;
+    linkedin: string;
+    cv: string;
+    switchLang: string;
+    experienceNav: string;
+  };
+}
+
+export default function Hero({ lang, dict }: HeroProps) {
   const { scrollY } = useScroll();
 
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
@@ -19,6 +34,8 @@ export default function Hero() {
     [0, 100],
     ["auto", "none"],
   ) as any;
+
+  const cvHref = `/${lang}/cv.html`;
 
   return (
     <>
@@ -43,15 +60,12 @@ export default function Hero() {
         >
           <div className="hero-content">
             <h1 className="hero-title">
-              Hola, soy{" "}
+              {dict.greeting}
               <span style={{ color: "var(--accent)" }}>Rubén Hidalgo</span>
             </h1>
-            <p className="hero-subtitle">
-              Software Engineer enfocado en crear soluciones eficientes,
-              elegantes y centradas en resolver problemas reales.
-            </p>
+            <p className="hero-subtitle">{dict.subtitle}</p>
             <div
-              style={{ display: "flex", gap: "1rem", justifyContent: "center" }}
+              style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
             >
               <a
                 href="https://github.com/RubizZ"
@@ -59,7 +73,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 className="btn btn-primary"
               >
-                <FaGithub size={20} /> GitHub
+                <FaGithub size={20} /> {dict.github}
               </a>
               <a
                 href="https://www.linkedin.com/in/ruben-hidalgo-arias"
@@ -67,15 +81,15 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 className="btn btn-outline"
               >
-                <FaLinkedin size={20} /> LinkedIn
+                <FaLinkedin size={20} /> {dict.linkedin}
               </a>
               <a
-                href="/cv.html"
+                href={cvHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline"
               >
-                <FaFileAlt size={20} /> CV
+                <FaFileAlt size={20} /> {dict.cv}
               </a>
             </div>
           </div>
@@ -108,7 +122,7 @@ export default function Hero() {
             textTransform: "uppercase",
           }}
         >
-          Experiencia
+          {dict.experienceNav}
         </span>
         <motion.div
           animate={{ y: [0, 10, 0] }}

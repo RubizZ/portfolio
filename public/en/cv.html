@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rubén Hidalgo Arias — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sidebar-bg: #0f0f23; --sidebar-accent: #6d28d9; --sidebar-text: #e2e8f0;
+      --sidebar-muted: #94a3b8; --main-bg: #ffffff; --main-text: #1e1e2e;
+      --main-muted: #64748b; --accent: #6d28d9; --accent-light: #ede9fe;
+      --border: #e2e8f0; --tag-bg: #f1f5f9; --tag-text: #334155;
+    }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--main-text); font-size: 13px; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 210mm; min-height: 297mm; margin: 20px auto; background: white; display: grid; grid-template-columns: 195px 1fr; grid-template-rows: auto 1fr; box-shadow: 0 20px 60px rgba(0,0,0,0.15); overflow: hidden; }
+    .header { grid-column: 1 / -1; background: var(--sidebar-bg); padding: 28px 30px 24px 30px; display: flex; align-items: center; gap: 24px; }
+    .header-avatar { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--sidebar-accent), #4f46e5); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: white; flex-shrink: 0; letter-spacing: -1px; }
+    .header-info { flex: 1; }
+    .header-name { font-size: 26px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; line-height: 1; }
+    .header-role { font-size: 13px; font-weight: 500; color: #a78bfa; margin-top: 5px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .header-links { display: flex; gap: 18px; margin-top: 10px; flex-wrap: wrap; }
+    .header-link { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: #cbd5e1; text-decoration: none; }
+    .header-link svg { opacity: 0.7; flex-shrink: 0; }
+    .sidebar { background: #17172e; padding: 22px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .sidebar-section-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--sidebar-accent); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(109,40,217,0.3); }
+    .skill-category { margin-bottom: 12px; }
+    .skill-cat-label { font-size: 9.5px; font-weight: 600; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .skill-tag { background: rgba(109,40,217,0.15); border: 1px solid rgba(109,40,217,0.25); color: #c4b5fd; font-size: 10.5px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
+    .lang-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .lang-name { color: var(--sidebar-text); font-size: 12px; font-weight: 500; }
+    .lang-level { font-size: 9.5px; font-weight: 600; background: rgba(109,40,217,0.2); border: 1px solid rgba(109,40,217,0.3); color: #a78bfa; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .main { padding: 22px 26px; display: flex; flex-direction: column; gap: 20px; }
+    .section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid var(--accent-light); }
+    .timeline-item { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin-bottom: 14px; position: relative; padding-left: 14px; }
+    .timeline-item::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    .timeline-role { font-size: 13px; font-weight: 700; color: var(--main-text); grid-column: 1; }
+    .timeline-date { font-size: 10.5px; font-weight: 600; color: var(--accent); white-space: nowrap; grid-column: 2; grid-row: 1 / 3; align-self: start; text-align: right; }
+    .timeline-org { font-size: 11.5px; font-weight: 600; color: var(--main-muted); grid-column: 1; }
+    .timeline-org em { font-style: normal; color: var(--accent); }
+    .timeline-desc { grid-column: 1 / -1; margin-top: 4px; }
+    .timeline-desc ul { padding-left: 14px; margin-top: 2px; }
+    .timeline-desc ul li { font-size: 11.5px; color: #475569; margin-bottom: 2px; line-height: 1.5; }
+    .timeline-desc p { font-size: 11.5px; color: #475569; }
+    .timeline-tech { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+    .tech-tag { background: var(--tag-bg); color: var(--tag-text); font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border); }
+    .badge { display: inline-flex; align-items: center; gap: 3px; background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .project-card { border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: #fafafa; }
+    .project-card:hover { border-color: #c4b5fd; }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+    .project-name { font-size: 12.5px; font-weight: 700; color: var(--main-text); }
+    .project-links { display: flex; gap: 6px; flex-shrink: 0; }
+    .project-link { font-size: 9.5px; font-weight: 600; color: var(--accent); text-decoration: none; border: 1px solid #c4b5fd; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+    .project-desc { font-size: 10.5px; color: #64748b; line-height: 1.5; margin-bottom: 7px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+    .project-tag { background: var(--accent-light); color: #5b21b6; font-size: 9.5px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }
+    .production-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; margin-right: 4px; vertical-align: middle; }
+    .print-btn { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: flex; align-items: center; gap: 8px; background: #6d28d9; color: white; border: none; border-radius: 10px; padding: 11px 20px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 20px rgba(109,40,217,0.4); transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; letter-spacing: 0.2px; }
+    .print-btn:hover { background: #5b21b6; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(109,40,217,0.5); }
+    .print-btn:active { transform: translateY(0); }
+    @media print {
+      body { background: white; font-size: 11px; }
+      .page { 
+        margin: 0; 
+        box-shadow: none; 
+        width: 100%; 
+        min-height: 100vh;
+        height: 297mm;
+        overflow: hidden; 
+      }
+      .main { padding: 16px 20px; gap: 12px; }
+      .sidebar { padding: 16px 14px; gap: 16px; }
+      .header { padding: 20px 24px 16px 24px; gap: 16px; }
+      .header-avatar { width: 56px; height: 56px; font-size: 22px; }
+      .header-name { font-size: 22px; }
+      .timeline-item { margin-bottom: 8px; }
+      .project-card { padding: 8px; break-inside: avoid; }
+      .project-desc { margin-bottom: 4px; font-size: 10px; }
+      .section-title { margin-bottom: 8px; padding-bottom: 3px; }
+      a { text-decoration: none; }
+      .print-btn { display: none; }
+    }
+    @page { margin: 0; size: A4; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="header-avatar">RH</div>
+    <div class="header-info">
+      <div class="header-name">Rubén Hidalgo Arias</div>
+      <div class="header-role">Software Engineer · Full Stack</div>
+      <div class="header-links">
+        <a class="header-link" href="mailto:ruben200409@gmail.com">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          ruben200409@gmail.com
+        </a>
+        <a class="header-link" href="https://linkedin.com/in/ruben-hidalgo-arias">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/ruben-hidalgo-arias
+        </a>
+        <a class="header-link" href="https://github.com/RubizZ">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          github.com/RubizZ
+        </a>
+        <a class="header-link" href="https://rubenhidalgo.dev">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          rubenhidalgo.dev
+        </a>
+        <span class="header-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Madrid, Spain
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-section-title">Skills</div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Lit</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">Tailwind CSS</span>
+          <span class="skill-tag">Three.js</span>
+          <span class="skill-tag">React Query</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Backend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Express</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Spring</span>
+          <span class="skill-tag">Zod</span>
+          <span class="skill-tag">Jest</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Data &amp; Infrastructure</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Prisma</span>
+          <span class="skill-tag">Supabase</span>
+          <span class="skill-tag">AWS S3</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-section-title">Languages</div>
+      <div class="lang-item"><span class="lang-name">Spanish</span><span class="lang-level">Native</span></div>
+      <div class="lang-item"><span class="lang-name">English</span><span class="lang-level">C1</span></div>
+    </div>
+    <div>
+      <div class="sidebar-section-title">Interests</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Fintech</span>
+        <span class="skill-tag">Open Source</span>
+        <span class="skill-tag">Generative AI</span>
+        <span class="skill-tag">3D Web</span>
+        <span class="skill-tag">System Design</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section>
+      <div class="section-title">Experience</div>
+      <div class="timeline-item">
+        <div class="timeline-role">Frontend Engineer · Internship</div>
+        <div class="timeline-date">Apr 2026 – Present</div>
+        <div class="timeline-org">NTT Data &nbsp;<em>→ client BBVA</em></div>
+        <div class="timeline-desc">
+          <ul>
+            <li>Developed components and web pages using the <strong>BBVA Cells</strong> architecture built on <strong>Lit</strong> (native Web Components) in a real fintech environment.</li>
+            <li>Analysed and deep-dived into BBVA production code, gaining understanding of large-scale proprietary technology stacks and architectures.</li>
+            <li>Learned the full lifecycle of functional solutions in an enterprise banking environment following Agile methodologies.</li>
+          </ul>
+        </div>
+        <div class="timeline-tech">
+          <span class="tech-tag">Lit</span>
+          <span class="tech-tag">Web Components</span>
+          <span class="tech-tag">BBVA Cells</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Micro-frontends</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Education</div>
+      <div class="timeline-item">
+        <div class="timeline-role">B.Sc. in Computer Science &amp; Engineering</div>
+        <div class="timeline-date">2022 – Jun 2026</div>
+        <div class="timeline-org">Universidad Complutense de Madrid (UCM)</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>Specialisation in Software Engineering and Artificial Intelligence.</li>
+            <li><span class="badge">★ Distinction</span> in Programming Technology I — advanced OOP and systems programming.</li>
+            <li><span class="badge">★ Distinction</span> in Programming Technology II — software architectures (MVC), concurrency and state machines in Java.</li>
+            <li><span class="badge">★ Distinction</span> in Data Structures &amp; Algorithms.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-role">Erasmus+ Exchange Programme</div>
+        <div class="timeline-date">Sep 2024 – Jan 2025</div>
+        <div class="timeline-org">Technische Universiteit Eindhoven (TU/e) · Netherlands</div>
+        <div class="timeline-desc">
+          <p>Courses taught in English: Operating Systems, Computer Networks, Artificial Intelligence, and Formal Languages.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Featured Projects</div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-name"><span class="production-dot"></span>VHUB</div>
+            <div class="project-links">
+              <a class="project-link" href="https://vhub-psi.vercel.app">Live</a>
+              <a class="project-link" href="https://github.com/RubizZ/VHUB">GitHub</a>
+            </div>
+          </div>
+          <div class="project-desc">Full-stack platform for competitive gaming teams featuring availability tracking, statistics, leaderboards, real-time chat, and a strategy editor.</div>
+          <div class="project-tags">
+            <span class="project-tag">Next.js</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">PostgreSQL</span>
+            <span class="project-tag">Redis</span>
+            <span class="project-tag">Docker</span>
+            <span class="project-tag">Prisma</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-name"><span class="production-dot"></span>flAIghts</div>
+            <div class="project-links">
+              <a class="project-link" href="https://flaights.es">Live</a>
+              <a class="project-link" href="https://github.com/RubizZ/flAIghts">GitHub</a>
+            </div>
+          </div>
+          <div class="project-desc"><strong>Bachelor's Thesis (TFG).</strong> Web app that calculates optimal flight routes using algorithms and AI. 3D globe visualisation with Three.js and LLM integration (OpenAI + Ollama).</div>
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Three.js</span>
+            <span class="project-tag">OpenAI SDK</span>
+            <span class="project-tag">Express</span>
+            <span class="project-tag">MongoDB</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-name">typed-express-pipeline</div>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/RubizZ/typed-express-pipeline">GitHub</a>
+            </div>
+          </div>
+          <div class="project-desc">Published zero-dependency Node.js library for strict typing and type-safe middleware chaining in Express with TypeScript.</div>
+          <div class="project-tags">
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Express</span>
+            <span class="project-tag">Jest</span>
+            <span class="project-tag">Open Source</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-name">Trendy</div>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/RubizZ/Trendy">GitHub</a>
+            </div>
+          </div>
+          <div class="project-desc">Clothing store management application implementing 10+ GoF design patterns, IEEE documentation, and RUP methodology. Top grade in Software Engineering.</div>
+          <div class="project-tags">
+            <span class="project-tag">Java</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">GoF Patterns</span>
+            <span class="project-tag">IEEE Docs</span>
+            <span class="project-tag">RUP</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button class="print-btn" onclick="window.print()" title="Export to PDF">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+  </svg>
+  Export PDF
+</button>
+</body>
+</html>

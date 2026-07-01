@@ -4,7 +4,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { SCROLL } from "../utils/scrollController";
 
-export default function Experience() {
+import type { Dictionary } from "../lib/getDictionary";
+
+export default function Experience({ dict }: { dict: Dictionary }) {
   const { scrollY } = useScroll();
 
   const start = SCROLL.HERO_END; // 400
@@ -57,7 +59,7 @@ export default function Experience() {
               letterSpacing: "2px",
             }}
           >
-            Experiencia Laboral
+            {dict.experience.title}
           </h2>
 
           <div
@@ -75,7 +77,7 @@ export default function Experience() {
                 }}
               >
                 <h3 className="experience-title">
-                  NTT Data{" "}
+                  {dict.experience.company}{" "}
                   <span
                     style={{
                       color: "var(--text-muted)",
@@ -83,7 +85,7 @@ export default function Experience() {
                       fontWeight: 400,
                     }}
                   >
-                    → cliente BBVA
+                    {dict.experience.client}
                   </span>
                 </h3>
                 <span
@@ -95,7 +97,7 @@ export default function Experience() {
                     textTransform: "uppercase",
                   }}
                 >
-                  Abr 2026 – Actualidad
+                  {dict.experience.date}
                 </span>
               </div>
               <h4
@@ -107,24 +109,19 @@ export default function Experience() {
                   fontWeight: 400,
                 }}
               >
-                Software Engineer Intern
+                {dict.experience.role}
               </h4>
               <ul className="experience-list">
-                <li>
-                  Desarrollo de componentes y páginas web con la arquitectura{" "}
-                  <strong>BBVA Cells</strong> sobre <strong>Lit</strong> (Web
-                  Components nativos) en un contexto fintech real.
-                </li>
-                <li>
-                  Análisis e inmersión en código de soluciones BBVA en
-                  producción, comprendiendo el stack tecnológico y arquitecturas
-                  propietarias a gran escala.
-                </li>
-                <li>
-                  Aprendizaje del ciclo de vida completo de soluciones
-                  funcionales en entorno bancario empresarial con metodologías
-                  ágiles.
-                </li>
+                {dict.experience.bullets.map((b: string, i: number) => (
+                  <li
+                    key={i}
+                    dangerouslySetInnerHTML={{
+                      __html: b
+                        .replace(/BBVA Cells/g, "<strong>BBVA Cells</strong>")
+                        .replace(/Lit/g, "<strong>Lit</strong>"),
+                    }}
+                  />
+                ))}
               </ul>
             </div>
           </div>
@@ -165,7 +162,7 @@ export default function Experience() {
             textAlign: "center",
           }}
         >
-          Volver a la Bienvenida
+          {dict.end.backToHome}
         </span>
       </motion.div>
 
@@ -200,7 +197,7 @@ export default function Experience() {
             textTransform: "uppercase",
           }}
         >
-          Conocimientos
+          {dict.nav.tech}
         </span>
         <motion.div
           animate={{ y: [0, 10, 0] }}
