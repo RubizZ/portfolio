@@ -7,7 +7,12 @@ import {
   FaExternalLinkAlt,
   FaCode,
 } from "react-icons/fa";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
@@ -647,7 +652,7 @@ function ProjectItem({
         >
           {project.description}
         </p>
-        
+
         {/* Botón de tecnologías para móvil */}
         <button
           className="mobile-tech-btn"
@@ -665,7 +670,7 @@ function ProjectItem({
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            backdropFilter: "blur(10px)"
+            backdropFilter: "blur(10px)",
           }}
         >
           <FaCode /> Ver Tecnologías
@@ -717,7 +722,10 @@ function ProjectItem({
       {prevProjectName ? (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: SCROLL.getProjectStart(index - 1) + 950, behavior: "smooth" })
+            window.scrollTo({
+              top: SCROLL.getProjectStart(index - 1) + 950,
+              behavior: "smooth",
+            })
           }
           className="project-nav-up"
           style={{
@@ -754,7 +762,10 @@ function ProjectItem({
       ) : (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: SCROLL.getEcosystemCenter(activeEcosystems.length - 1), behavior: "smooth" })
+            window.scrollTo({
+              top: SCROLL.getEcosystemCenter(activeEcosystems.length - 1),
+              behavior: "smooth",
+            })
           }
           className="project-nav-up"
           style={{
@@ -783,7 +794,7 @@ function ProjectItem({
               color: "var(--text-muted)",
               letterSpacing: "2px",
               textTransform: "uppercase",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             Volver a Conocimientos
@@ -795,7 +806,10 @@ function ProjectItem({
       {nextProjectName && (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: SCROLL.getProjectStart(index + 1) + 950, behavior: "smooth" })
+            window.scrollTo({
+              top: SCROLL.getProjectStart(index + 1) + 950,
+              behavior: "smooth",
+            })
           }
           className="global-nav-down"
           style={{
@@ -836,7 +850,10 @@ function ProjectItem({
         <div
           style={{
             position: "fixed",
-            top: 0, left: 0, right: 0, bottom: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             background: "rgba(0,0,0,0.8)",
             backdropFilter: "blur(10px)",
             zIndex: 9999, // ensures it's above everything
@@ -844,7 +861,7 @@ function ProjectItem({
             alignItems: "center",
             justifyContent: "center",
             padding: "2rem",
-            pointerEvents: "auto"
+            pointerEvents: "auto",
           }}
           onClick={() => setShowTechModal(false)}
         >
@@ -861,20 +878,54 @@ function ProjectItem({
               maxWidth: "400px",
               display: "flex",
               flexDirection: "column",
-              gap: "1.5rem"
+              gap: "1.5rem",
             }}
           >
-            <h4 style={{ margin: 0, fontSize: "1.2rem", textAlign: "center", color: "#fff" }}>Tecnologías usadas</h4>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+            <h4
+              style={{
+                margin: 0,
+                fontSize: "1.2rem",
+                textAlign: "center",
+                color: "#fff",
+              }}
+            >
+              Tecnologías usadas
+            </h4>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "1rem",
+                justifyContent: "center",
+              }}
+            >
               {project.tech.map((techName: string) => {
                 const skill = skillsData.find((s) => s.name === techName);
                 const Icon = skill?.icon;
                 return (
-                  <div key={techName} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-                    {Icon && <Icon size={32} style={{ color: "var(--accent)" }} />}
-                    <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center" }}>{techName}</span>
+                  <div
+                    key={techName}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    {Icon && (
+                      <Icon size={32} style={{ color: "var(--accent)" }} />
+                    )}
+                    <span
+                      style={{
+                        fontSize: "0.8rem",
+                        color: "var(--text-muted)",
+                        textAlign: "center",
+                      }}
+                    >
+                      {techName}
+                    </span>
                   </div>
-                )
+                );
               })}
             </div>
             <button
@@ -887,7 +938,7 @@ function ProjectItem({
                 border: "none",
                 borderRadius: "8px",
                 fontWeight: 600,
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
               Cerrar
@@ -911,6 +962,11 @@ export default function Projects({ selectedTech }: ProjectsProps) {
       p.tech.includes(selectedTech),
     );
   }
+
+  const { scrollY } = useScroll();
+  const emptyStart = SCROLL.getProjectStart(0);
+  const emptyEnd = emptyStart + SCROLL.SKILLS_GAP;
+  const emptyOpacity = useTransform(scrollY, [emptyStart, emptyEnd], [0, 1]);
 
   return (
     <section
@@ -947,12 +1003,13 @@ export default function Projects({ selectedTech }: ProjectsProps) {
       })}
 
       {filteredProjects.length === 0 && (
-        <div
+        <motion.div
           style={{
             height: "100vh",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            opacity: emptyOpacity,
           }}
         >
           <p
@@ -965,7 +1022,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           >
             Aún no hay proyectos públicos con esta tecnología.
           </p>
-        </div>
+        </motion.div>
       )}
 
       <style>{`
