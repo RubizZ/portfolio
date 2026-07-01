@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "./Hero";
 import Experience from "./Experience";
 import TechNetwork from "./TechNetwork";
@@ -22,6 +22,102 @@ export default function PortfolioClient() {
 
   // We add space at the end so the sticky container unsticks shortly after the last project fully enters
   const scrollHeight = SCROLL.getTotalHeight(filteredProjects.length);
+  const checkpoints = SCROLL.getAllCheckpoints(filteredProjects.length);
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) return;
+
+    let touchStartY = 0;
+    let currentIndex = 0;
+    let lastJumpTime = 0;
+    let wheelTimeout: NodeJS.Timeout;
+
+    const snapToNext = (direction: 1 | -1) => {
+      if (direction === 1) {
+        currentIndex = Math.min(currentIndex + 1, checkpoints.length - 1);
+      } else {
+        currentIndex = Math.max(currentIndex - 1, 0);
+      }
+
+      const targetY = checkpoints[currentIndex];
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+      lastJumpTime = Date.now();
+    };
+
+    const syncCurrentIndex = () => {
+      // Si ha pasado suficiente tiempo desde el último salto (la animación ha terminado),
+      // resincronizamos el índice con la posición real del scroll por si usó algún botón.
+      if (Date.now() - lastJumpTime > 800) {
+        let minDiff = Infinity;
+        const currentY = window.scrollY;
+        for (let i = 0; i < checkpoints.length; i++) {
+          const diff = Math.abs(checkpoints[i] - currentY);
+          if (diff < minDiff) {
+            minDiff = diff;
+            currentIndex = i;
+          }
+        }
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const lastCheckpoint = checkpoints[checkpoints.length - 1];
+      const currentY = window.scrollY;
+
+      if (currentY <= 5 && e.deltaY < 0) return;
+      if (currentY >= lastCheckpoint - 5) {
+        if (e.deltaY > 0) return;
+        if (e.deltaY < 0 && currentY > lastCheckpoint + 5) return;
+      }
+
+      e.preventDefault();
+      if (wheelTimeout) return;
+      syncCurrentIndex();
+      snapToNext(e.deltaY > 0 ? 1 : -1);
+
+      wheelTimeout = setTimeout(() => {
+        wheelTimeout = undefined as any;
+      }, 300);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      syncCurrentIndex();
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY;
+      const diff = touchStartY === 0 ? 0 : touchStartY - touchY;
+
+      const lastCheckpoint = checkpoints[checkpoints.length - 1];
+      const currentY = window.scrollY;
+
+      if (currentY <= 5 && diff < 0) return;
+      if (currentY >= lastCheckpoint - 5) {
+        if (diff > 0) return;
+        if (diff < 0 && currentY > lastCheckpoint + 5) return;
+      }
+
+      e.preventDefault();
+
+      if (touchStartY === 0) return;
+
+      if (Math.abs(diff) > 50) {
+        snapToNext(diff > 0 ? 1 : -1);
+        touchStartY = 0;
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [checkpoints]);
 
   return (
     <>
@@ -47,6 +143,7 @@ export default function PortfolioClient() {
           <Projects selectedTech={selectedTech} />
         </div>
         <div
+          className="scroll-track-container"
           style={{
             position: "relative",
             zIndex: 30,
@@ -54,6 +151,21 @@ export default function PortfolioClient() {
           }}
         >
           {/* Scroll track for the motion animations */}
+          {SCROLL.getAllCheckpoints(filteredProjects.length).map(
+            (point, idx) => (
+              <div
+                key={idx}
+                className="scroll-snap-point"
+                style={{
+                  position: "absolute",
+                  top: `${point}px`,
+                  height: "1px",
+                  width: "100%",
+                  pointerEvents: "none",
+                }}
+              />
+            ),
+          )}
         </div>
       </div>
 
@@ -85,8 +197,12 @@ export default function PortfolioClient() {
           <button
             onClick={() => {
               setSelectedTech("Todas");
-              window.scrollTo({ top: SCROLL.getSkillsEnd(), behavior: "smooth" });
+              window.scrollTo({
+                top: SCROLL.getSkillsEnd(),
+                behavior: "smooth",
+              });
             }}
+            className="btn-remove-filter"
             style={{
               width: "100%",
               maxWidth: "350px",
@@ -104,26 +220,13 @@ export default function PortfolioClient() {
               boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
               transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor =
-                "rgba(255, 255, 255, 0.08)";
-              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-              e.currentTarget.style.transform = "translateY(-5px) scale(1.05)";
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor =
-                "rgba(255, 255, 255, 0.03)";
-              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)";
-              e.currentTarget.style.transform = "translateY(0) scale(1)";
-              e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
-            }}
           >
             Quitar filtro y ver todos
           </button>
         )}
 
         <button
+          className="btn-back-home"
           onClick={() => {
             setSelectedTech("Todas");
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -142,18 +245,6 @@ export default function PortfolioClient() {
             letterSpacing: "2px",
             textTransform: "uppercase",
             transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
-            e.currentTarget.style.color = "#fff";
-            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.4)";
-            e.currentTarget.style.transform = "translateY(-5px)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0)";
-            e.currentTarget.style.color = "var(--text-muted)";
-            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-            e.currentTarget.style.transform = "translateY(0)";
           }}
         >
           Volver a la Bienvenida

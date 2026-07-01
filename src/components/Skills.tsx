@@ -17,6 +17,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const dockRef = useRef<HTMLDivElement>(null);
 
   const [indicatorX, setIndicatorX] = useState(0);
+  const [indicatorY, setIndicatorY] = useState(0);
   const [indicatorVisible, setIndicatorVisible] = useState(false);
   const [transitionType, setTransitionType] = useState<"spring" | "instant">("spring");
   const [fadeKey, setFadeKey] = useState(0);
@@ -38,6 +39,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
         const dockRect = dockRef.current.getBoundingClientRect();
         const elRect = activeEl.getBoundingClientRect();
         const x = elRect.left - dockRect.left + (elRect.width / 2);
+        const y = elRect.bottom - dockRect.top + 4; // 4px below the element
         let finalType = type;
 
         if (selectedTech === "Todas" && type === "spring") {
@@ -52,6 +54,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
 
         setTransitionType(finalType);
         setIndicatorX(x);
+        setIndicatorY(y);
 
         if (carouselRef.current) {
           const carouselRect = carouselRef.current.getBoundingClientRect();
@@ -97,12 +100,12 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   // Group skills by ecosystem
   const ecosystems = [1, 2, 3, 4, 5];
   const ecosystemWatermarks: Record<number, React.ReactNode> = {
-    1: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>FRONTEND</span>,
-    2: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>NODE.JS</span>,
-    3: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>JAVA</span>,
-    4: <span style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>PYTHON</span>,
+    1: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>FRONTEND</span>,
+    2: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>NODE.JS</span>,
+    3: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>JAVA</span>,
+    4: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>PYTHON</span>,
     5: (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 0.85, fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 0.85, fontSize: 'clamp(0.8rem, 4vw, 2.5rem)' }}>
         <span>INFRA &</span>
         <span>DATOS</span>
       </div>
@@ -292,7 +295,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
                     padding: '0 0.5rem'
                   }}
                 >
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', display: 'flex', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.03)', letterSpacing: '8px', fontWeight: 900, zIndex: 0, pointerEvents: 'none' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', display: 'flex', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.03)', letterSpacing: '0.2em', fontWeight: 900, zIndex: 0, pointerEvents: 'none' }}>
                     {ecosystemWatermarks[ecoId]}
                   </div>
                   <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
@@ -356,18 +359,21 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             {/* Indicador Global Flotante */}
             <motion.div
               key={fadeKey}
-              initial={{ opacity: 0, x: indicatorX }}
-              animate={{ x: indicatorX, opacity: indicatorVisible ? 1 : 0 }}
+              initial={{ opacity: 0, x: indicatorX, y: indicatorY }}
+              animate={{ x: indicatorX, y: indicatorY, opacity: indicatorVisible ? 1 : 0 }}
               onAnimationComplete={() => setIsFlyingFromTodas(false)}
               transition={{ 
                 x: transitionType === "spring" 
+                  ? { type: "spring", stiffness: 400, damping: 30 } 
+                  : { type: "tween", duration: 0 },
+                y: transitionType === "spring" 
                   ? { type: "spring", stiffness: 400, damping: 30 } 
                   : { type: "tween", duration: 0 },
                 opacity: { duration: 0.2 } // Fade duration
               }}
               style={{
                 position: 'absolute',
-                bottom: '12px',
+                top: 0,
                 left: '-3px',
                 width: '6px',
                 height: '6px',
@@ -388,14 +394,6 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
         .nav-arrow {
           transition: all 0.3s ease;
         }
-        .nav-arrow:hover {
-          color: white !important;
-          transform: scale(1.2);
-        }
-        .dock-item:hover .icon-wrapper { 
-          transform: scale(1.4) translateY(-5px) !important; 
-          color: #fff !important; 
-        }
         .dock-tooltip {
           position: absolute; 
           top: -35px; 
@@ -413,17 +411,28 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
           letter-spacing: 1px;
           z-index: 100;
         }
-        .dock-item:hover .dock-tooltip { 
-          opacity: 1; 
-          transform: translateY(-5px); 
-        }
         .side-arrow {
           color: rgba(255,255,255,0.3);
           transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .side-arrow:hover {
-          color: #fff;
-          transform: translateY(-50%) scale(1.2) !important;
+
+        @media (hover: hover) {
+          .nav-arrow:hover {
+            color: white !important;
+            transform: scale(1.2);
+          }
+          .dock-item:hover .icon-wrapper { 
+            transform: scale(1.4) translateY(-5px) !important; 
+            color: #fff !important; 
+          }
+          .dock-item:hover .dock-tooltip { 
+            opacity: 1; 
+            transform: translateY(-5px); 
+          }
+          .side-arrow:hover {
+            color: #fff;
+            transform: translateY(-50%) scale(1.2) !important;
+          }
         }
       `}</style>
     </motion.div>

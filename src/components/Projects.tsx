@@ -5,6 +5,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaExternalLinkAlt,
+  FaCode,
 } from "react-icons/fa";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
@@ -91,6 +92,7 @@ function ProjectItem({
   const [techPositions, setTechPositions] = useState<
     { left: string; top: string }[]
   >([]);
+  const [showTechModal, setShowTechModal] = useState(false);
 
   useEffect(() => {
     const calculatePositions = () => {
@@ -341,6 +343,7 @@ function ProjectItem({
   return (
     <motion.div
       ref={containerRef}
+      className="project-container"
       style={{
         position: "absolute",
         top: 0,
@@ -393,6 +396,7 @@ function ProjectItem({
       {/* Texts */}
       <motion.div
         ref={textRef}
+        className="project-text-container"
         style={{
           position: "absolute",
           ...layout.text,
@@ -624,22 +628,44 @@ function ProjectItem({
           )}
         </div>
         <p
+          className="project-desc"
           style={{
             color: "var(--text-muted)",
-            fontSize: "1.5rem",
-            lineHeight: "1.6",
             fontWeight: 300,
             margin: 0,
           }}
         >
           {project.description}
         </p>
+        
+        {/* Botón de tecnologías para móvil */}
+        <button
+          className="mobile-tech-btn"
+          onClick={() => setShowTechModal(true)}
+          style={{
+            marginTop: "1rem",
+            padding: "0.75rem 1.5rem",
+            background: "rgba(255,255,255,0.05)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "12px",
+            color: "var(--text-main)",
+            fontWeight: 600,
+            display: "none",
+            gap: "0.5rem",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            backdropFilter: "blur(10px)"
+          }}
+        >
+          <FaCode /> Ver Tecnologías
+        </button>
       </motion.div>
 
       {/* Screenshot Placeholder */}
       <motion.div
         ref={imgRef}
-        className="screenshot-placeholder"
+        className="project-img-container screenshot-placeholder"
         style={{
           position: "absolute",
           ...layout.img,
@@ -681,8 +707,9 @@ function ProjectItem({
       {prevProjectName ? (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: SCROLL.getProjectStart(index - 1), behavior: "smooth" })
+            window.scrollTo({ top: SCROLL.getProjectStart(index - 1) + 950, behavior: "smooth" })
           }
+          className="project-nav-up"
           style={{
             position: "absolute",
             top: "17vh",
@@ -719,6 +746,7 @@ function ProjectItem({
           onClick={() =>
             window.scrollTo({ top: SCROLL.getEcosystemCenter(activeEcosystems.length - 1), behavior: "smooth" })
           }
+          className="project-nav-up"
           style={{
             position: "absolute",
             top: "17vh",
@@ -745,6 +773,7 @@ function ProjectItem({
               color: "var(--text-muted)",
               letterSpacing: "2px",
               textTransform: "uppercase",
+              textAlign: "center"
             }}
           >
             Volver a Conocimientos
@@ -756,8 +785,9 @@ function ProjectItem({
       {nextProjectName && (
         <motion.div
           onClick={() =>
-            window.scrollTo({ top: SCROLL.getProjectStart(index + 1), behavior: "smooth" })
+            window.scrollTo({ top: SCROLL.getProjectStart(index + 1) + 950, behavior: "smooth" })
           }
+          className="global-nav-down"
           style={{
             position: "absolute",
             bottom: "8vh",
@@ -790,6 +820,71 @@ function ProjectItem({
           </motion.div>
         </motion.div>
       )}
+
+      {/* Mobile Tech Modal */}
+      {showTechModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: "rgba(0,0,0,0.8)",
+            backdropFilter: "blur(10px)",
+            zIndex: 9999, // ensures it's above everything
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+            pointerEvents: "auto"
+          }}
+          onClick={() => setShowTechModal(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "var(--bg-color)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "24px",
+              padding: "2rem",
+              width: "100%",
+              maxWidth: "400px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem"
+            }}
+          >
+            <h4 style={{ margin: 0, fontSize: "1.2rem", textAlign: "center", color: "#fff" }}>Tecnologías usadas</h4>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+              {project.tech.map((techName: string) => {
+                const skill = skillsData.find((s) => s.name === techName);
+                const Icon = skill?.icon;
+                return (
+                  <div key={techName} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
+                    {Icon && <Icon size={32} style={{ color: "var(--accent)" }} />}
+                    <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center" }}>{techName}</span>
+                  </div>
+                )
+              })}
+            </div>
+            <button
+              onClick={() => setShowTechModal(false)}
+              style={{
+                marginTop: "1rem",
+                padding: "0.75rem",
+                background: "var(--accent)",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              Cerrar
+            </button>
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -816,7 +911,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
         left: 0,
         width: "100%",
         height: "100vh",
-        zIndex: 30,
+        zIndex: 60,
         pointerEvents: "none",
       }}
     >
@@ -871,10 +966,6 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           position: relative;
           z-index: 2;
         }
-        .github-btn-wrapper:hover .github-link {
-          color: #fff; 
-          transform: scale(1.15) rotate(5deg);
-        }
         .github-btn-wrapper {
           position: relative;
           display: inline-flex;
@@ -890,14 +981,6 @@ export default function Projects({ selectedTech }: ProjectsProps) {
           color: rgba(255,255,255,0.3);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           opacity: 0;
-        }
-        .github-btn-wrapper:hover .github-tag {
-          color: rgba(255,255,255,0.9);
-          transform: translateY(4px);
-          opacity: 1;
-        }
-        .github-btn-wrapper:hover .github-tag.top {
-          transform: translateX(-50%) translateY(-4px);
         }
         .github-tag.top {
           top: auto;
@@ -941,8 +1024,22 @@ export default function Projects({ selectedTech }: ProjectsProps) {
         .github-tag.left .github-tag-text {
           transform: rotate(4deg);
         }
-        .screenshot-placeholder:hover {
-          border-color: rgba(255,255,255,0.3);
+        @media (hover: hover) {
+          .github-btn-wrapper:hover .github-link {
+            color: #fff; 
+            transform: scale(1.15) rotate(5deg);
+          }
+          .github-btn-wrapper:hover .github-tag {
+            color: rgba(255,255,255,0.9);
+            transform: translateY(4px);
+            opacity: 1;
+          }
+          .github-btn-wrapper:hover .github-tag.top {
+            transform: translateX(-50%) translateY(-4px);
+          }
+          .screenshot-placeholder:hover {
+            border-color: rgba(255,255,255,0.3);
+          }
         }
         .flying-tech {
           animation: floatAnimation 8s ease-in-out infinite;

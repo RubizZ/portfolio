@@ -77,6 +77,7 @@ function SidebarMenuItem({ eco, index, scrollY }: { eco: Ecosystem; index: numbe
 
   return (
     <motion.div
+      className="ecosystem-menu-wrapper"
       style={{
         opacity,
         scale,
@@ -86,6 +87,7 @@ function SidebarMenuItem({ eco, index, scrollY }: { eco: Ecosystem; index: numbe
       onClick={() => window.scrollTo({ top: center, behavior: "smooth" })}
     >
       <span
+        className="ecosystem-menu-item"
         style={{
           fontSize: "1.2rem",
           fontWeight: "bold",
@@ -129,6 +131,7 @@ function EcosystemLayer({ eco, index, scrollY }: { eco: Ecosystem; index: number
           return (
             <div
               key={node.id}
+              className="tech-node"
               style={{
                 position: "absolute",
                 top: `${node.y}%`,
@@ -202,6 +205,7 @@ function NavigationArrow({
     <>
       <motion.div
         onClick={() => window.scrollTo({ top: prevTarget, behavior: "smooth" })}
+        className="global-nav-up"
         style={{
           position: "absolute",
           top: "12vh",
@@ -227,6 +231,7 @@ function NavigationArrow({
 
       <motion.div
         onClick={() => window.scrollTo({ top: nextTarget, behavior: "smooth" })}
+        className="global-nav-down"
         style={{
           position: "absolute",
           bottom: "8vh",
@@ -285,6 +290,7 @@ export default function TechNetwork() {
       }}
     >
       <motion.div
+        className="ecosystems-sidebar"
         style={{
           position: "absolute",
           left: "5vw",

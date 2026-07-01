@@ -28,7 +28,7 @@ export default function Hero() {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100vh",
+          height: "100dvh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -42,25 +42,11 @@ export default function Hero() {
           style={{ textAlign: "center", pointerEvents }}
         >
           <div className="hero-content">
-            <h1
-              style={{
-                fontSize: "4.5rem",
-                fontWeight: "800",
-                marginBottom: "1.5rem",
-                lineHeight: "1.1",
-              }}
-            >
+            <h1 className="hero-title">
               Hola, soy{" "}
               <span style={{ color: "var(--accent)" }}>Rubén Hidalgo</span>
             </h1>
-            <p
-              style={{
-                fontSize: "1.25rem",
-                color: "var(--text-muted)",
-                maxWidth: "600px",
-                margin: "0 auto 3rem",
-              }}
-            >
+            <p className="hero-subtitle">
               Software Engineer enfocado en crear soluciones eficientes,
               elegantes y centradas en resolver problemas reales.
             </p>
@@ -98,6 +84,7 @@ export default function Hero() {
 
       <motion.div
         onClick={() => window.scrollTo({ top: 800, behavior: "smooth" })}
+        className="global-nav-down"
         style={{
           position: "absolute",
           bottom: "8vh",
