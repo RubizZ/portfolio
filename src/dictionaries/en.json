@@ -23,9 +23,9 @@
     "date": "Apr 2026 – Present",
     "role": "Software Engineer Intern",
     "bullets": [
-      "Developed components and web pages using the BBVA Cells architecture built on Lit (native Web Components) in a real fintech environment.",
-      "Analysed and deep-dived into BBVA production code, gaining understanding of large-scale proprietary technology stacks and architectures.",
-      "Learned the full lifecycle of functional solutions in an enterprise banking environment following Agile methodologies."
+      "Development of components and micro-frontends using the proprietary BBVA Cells architecture based on Lit (native Web Components).",
+      "Training in the corporate workflow, agile methodologies, and quality standards required in a real fintech environment.",
+      "Understanding of the software development lifecycle at a corporate level, from local development to code delivery processes."
     ]
   },
   "tech": {

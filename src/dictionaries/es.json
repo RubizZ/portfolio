@@ -23,9 +23,9 @@
     "date": "Abr 2026 – Actualidad",
     "role": "Software Engineer Intern",
     "bullets": [
-      "Desarrollo de componentes y páginas web con la arquitectura BBVA Cells sobre Lit (Web Components nativos) en un contexto fintech real.",
-      "Análisis e inmersión en código de soluciones BBVA en producción, comprendiendo el stack tecnológico y arquitecturas propietarias a gran escala.",
-      "Aprendizaje del ciclo de vida completo de soluciones funcionales en entorno bancario empresarial con metodologías ágiles."
+      "Desarrollo de componentes y micro-frontends (soluciones funcionales) usando la arquitectura propietaria BBVA Cells basada en Lit (Web Components nativos).",
+      "Capacitación en el flujo de trabajo corporativo, metodologías ágiles y estándares de calidad requeridos en un entorno fintech real.",
+      "Comprensión del ciclo de vida del software a nivel corporativo, desde los entornos de desarrollo local hasta los procesos de entrega de código."
     ]
   },
   "tech": {
