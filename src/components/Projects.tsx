@@ -282,12 +282,16 @@ function ProjectItem({
   const endExit = startExit + 500;
 
   const [hasEntered, setHasEntered] = useState(false);
+  const [dismissTooltip, setDismissTooltip] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest >= startEnter && !hasEntered) {
       setHasEntered(true);
     } else if (latest < startEnter - 100 && hasEntered) {
       setHasEntered(false); // Reset si volvemos muy atrás para que se repita la animación si bajamos de nuevo
+    }
+    if (index === 0 && latest > startEnter + 600 && !dismissTooltip) {
+      setDismissTooltip(true);
     }
   });
 
@@ -553,7 +557,11 @@ function ProjectItem({
           </h3>
           {layout.text.textAlign !== "right" && (
             <div style={{ display: "flex", gap: "1.5rem" }}>
-              <div className="github-btn-wrapper">
+              <div 
+                className="github-btn-wrapper"
+                onMouseEnter={() => index === 0 && setDismissTooltip(true)}
+                onTouchStart={() => index === 0 && setDismissTooltip(true)}
+              >
                 <a
                   href={project.url}
                   target="_blank"
@@ -563,7 +571,7 @@ function ProjectItem({
                 >
                   <FaGithub size={42} />
                 </a>
-                <div className="github-tag right">
+                <div className={`github-tag right ${index === 0 && !dismissTooltip ? "visible-default" : ""}`}>
                   <svg
                     width="40"
                     height="30"
@@ -595,7 +603,11 @@ function ProjectItem({
                 </div>
               </div>
               {project.liveUrl && (
-                <div className="github-btn-wrapper">
+                <div 
+                  className="github-btn-wrapper"
+                  onMouseEnter={() => index === 0 && setDismissTooltip(true)}
+                  onTouchStart={() => index === 0 && setDismissTooltip(true)}
+                >
                   <a
                     href={project.liveUrl}
                     target="_blank"
@@ -605,7 +617,7 @@ function ProjectItem({
                   >
                     <FaExternalLinkAlt size={36} />
                   </a>
-                  <div className="github-tag top">
+                  <div className={`github-tag top ${index === 0 && !dismissTooltip ? "visible-default" : ""}`}>
                     <svg
                       width="40"
                       height="30"
@@ -1054,6 +1066,10 @@ export default function Projects({
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           opacity: 0;
         }
+        .github-tag.visible-default {
+          opacity: 1;
+          color: rgba(255,255,255,0.7);
+        }
         .github-tag.top {
           top: auto;
           bottom: 70%;
@@ -1062,7 +1078,7 @@ export default function Projects({
           align-items: center;
           margin-top: 0;
           margin-bottom: 10px;
-          transform: translateX(-50%);
+          transform: translateX(-30%);
         }
         .github-tag.top .github-tag-text {
           margin-top: 0;
@@ -1107,7 +1123,7 @@ export default function Projects({
             opacity: 1;
           }
           .github-btn-wrapper:hover .github-tag.top {
-            transform: translateX(-50%) translateY(-4px);
+            transform: translateX(-30%) translateY(-4px);
           }
           .screenshot-placeholder:hover {
             border-color: rgba(255,255,255,0.3);
