@@ -268,7 +268,7 @@ section {
     position: static !important;
     transform: none !important;
     text-align: center !important;
-    margin-top: 28vh !important;
+    margin-top: 16vh !important;
     width: 90% !important;
   }
 
@@ -324,7 +324,7 @@ section {
   }
 
   .project-nav-up {
-    top: 17vh !important; /* Debajo de los filtros del dock */
+    top: 13vh !important; /* Debajo de los filtros del dock */
   }
 
   /* Reducir el tamaño de los iconos del mapa de tecnologías en móvil */
