@@ -100,6 +100,7 @@ function ProjectItem({
     { left: string; top: string }[]
   >([]);
   const [showTechModal, setShowTechModal] = useState(false);
+  const [hasHovered, setHasHovered] = useState(false);
 
   useEffect(() => {
     const calculatePositions = () => {
@@ -282,16 +283,12 @@ function ProjectItem({
   const endExit = startExit + 500;
 
   const [hasEntered, setHasEntered] = useState(false);
-  const [dismissTooltip, setDismissTooltip] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest >= startEnter && !hasEntered) {
       setHasEntered(true);
     } else if (latest < startEnter - 100 && hasEntered) {
       setHasEntered(false); // Reset si volvemos muy atrás para que se repita la animación si bajamos de nuevo
-    }
-    if (index === 0 && latest > startEnter + 600 && !dismissTooltip) {
-      setDismissTooltip(true);
     }
   });
 
@@ -449,7 +446,11 @@ function ProjectItem({
           {layout.text.textAlign === "right" && (
             <div style={{ display: "flex", gap: "1.5rem" }}>
               {project.liveUrl && (
-                <div className="github-btn-wrapper">
+                <div 
+                  className="github-btn-wrapper"
+                  onMouseEnter={() => setHasHovered(true)}
+                  onTouchStart={() => setHasHovered(true)}
+                >
                   <a
                     href={project.liveUrl}
                     target="_blank"
@@ -459,7 +460,7 @@ function ProjectItem({
                   >
                     <FaExternalLinkAlt size={36} />
                   </a>
-                  <div className="github-tag top">
+                  <div className={`github-tag top ${index === 0 && !hasHovered ? "visible-default" : ""}`}>
                     <svg
                       width="40"
                       height="30"
@@ -491,11 +492,15 @@ function ProjectItem({
                         mask={`url(#mask-${index}-svg)`}
                       />
                     </svg>
-                    <span className="github-tag-text">VER WEB</span>
+                    <span className="github-tag-text">{dict.projects.live}</span>
                   </div>
                 </div>
               )}
-              <div className="github-btn-wrapper">
+              <div 
+                className="github-btn-wrapper"
+                onMouseEnter={() => setHasHovered(true)}
+                onTouchStart={() => setHasHovered(true)}
+              >
                 <a
                   href={project.url}
                   target="_blank"
@@ -505,7 +510,7 @@ function ProjectItem({
                 >
                   <FaGithub size={42} />
                 </a>
-                <div className="github-tag left">
+                <div className={`github-tag left ${index === 0 && !hasHovered ? "visible-default" : ""}`}>
                   <svg
                     width="40"
                     height="30"
@@ -559,8 +564,8 @@ function ProjectItem({
             <div style={{ display: "flex", gap: "1.5rem" }}>
               <div 
                 className="github-btn-wrapper"
-                onMouseEnter={() => index === 0 && setDismissTooltip(true)}
-                onTouchStart={() => index === 0 && setDismissTooltip(true)}
+                onMouseEnter={() => setHasHovered(true)}
+                onTouchStart={() => setHasHovered(true)}
               >
                 <a
                   href={project.url}
@@ -571,7 +576,7 @@ function ProjectItem({
                 >
                   <FaGithub size={42} />
                 </a>
-                <div className={`github-tag right ${index === 0 && !dismissTooltip ? "visible-default" : ""}`}>
+                <div className={`github-tag right ${index === 0 && !hasHovered ? "visible-default" : ""}`}>
                   <svg
                     width="40"
                     height="30"
@@ -605,8 +610,8 @@ function ProjectItem({
               {project.liveUrl && (
                 <div 
                   className="github-btn-wrapper"
-                  onMouseEnter={() => index === 0 && setDismissTooltip(true)}
-                  onTouchStart={() => index === 0 && setDismissTooltip(true)}
+                  onMouseEnter={() => setHasHovered(true)}
+                  onTouchStart={() => setHasHovered(true)}
                 >
                   <a
                     href={project.liveUrl}
@@ -617,7 +622,7 @@ function ProjectItem({
                   >
                     <FaExternalLinkAlt size={36} />
                   </a>
-                  <div className={`github-tag top ${index === 0 && !dismissTooltip ? "visible-default" : ""}`}>
+                  <div className={`github-tag top ${index === 0 && !hasHovered ? "visible-default" : ""}`}>
                     <svg
                       width="40"
                       height="30"

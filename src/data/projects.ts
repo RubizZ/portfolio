@@ -34,11 +34,6 @@ export const projectsData: Project[] = [
     liveUrl: "https://flaights.es",
   },
   {
-    name: "CollabUp",
-    tech: ["Android", "Java"],
-    url: "https://github.com/RubizZ/CollabUp",
-  },
-  {
     name: "VHUB",
     tech: [
       "TypeScript",
@@ -60,9 +55,14 @@ export const projectsData: Project[] = [
     liveUrl: "https://vhub-psi.vercel.app/",
   },
   {
-    name: "Trendy",
-    tech: ["Java", "MySQL"],
-    url: "https://github.com/RubizZ/Trendy",
+    name: "ArenaOfMusic",
+    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS"],
+    url: "https://github.com/RubizZ/ArenaOfMusic",
+  },
+  {
+    name: "CollabUp",
+    tech: ["Android", "Java"],
+    url: "https://github.com/RubizZ/CollabUp",
   },
   {
     name: "typed-express-pipeline",
@@ -70,8 +70,8 @@ export const projectsData: Project[] = [
     url: "https://github.com/RubizZ/typed-express-pipeline",
   },
   {
-    name: "ArenaOfMusic",
-    tech: ["HTML", "JavaScript", "Java", "Spring", "Thymeleaf", "CSS"],
-    url: "https://github.com/RubizZ/ArenaOfMusic",
+    name: "Trendy",
+    tech: ["Java", "MySQL"],
+    url: "https://github.com/RubizZ/Trendy",
   },
 ];
