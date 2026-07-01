@@ -1071,9 +1071,11 @@ export default function Projects({
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           opacity: 0;
         }
-        .github-tag.visible-default {
-          opacity: 1;
-          color: rgba(255,255,255,0.7);
+        @media (min-width: 769px) {
+          .github-tag.visible-default {
+            opacity: 1;
+            color: rgba(255,255,255,0.7);
+          }
         }
         .github-tag.top {
           top: auto;

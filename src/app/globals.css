@@ -324,7 +324,7 @@ section {
   }
 
   .project-nav-up {
-    top: 13vh !important; /* Debajo de los filtros del dock */
+    top: 16vh !important; /* Debajo de los filtros del dock */
   }
 
   /* Reducir el tamaño de los iconos del mapa de tecnologías en móvil */
