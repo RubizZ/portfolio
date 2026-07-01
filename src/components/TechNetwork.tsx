@@ -237,7 +237,7 @@ function NavigationArrow({
         className="global-nav-down"
         style={{
           position: "absolute",
-          bottom: "clamp(20px, 4dvh, 60px)",
+          bottom: "clamp(10px, 3vh, 30px)",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",

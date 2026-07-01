@@ -320,7 +320,7 @@ section {
   }
 
   .global-nav-down {
-    bottom: 12vh !important; /* Mobile browser UI usually covers the bottom 8-10vh */
+    bottom: 4dvh !important; /* Fixed: use dvh to properly align with mobile UI */
   }
 
   .project-nav-up {

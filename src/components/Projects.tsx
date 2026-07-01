@@ -833,7 +833,7 @@ function ProjectItem({
           className="global-nav-down"
           style={{
             position: "absolute",
-            bottom: "8vh",
+            bottom: "clamp(10px, 3vh, 30px)",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
