@@ -36,7 +36,7 @@ export default function Experience() {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100vh",
+          height: "100dvh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -137,7 +137,7 @@ export default function Experience() {
         className="global-nav-up"
         style={{
           position: "absolute",
-          top: "8vh",
+          top: "clamp(20px, 4dvh, 60px)",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
@@ -179,7 +179,7 @@ export default function Experience() {
         className="global-nav-down"
         style={{
           position: "absolute",
-          bottom: "8vh",
+          bottom: "clamp(20px, 4dvh, 60px)",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",

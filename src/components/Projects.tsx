@@ -363,7 +363,7 @@ function ProjectItem({
         top: 0,
         left: 0,
         width: "100%",
-        height: "100vh",
+        height: "100dvh",
         opacity,
         pointerEvents: "none",
         zIndex: 30 + index,
@@ -729,7 +729,7 @@ function ProjectItem({
           className="project-nav-up"
           style={{
             position: "absolute",
-            top: "17vh",
+            top: "clamp(140px, 22dvh, 200px)",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
@@ -769,7 +769,7 @@ function ProjectItem({
           className="project-nav-up"
           style={{
             position: "absolute",
-            top: "17vh",
+            top: "clamp(140px, 22dvh, 200px)",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
@@ -975,7 +975,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
         top: 0,
         left: 0,
         width: "100%",
-        height: "100vh",
+        height: "100dvh",
         zIndex: 60,
         pointerEvents: "none",
       }}
@@ -1004,7 +1004,7 @@ export default function Projects({ selectedTech }: ProjectsProps) {
       {filteredProjects.length === 0 && (
         <motion.div
           style={{
-            height: "100vh",
+            height: "100dvh",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

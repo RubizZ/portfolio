@@ -129,7 +129,7 @@ export default function PortfolioClient() {
           style={{
             position: "sticky",
             top: 0,
-            height: "100vh",
+            height: "100dvh",
             overflow: "hidden",
             zIndex: 40,
             pointerEvents: "none",
@@ -176,10 +176,11 @@ export default function PortfolioClient() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          paddingTop: "6rem",
-          paddingBottom: "4rem",
+          paddingTop: "clamp(3rem, 10dvh, 6rem)",
+          paddingBottom: "clamp(2rem, 8dvh, 4rem)",
           zIndex: 50,
           position: "relative",
+
           gap: "1.5rem",
         }}
       >

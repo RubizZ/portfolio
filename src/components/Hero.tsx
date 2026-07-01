@@ -87,7 +87,7 @@ export default function Hero() {
         className="global-nav-down"
         style={{
           position: "absolute",
-          bottom: "8vh",
+          bottom: "clamp(20px, 4dvh, 60px)",
           left: "50%",
           x: "-50%",
           display: "flex",
