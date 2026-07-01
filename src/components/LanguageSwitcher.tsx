@@ -35,7 +35,7 @@ export default function LanguageSwitcher({ lang }: { lang: Locale }) {
     <div
       ref={ref}
       style={{
-        position: "fixed",
+        position: "absolute",
         top: "1.25rem",
         right: "1.5rem",
         zIndex: 9999,
