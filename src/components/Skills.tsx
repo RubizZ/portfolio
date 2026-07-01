@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
+import { activeEcosystems } from "../data/ecosystems";
 import { FaChevronLeft, FaChevronRight, FaCode } from "react-icons/fa";
 
 interface SkillsProps {
@@ -98,7 +99,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
   const pointerEvents = useTransform(scrollY, [start, end], ['none', 'auto']) as any;
 
   // Group skills by ecosystem
-  const ecosystems = [1, 2, 3, 4, 5];
+  const ecosystems = activeEcosystems.map(e => e.id);
   const ecosystemWatermarks: Record<number, React.ReactNode> = {
     1: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>FRONTEND</span>,
     2: <span style={{ fontSize: 'clamp(1rem, 6vw, 5rem)' }}>NODE.JS</span>,
@@ -280,7 +281,7 @@ export default function Skills({ selectedTech, setSelectedTech }: SkillsProps) {
             }}
           >
             {ecosystems.map(ecoId => {
-              const ecoSkills = skillsData.filter(s => s.ecosystem === ecoId);
+              const ecoSkills = skillsData.filter(s => s.ecosystem === ecoId && !s.hidden);
               return (
                 <div 
                   key={ecoId}

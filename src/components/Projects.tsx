@@ -7,7 +7,7 @@ import {
   FaExternalLinkAlt,
   FaCode,
 } from "react-icons/fa";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
@@ -274,6 +274,16 @@ function ProjectItem({
   const startExit = endEnter + 600;
   const endExit = startExit + 500;
 
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest >= startEnter && !hasEntered) {
+      setHasEntered(true);
+    } else if (latest < startEnter - 100 && hasEntered) {
+      setHasEntered(false); // Reset si volvemos muy atrás para que se repita la animación si bajamos de nuevo
+    }
+  });
+
   const transformInput = isLast
     ? [startEnter, endEnter]
     : [startEnter, endEnter, startExit, endExit];
@@ -369,7 +379,7 @@ function ProjectItem({
               key={techName}
               className="flying-tech"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: hasEntered ? 1 : 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               style={{
                 ...pos,
