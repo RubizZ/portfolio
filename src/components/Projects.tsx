@@ -125,7 +125,7 @@ function ProjectItem({
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`/${lang}/${project.name}-${imgIndex + 1}.png`, { method: 'HEAD' })
+    fetch(`/${lang}/${project.name.toLowerCase()}-${imgIndex + 1}.png`, { method: 'HEAD' })
       .then(res => {
         if (isMounted) setHasNextImg(res.ok);
       })
