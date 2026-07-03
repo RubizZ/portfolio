@@ -1,9 +1,12 @@
 "use client";
+import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import {
   FaGithub,
   FaChevronDown,
   FaChevronUp,
+  FaChevronLeft,
+  FaChevronRight,
   FaExternalLinkAlt,
   FaCode,
 } from "react-icons/fa";
@@ -12,12 +15,13 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
+  AnimatePresence,
 } from "framer-motion";
 import { projectsData, Project } from "../data/projects";
 import { skillsData, SkillName } from "../data/skills";
 import { SCROLL } from "../utils/scrollController";
 import { activeEcosystems } from "../data/ecosystems";
-import { Dictionary } from "../lib/getDictionary";
+import { Dictionary, Locale } from "../lib/getDictionary";
 
 const projectLayouts: any[] = [
   {
@@ -53,10 +57,10 @@ const projectLayouts: any[] = [
   {
     text: {
       top: "35%",
-      right: "5%",
+      right: "10%",
       textAlign: "right",
     },
-    img: { bottom: "10%", right: "5%" },
+    img: { bottom: "10%", left: "10%" },
     textInitial: { x: 0, y: -200, scale: 1 },
     imgInitial: { x: 0, y: 200, scale: 1 },
   },
@@ -76,6 +80,18 @@ function getPseudoRandom(seedStr: string) {
   };
 }
 
+const sliderVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+  }),
+  center: {
+    x: 0,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? "100%" : "-100%",
+  }),
+};
+
 function ProjectItem({
   project,
   index,
@@ -84,6 +100,7 @@ function ProjectItem({
   nextProjectName,
   prevProjectName,
   dict,
+  lang,
 }: {
   project: Project;
   index: number;
@@ -92,6 +109,7 @@ function ProjectItem({
   nextProjectName?: string;
   prevProjectName?: string;
   dict: Dictionary;
+  lang: Locale;
 }) {
   const textRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -101,6 +119,21 @@ function ProjectItem({
   >([]);
   const [showTechModal, setShowTechModal] = useState(false);
   const [hasHovered, setHasHovered] = useState(false);
+  const [imgIndex, setImgIndex] = useState(1);
+  const [hasNextImg, setHasNextImg] = useState(false);
+  const [direction, setDirection] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`/${lang}/${project.name}-${imgIndex + 1}.png`, { method: 'HEAD' })
+      .then(res => {
+        if (isMounted) setHasNextImg(res.ok);
+      })
+      .catch(() => {
+        if (isMounted) setHasNextImg(false);
+      });
+    return () => { isMounted = false; };
+  }, [lang, project.name, imgIndex]);
 
   useEffect(() => {
     const calculatePositions = () => {
@@ -696,10 +729,10 @@ function ProjectItem({
         </button>
       </motion.div>
 
-      {/* Screenshot Placeholder */}
+      {/* Screenshot Container */}
       <motion.div
         ref={imgRef}
-        className="project-img-container screenshot-placeholder"
+        className="project-img-container"
         style={{
           position: "absolute",
           ...layout.img,
@@ -709,32 +742,122 @@ function ProjectItem({
           width: layout.img.width || "45vw",
           minWidth: "300px",
           maxWidth: "800px",
-          aspectRatio: "16/9",
-          backgroundColor: "rgba(255,255,255,0.02)",
-          border: "2px dashed rgba(255,255,255,0.1)",
           borderRadius: "24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
-          backdropFilter: "blur(10px)",
-          transition: "border-color 0.5s ease",
           zIndex: 10,
           pointerEvents, // Only this container receives clicks when active
+          overflow: "visible",
         }}
       >
-        <span
-          style={{
-            color: "rgba(255,255,255,0.3)",
-            fontSize: "1.2rem",
-            fontWeight: 300,
-            letterSpacing: "1px",
-            textAlign: "center",
-            padding: "1rem",
-          }}
+        <a
+          href={`/${lang}/${project.name.toLowerCase()}-${imgIndex}.png`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ display: "block", width: "100%", cursor: "pointer", position: "relative" }}
         >
-          [ Captura de {project.name} ]
-        </span>
+          <div style={{ display: "grid", overflow: "hidden", borderRadius: "24px" }}>
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={imgIndex}
+                custom={direction}
+                variants={sliderVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ type: "tween", ease: "easeInOut", duration: 0.4 }}
+                style={{ gridArea: "1 / 1", width: "100%" }}
+              >
+                <Image
+                  src={`/${lang}/${project.name.toLowerCase()}-${imgIndex}.png`}
+                  alt={`Captura de ${project.name} - Imagen ${imgIndex}`}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                    borderRadius: "24px",
+                    border: "2px solid rgba(255,255,255,0.1)",
+                    transition: "border-color 0.5s ease",
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                  className="screenshot-img"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </a>
+
+        {/* Previous Image Arrow */}
+        {imgIndex > 1 && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setDirection(-1);
+              setImgIndex(prev => prev - 1);
+            }}
+            style={{
+              position: "absolute",
+              left: "-20px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "rgba(0,0,0,0.6)",
+              color: "white",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              borderRadius: "50%",
+              width: "40px",
+              height: "40px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              zIndex: 20,
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            <FaChevronLeft size={20} />
+          </button>
+        )}
+
+        {/* Next Image Arrow */}
+        {hasNextImg && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setDirection(1);
+              setImgIndex(prev => prev + 1);
+            }}
+            style={{
+              position: "absolute",
+              right: "-20px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "rgba(0,0,0,0.6)",
+              color: "white",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              borderRadius: "50%",
+              width: "40px",
+              height: "40px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              zIndex: 20,
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            <FaChevronRight size={20} />
+          </button>
+        )}
       </motion.div>
 
       {/* Arrow to Previous Project or Conocimientos */}
@@ -972,9 +1095,11 @@ function ProjectItem({
 export default function Projects({
   selectedTech,
   dict,
+  lang,
 }: {
   selectedTech: SkillName | "Todas";
   dict: Dictionary;
+  lang: Locale;
 }) {
   let filteredProjects = projectsData;
 
@@ -1020,6 +1145,7 @@ export default function Projects({
               index > 0 ? filteredProjects[index - 1].name : undefined
             }
             dict={dict}
+            lang={lang}
           />
         );
       })}

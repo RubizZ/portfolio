@@ -149,7 +149,7 @@ export default function PortfolioClient({ lang, dict }: PortfolioClientProps) {
             setSelectedTech={setSelectedTech}
             dict={dict}
           />
-          <Projects selectedTech={selectedTech} dict={dict} />
+          <Projects selectedTech={selectedTech} dict={dict} lang={lang} />
         </div>
         <div
           className="scroll-track-container"
