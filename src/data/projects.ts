@@ -52,7 +52,7 @@ export const projectsData: Project[] = [
       "HTML",
     ],
     url: "https://github.com/RubizZ/VHUB",
-    liveUrl: "https://vhub-psi.vercel.app/",
+    liveUrl: "https://vhub.rubenhidalgo.dev",
   },
   {
     name: "ArenaOfMusic",
